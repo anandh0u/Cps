@@ -1,6 +1,6 @@
-# [Project name]
+# CPS Department Portal
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+A responsive department information hub for Cyber Physical System Engineering at Government Engineering College Thrissur.
 
 ## Run & Operate
 
@@ -22,15 +22,26 @@ _Replace the heading above with the project's name, and this line with one sente
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/cps-department-portal` — responsive React web app
+- `artifacts/api-server/src/routes/department.ts` — department and session endpoints
+- `lib/db/src/schema/department.ts` — department database models
+- `lib/api-spec/openapi.yaml` — source of truth for API contracts
+- `agent.md` — future modification notes and production handoff guidance
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- API contracts are defined in OpenAPI first, then generated into typed React Query hooks and Zod validators.
+- Department content is stored in PostgreSQL through Drizzle rather than hardcoded in the frontend.
+- The initial sign-in flow is intentionally a preview session with a clearly documented demo credential; managed authentication should replace it before production.
+- The web app lives at the root preview path so the department portal is the primary product surface.
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+- Login screen for portal access
+- Department overview with counts, highlights, events, news, and notifications
+- Searchable student directory
+- Faculty directory with specialization and office details
+- Events, news, and notification views
 
 ## User preferences
 
@@ -38,7 +49,9 @@ _Populate as you build — explicit user instructions worth remembering across s
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
+- `SESSION_SECRET` is required by the API server.
+- Run API codegen after every OpenAPI change before importing new hooks or schemas.
+- Use the managed workflows rather than starting Vite or Express directly when previewing.
 
 ## Pointers
 

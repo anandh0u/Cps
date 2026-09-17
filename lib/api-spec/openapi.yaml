@@ -10,6 +10,10 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: department
+    description: Department information
+  - name: auth
+    description: Authentication session
 paths:
   /healthz:
     get:
@@ -24,6 +28,137 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /dashboard:
+    get:
+      operationId: getDashboard
+      tags: [department]
+      summary: Get department dashboard
+      responses:
+        "200":
+          description: Department dashboard data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Dashboard"
+  /students:
+    get:
+      operationId: getStudents
+      tags: [department]
+      summary: List students
+      parameters:
+        - name: year
+          in: query
+          schema:
+            type: string
+        - name: search
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Student directory
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Student"
+  /faculty:
+    get:
+      operationId: getFaculty
+      tags: [department]
+      summary: List faculty
+      responses:
+        "200":
+          description: Faculty directory
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Faculty"
+  /events:
+    get:
+      operationId: getEvents
+      tags: [department]
+      summary: List department events
+      parameters:
+        - name: upcoming
+          in: query
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: Department events
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Event"
+  /news:
+    get:
+      operationId: getNews
+      tags: [department]
+      summary: List department news
+      responses:
+        "200":
+          description: Department news
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/NewsItem"
+  /notifications:
+    get:
+      operationId: getNotifications
+      tags: [department]
+      summary: List notifications
+      responses:
+        "200":
+          description: Department notifications
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Notification"
+  /auth/session:
+    get:
+      operationId: getSession
+      tags: [auth]
+      summary: Get current session
+      responses:
+        "200":
+          description: Current session
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Session"
+    post:
+      operationId: createSession
+      tags: [auth]
+      summary: Create a demo session
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginInput"
+      responses:
+        "200":
+          description: Signed-in session
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Session"
+        "401":
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 components:
   schemas:
     HealthStatus:
@@ -33,4 +168,140 @@ components:
           type: string
       required:
         - status
+    DepartmentProfile:
+      type: object
+      properties:
+        name:
+          type: string
+        institution:
+          type: string
+        shortName:
+          type: string
+        location:
+          type: string
+        established:
+          type: string
+        description:
+          type: string
+      required: [name, institution, shortName, location, established, description]
+    Dashboard:
+      type: object
+      properties:
+        profile:
+          $ref: "#/components/schemas/DepartmentProfile"
+        counts:
+          type: object
+          properties:
+            students: { type: integer }
+            faculty: { type: integer }
+            upcomingEvents: { type: integer }
+            unreadNotifications: { type: integer }
+          required: [students, faculty, upcomingEvents, unreadNotifications]
+        highlights:
+          type: array
+          items:
+            $ref: "#/components/schemas/Highlight"
+        upcomingEvents:
+          type: array
+          items:
+            $ref: "#/components/schemas/Event"
+        latestNews:
+          type: array
+          items:
+            $ref: "#/components/schemas/NewsItem"
+      required: [profile, counts, highlights, upcomingEvents, latestNews]
+    Highlight:
+      type: object
+      properties:
+        label: { type: string }
+        value: { type: string }
+        detail: { type: string }
+        tone: { type: string }
+      required: [label, value, detail, tone]
+    Student:
+      type: object
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        rollNumber: { type: string }
+        year: { type: string }
+        semester: { type: string }
+        email: { type: string }
+        focus: { type: string }
+        avatarUrl: { type: ["string", "null"] }
+      required: [id, name, rollNumber, year, semester, email, focus, avatarUrl]
+    Faculty:
+      type: object
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        designation: { type: string }
+        specialization: { type: string }
+        email: { type: string }
+        office: { type: string }
+        avatarUrl: { type: ["string", "null"] }
+      required: [id, name, designation, specialization, email, office, avatarUrl]
+    Event:
+      type: object
+      properties:
+        id: { type: integer }
+        title: { type: string }
+        date: { type: string }
+        time: { type: string }
+        venue: { type: string }
+        type: { type: string }
+        description: { type: string }
+      required: [id, title, date, time, venue, type, description]
+    NewsItem:
+      type: object
+      properties:
+        id: { type: integer }
+        title: { type: string }
+        excerpt: { type: string }
+        publishedAt: { type: string }
+        category: { type: string }
+        featured: { type: boolean }
+      required: [id, title, excerpt, publishedAt, category, featured]
+    Notification:
+      type: object
+      properties:
+        id: { type: integer }
+        title: { type: string }
+        body: { type: string }
+        createdAt: { type: string }
+        category: { type: string }
+        read: { type: boolean }
+      required: [id, title, body, createdAt, category, read]
+    LoginInput:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 1
+      required: [email, password]
+    Session:
+      type: object
+      properties:
+        authenticated: { type: boolean }
+        user:
+          oneOf:
+            - $ref: "#/components/schemas/SessionUser"
+            - type: "null"
+      required: [authenticated, user]
+    SessionUser:
+      type: object
+      properties:
+        name: { type: string }
+        email: { type: string }
+        role: { type: string }
+        initials: { type: string }
+      required: [name, email, role, initials]
+    ErrorResponse:
+      type: object
+      properties:
+        error: { type: string }
+      required: [error]
 

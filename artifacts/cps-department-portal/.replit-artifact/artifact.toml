@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "CPS Department Portal"
+description = "A responsive information hub for Cyber Physical System Engineering at Government Engineering College Thrissur, with secure sign-in, student and faculty details, events, announcements, news, and department updates."
+version = "1.0.0"
+id = "artifacts/cps-department-portal"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 26254
+
+[services.development]
+run = "pnpm --filter @workspace/cps-department-portal run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/cps-department-portal", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/cps-department-portal/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "26254"
+BASE_PATH = "/"
