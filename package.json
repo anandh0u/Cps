@@ -1,19 +1,19 @@
 {
-  "name": "workspace",
-  "version": "0.0.0",
-  "license": "MIT",
+  "name": "cps-department-portal",
+  "version": "1.0.0",
+  "description": "Cyber Physical System Engineering Department Portal - Government Engineering College Thrissur",
+  "main": "server/index.js",
+  "type": "module",
   "scripts": {
-    "preinstall": "sh -c 'rm -f package-lock.json yarn.lock; case \"$npm_config_user_agent\" in pnpm/*) ;; *) echo \"Use pnpm instead\" >&2; exit 1 ;; esac'",
-    "build": "pnpm run typecheck && pnpm -r --if-present run build",
-    "typecheck:libs": "tsc --build",
-    "typecheck": "pnpm run typecheck:libs && pnpm -r --filter \"./artifacts/**\" --filter \"./scripts\" --if-present run typecheck"
+    "start": "node server/index.js",
+    "server": "node server/index.js",
+    "client": "npm --prefix client run dev",
+    "dev": "node dev.js",
+    "build": "npm --prefix client install && npm --prefix client run build",
+    "setup": "npm install && npm --prefix client install"
   },
-  "private": true,
   "dependencies": {
-    "@replit/connectors-sdk": "^0.4.3"
-  },
-  "devDependencies": {
-    "prettier": "^3.9.6",
-    "typescript": "~5.9.3"
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
   }
 }

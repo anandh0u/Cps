@@ -1,0 +1,693 @@
+/* ==========================================================================
+   CPS Student Welfare Portal — Left Sidebar & Clean Institutional Layout
+   Government Engineering College Thrissur
+   ========================================================================== */
+
+:root {
+  --font-heading: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Shady Off-White & Neutral Palette */
+  --bg-canvas: #f4f5f7;       /* Calm, gentle shady off-white */
+  --bg-card: #ffffff;         /* Pure clean card */
+  --bg-subtle: #f8fafc;       /* Light subtle fill */
+
+  /* Text & Ink */
+  --text-main: #0f172a;       /* Slate 900 */
+  --text-muted: #334155;      /* Slate 700 */
+  --text-dim: #64748b;        /* Slate 500 */
+  
+  /* Borders */
+  --border-light: #e2e8f0;    /* Clean 1px border */
+  --border-medium: #cbd5e1;
+  --border-dark: #94a3b8;
+
+  /* Institutional Accents */
+  --navy-primary: #1e293b;    /* Slate 800 */
+  --navy-dark: #0f172a;
+  --navy-subtle: #f1f5f9;
+  --navy-border: #cbd5e1;
+
+  --amber-warm: #b45309;      /* Amber 700 */
+  --amber-light: #fef3c7;
+  --amber-border: #fde68a;
+
+  --green-forest: #15803d;    /* Emerald 700 */
+  --green-light: #dcfce7;
+  --green-border: #bbf7d0;
+
+  --red-crimson: #b91c1c;     /* Crimson 700 */
+  --red-light: #fee2e2;
+  --red-border: #fecaca;
+
+  /* Shadows & Radii */
+  --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.07), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-canvas);
+  color: var(--text-main);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--navy-dark);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Master Layout: Left Sidebar + Right Main Content */
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* Left Sidebar */
+.sidebar {
+  width: 250px;
+  flex-shrink: 0;
+  background: #ffffff;
+  border-right: 1px solid var(--border-light);
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  box-shadow: 1px 0 3px rgba(0, 0, 0, 0.02);
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 18px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.brand-icon-box {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  background: var(--navy-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+}
+
+.brand-info h2 {
+  font-size: 1.05rem;
+  color: var(--navy-dark);
+  line-height: 1.15;
+}
+
+.brand-info p {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  font-weight: 600;
+}
+
+.sidebar-nav {
+  flex: 1;
+  padding: 14px 10px;
+  overflow-y: auto;
+}
+
+.sidebar-nav ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sidebar-link {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  font-family: var(--font-body);
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.12s ease;
+  text-align: left;
+}
+
+.sidebar-link:hover {
+  background: var(--bg-subtle);
+  color: var(--navy-dark);
+}
+
+.sidebar-link.active {
+  background: var(--navy-subtle);
+  color: var(--navy-dark);
+  border-color: var(--navy-border);
+  font-weight: 700;
+}
+
+.sidebar-link.committee-btn {
+  border: 1px solid var(--border-light);
+  background: #f8fafc;
+  margin-bottom: 6px;
+}
+
+.sidebar-link.committee-btn.active {
+  background: var(--navy-primary);
+  color: #ffffff;
+  border-color: var(--navy-primary);
+}
+
+.sidebar-link.committee-btn.active svg {
+  color: #ffffff !important;
+}
+
+.sidebar-footer {
+  padding: 14px;
+  border-top: 1px solid var(--border-light);
+  background: #ffffff;
+}
+
+.sidebar-help-card {
+  background: var(--bg-subtle);
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-light);
+  font-size: 0.76rem;
+  color: var(--text-dim);
+}
+
+.sidebar-help-card strong {
+  color: var(--navy-dark);
+  display: block;
+}
+
+.quick-call-link {
+  display: inline-block;
+  margin-top: 4px;
+  color: var(--red-crimson);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* Main Content Area */
+.main-content {
+  flex: 1;
+  min-width: 0;
+  padding: 24px 32px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.content-body {
+  flex: 1;
+}
+
+/* Page Header */
+.page-title-row {
+  margin-bottom: 22px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.page-title-row h1 {
+  font-size: 1.55rem;
+  color: var(--navy-dark);
+}
+
+.page-title-row p {
+  font-size: 0.88rem;
+  color: var(--text-dim);
+  margin-top: 2px;
+}
+
+/* Institutional Cards */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Tags & Badges */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+}
+
+.tag-navy {
+  background: #f1f5f9;
+  color: #1e293b;
+  border: 1px solid #cbd5e1;
+}
+
+.tag-green {
+  background: var(--green-light);
+  color: var(--green-forest);
+  border: 1px solid var(--green-border);
+}
+
+.tag-amber {
+  background: var(--amber-light);
+  color: var(--amber-warm);
+  border: 1px solid var(--amber-border);
+}
+
+.tag-red {
+  background: var(--red-light);
+  color: var(--red-crimson);
+  border: 1px solid var(--red-border);
+}
+
+.tag-stone {
+  background: #f8fafc;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 7px 14px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.12s ease-in-out;
+  border: 1px solid transparent;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: var(--navy-primary);
+  color: #ffffff;
+  border-color: var(--navy-primary);
+}
+
+.btn-primary:hover {
+  background: var(--navy-dark);
+}
+
+.btn-secondary {
+  background: #ffffff;
+  color: var(--text-main);
+  border-color: var(--border-medium);
+}
+
+.btn-secondary:hover {
+  background: var(--bg-subtle);
+  border-color: var(--navy-primary);
+}
+
+.btn-danger {
+  background: var(--red-crimson);
+  color: #ffffff;
+}
+
+.btn-danger:hover {
+  background: #991b1b;
+}
+
+/* Filter Shelf */
+.filter-shelf {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  background: #ffffff;
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-light);
+  background: #ffffff;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.filter-btn:hover {
+  border-color: var(--navy-primary);
+  color: var(--navy-primary);
+}
+
+.filter-btn.active {
+  background: var(--navy-primary);
+  color: #ffffff;
+  border-color: var(--navy-primary);
+}
+
+.search-field {
+  position: relative;
+  min-width: 240px;
+}
+
+.search-field input {
+  width: 100%;
+  padding: 6px 10px 6px 30px;
+  font-family: var(--font-body);
+  font-size: 0.84rem;
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-sm);
+  background: #ffffff;
+  color: var(--text-main);
+  outline: none;
+}
+
+.search-field svg {
+  position: absolute;
+  left: 9px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-dim);
+}
+
+/* Forms */
+.form-row {
+  margin-bottom: 14px;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 4px;
+}
+
+.form-input, .form-select, .form-textarea {
+  width: 100%;
+  padding: 7px 10px;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-sm);
+  background: #ffffff;
+  color: var(--text-main);
+  outline: none;
+}
+
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  border-color: var(--navy-primary);
+}
+
+/* Grid Layouts */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 900px) {
+  .app-layout {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .main-content {
+    padding: 16px;
+  }
+  .grid-2, .grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Simple Clean Footer (NO "Powered by Node.js") */
+.site-footer {
+  margin-top: auto;
+  padding-top: 32px;
+  padding-bottom: 16px;
+  border-top: 1px solid var(--border-light);
+  color: var(--text-dim);
+  font-size: 0.8rem;
+}
+
+.footer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.page-footer {
+  margin-top: 40px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+}
+
+/* Dedicated Admin Shell for /admin Route */
+.admin-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-canvas);
+}
+
+.admin-topbar {
+  background: #ffffff;
+  border-bottom: 1px solid var(--border-light);
+  padding: 14px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.admin-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.admin-content {
+  flex: 1;
+  padding: 28px 32px;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .admin-topbar {
+    padding: 12px 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .admin-content {
+    padding: 16px;
+  }
+}
+
+/* ==========================================================================
+   Institutional Top Bar with 3 Official Logos
+   ========================================================================== */
+.institutional-top-bar {
+  background: #ffffff;
+  border-bottom: 2px solid var(--border-medium);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  position: relative;
+  z-index: 40;
+}
+
+.top-bar-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 10px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* Logo 1: GEC Thrissur Crest (Left) */
+.top-brand-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.crest-box {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  background: #0f172a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  flex-shrink: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+.crest-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.college-main-title {
+  font-size: 0.94rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--navy-dark);
+  line-height: 1.2;
+}
+
+.college-sub-text {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+/* Logo 2: Association Logo (Center) */
+.top-brand-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.association-logo-box {
+  max-height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  background: #ffffff;
+  border: 1px solid var(--border-light);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.association-img {
+  max-height: 42px;
+  max-width: 250px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* Logo 3: CPS GECT Department Emblem (Right) */
+.top-brand-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  flex: 1;
+}
+
+.dept-main-title {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: var(--navy-dark);
+  text-align: right;
+  line-height: 1.2;
+}
+
+.dept-sub-text {
+  font-size: 0.72rem;
+  color: var(--amber-warm);
+  font-weight: 700;
+  text-align: right;
+  margin-top: 2px;
+}
+
+.cps-crest-box {
+  background: #0f172a;
+}
+
+@media (max-width: 1080px) {
+  .top-bar-inner {
+    flex-direction: column;
+    padding: 12px 16px;
+    gap: 10px;
+  }
+  .top-brand-left, .top-brand-center, .top-brand-right {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+  .dept-main-title, .dept-sub-text {
+    text-align: center;
+  }
+}

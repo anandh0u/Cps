@@ -1,0 +1,951 @@
+{
+  "department": {
+    "name": "Cyber Physical System Engineering",
+    "institution": "Government Engineering College Thrissur",
+    "shortName": "CPS",
+    "established": "2022",
+    "welfareEmail": "cps.welfare@gect.ac.in",
+    "studentRepPhone": "+91 487 2334144 (Ext: 4104)",
+    "location": "Academic Block B, GEC Thrissur, Ramavarmapuram, Kerala 680009"
+  },
+  "issues": [
+    {
+      "id": "CPS-ISSUE-2045",
+      "title": "Digital Storage Oscilloscope Station 2 Faulty Ch-1",
+      "category": "Lab Equipment",
+      "location": "CPS Hardware Lab H-101",
+      "priority": "Medium",
+      "status": "In Progress",
+      "submittedAt": "2026-09-21T03:14:42.210Z",
+      "description": "Station 2 channel 1 vertical gain knob is loose and calibration fails.",
+      "reportedBy": "CPS Student (Anonymous)",
+      "contactEmail": null,
+      "assignedCommittee": "Er. Sreejith K. (Hardware Superintendent)",
+      "timeline": [
+        {
+          "timestamp": "2026-09-21T03:14:42.210Z",
+          "actor": "Student Helpdesk System",
+          "note": "Issue submitted by student. Assigned to Er. Sreejith K. (Hardware Lab Superintendent) for initial assessment."
+        },
+        {
+          "timestamp": "2026-09-21T03:16:55.149Z",
+          "actor": "Student Welfare Officer",
+          "note": "Technician dispatched to bench. Replacement attenuator knob issued from stores."
+        }
+      ]
+    },
+    {
+      "id": "CPS-ISSUE-2041",
+      "title": "Station 4 Oscilloscope Ground Noise & Broken Probe",
+      "category": "Lab Equipment",
+      "location": "CPS Hardware & Embedded Lab (Room H-101)",
+      "priority": "High",
+      "status": "In Progress",
+      "submittedAt": "2026-09-19T14:20:00.000Z",
+      "description": "Station 4 100MHz probe attenuation switch broken. Second channel has heavy 50Hz ground noise during SPI signal capture.",
+      "reportedBy": "S6 CPS Lab Batch A (Anonymous)",
+      "contactEmail": null,
+      "assignedCommittee": "Er. Sreejith K. (Hardware Superintendent)",
+      "timeline": [
+        {
+          "timestamp": "2026-09-19T14:25:00.000Z",
+          "actor": "System Helpdesk",
+          "note": "Issue registered and assigned to Hardware Lab Committee."
+        },
+        {
+          "timestamp": "2026-09-19T16:00:00.000Z",
+          "actor": "Er. Sreejith K.",
+          "note": "Inspected workstation. 100MHz replacement probe requisitioned from department stores."
+        }
+      ]
+    },
+    {
+      "id": "CPS-ISSUE-2042",
+      "title": "Arm GNU Toolchain Missing on Workstations 14 to 18",
+      "category": "Software & IT",
+      "location": "CPS Hardware Lab (Room H-101)",
+      "priority": "Medium",
+      "status": "Resolved",
+      "submittedAt": "2026-09-18T10:15:00.000Z",
+      "description": "GCC Arm toolchain environment path unset on machines 14-18 following snapshot rollback.",
+      "reportedBy": "S4 CPS Student",
+      "contactEmail": "student.cps@gect.ac.in",
+      "assignedCommittee": "System Administrator (Ragesh P.)",
+      "timeline": [
+        {
+          "timestamp": "2026-09-18T10:30:00.000Z",
+          "actor": "System Helpdesk",
+          "note": "Issue logged and assigned to Systems Admin."
+        },
+        {
+          "timestamp": "2026-09-18T12:45:00.000Z",
+          "actor": "Ragesh P.",
+          "note": "Ansible playbook pushed across lab subnet. Environment paths fixed and test compilation verified."
+        },
+        {
+          "timestamp": "2026-09-18T13:00:00.000Z",
+          "actor": "Welfare Committee",
+          "note": "Issue marked as Resolved after confirming with student batch rep."
+        }
+      ]
+    },
+    {
+      "id": "CPS-ISSUE-2043",
+      "title": "Classroom 301 Projector HDMI Audio Intermittent Failure",
+      "category": "Classroom Facility",
+      "location": "Classroom 301 (CR-301)",
+      "priority": "Medium",
+      "status": "Under Review",
+      "submittedAt": "2026-09-20T08:45:00.000Z",
+      "description": "Podium HDMI connection cuts audio transmission to wall speakers intermittently during presentation videos.",
+      "reportedBy": "Class Representative S6 CPS",
+      "contactEmail": "cr.s6cps@gect.ac.in",
+      "assignedCommittee": "AV & Infrastructure Cell (Anand C.)",
+      "timeline": [
+        {
+          "timestamp": "2026-09-20T09:00:00.000Z",
+          "actor": "Welfare Committee",
+          "note": "Ticket scheduled for AV technician inspection during 12:30 PM recess."
+        }
+      ]
+    },
+    {
+      "id": "CPS-ISSUE-2044",
+      "title": "Insufficient Lighting Near Western Staircase of Hardware Block",
+      "category": "Hostel & Amenities",
+      "location": "Hardware Block Western Corridor",
+      "priority": "High",
+      "status": "In Progress",
+      "submittedAt": "2026-09-20T17:30:00.000Z",
+      "description": "Two corridor LED batten lights are non-functional near the western exit staircase, causing safety hazards during evening lab sessions.",
+      "reportedBy": "CPS Student (Anonymous)",
+      "contactEmail": null,
+      "assignedCommittee": "Campus Electrical Wing & Safety Committee",
+      "timeline": [
+        {
+          "timestamp": "2026-09-20T18:00:00.000Z",
+          "actor": "Safety Committee",
+          "note": "Work order sent to Electrical Maintenance Section for bulb replacement."
+        }
+      ]
+    }
+  ],
+  "suggestions": [
+    {
+      "id": "SUG-104",
+      "title": "Add Microchip Soldering Stations for FYP Teams",
+      "category": "Lab Facilities",
+      "idea": "Provide 2 additional temperature-controlled soldering stations with fume extractors in Lab H-101.",
+      "submittedAt": "2026-09-21T03:19:58.795Z",
+      "upvotes": 2,
+      "status": "Under Review",
+      "officialResponse": "Submitted to Welfare Committee for agenda review."
+    },
+    {
+      "id": "SUG-101",
+      "title": "Introduce Weekend Open-Lab Hours for Capstone Robotics Projects",
+      "category": "Lab Facilities",
+      "idea": "Allow final and pre-final year students access to the Robotics & IoT Lab on Saturdays with prior faculty permission for robot hardware assembly and calibration.",
+      "submittedAt": "2026-09-14T11:00:00.000Z",
+      "upvotes": 28,
+      "status": "Implemented",
+      "officialResponse": "Approved by HOD. Lab H-101 and R-204 are now open Saturdays 9:30 AM - 1:30 PM under supervision of Er. Deepa Mohan."
+    },
+    {
+      "id": "SUG-102",
+      "title": "Set up a Dedicated Component Lending Library for Small Sensors & Boards",
+      "category": "Student Resources",
+      "idea": "Create a fast self-checkout cupboard for basic sensor modules (ultrasonic, IMU, motor drivers) so students do not have to wait days for minor hardware testing.",
+      "submittedAt": "2026-09-17T15:20:00.000Z",
+      "upvotes": 34,
+      "status": "Considered",
+      "officialResponse": "Department stores currently compiling inventory. Dedicated fast-checkout shelf being installed in Lab H-101."
+    },
+    {
+      "id": "SUG-103",
+      "title": "Conduct Peer-to-Peer Linux & ROS2 Crash Course for S4 Juniors",
+      "category": "Academic Mentoring",
+      "idea": "Senior S6/S8 students can conduct a 2-day evening workshop helping juniors set up dual-boot Ubuntu and ROS2 on their personal laptops before lab classes begin.",
+      "submittedAt": "2026-09-19T09:40:00.000Z",
+      "upvotes": 19,
+      "status": "Under Review",
+      "officialResponse": "Welfare committee discussing date with Student Association for early October."
+    }
+  ],
+  "scholarships": [
+    {
+      "id": "GECT-SCH-001",
+      "name": "E-GRANTZ",
+      "provider": "GOVERNMENT Scheme",
+      "amount": "~₹10,000",
+      "category": "College & GECT Scholarships",
+      "eligibility": "All students whose annual family income is below ₹1 Lakh.",
+      "deadline": "Every Semester",
+      "applyUrl": "https://egrantz.kerala.gov.in/",
+      "tag": "GOVERNMENT",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-002",
+      "name": "NATIONAL SCHOLARSHIPS",
+      "provider": "GOVERNMENT Scheme",
+      "amount": "₹10,000 – ₹25,000",
+      "category": "College & GECT Scholarships",
+      "eligibility": "All students in various income levels.",
+      "deadline": "October 31",
+      "applyUrl": "https://scholarships.gov.in/",
+      "tag": "GOVERNMENT",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-003",
+      "name": "MEANS CUM MERIT (MCM)",
+      "provider": "MINORITY Scheme",
+      "amount": "₹25,000",
+      "category": "College & GECT Scholarships",
+      "eligibility": "Students of minority religions whose annual family income is below ₹8 Lakh and secured 50% marks in previous examinations.",
+      "deadline": "Check Notice Board",
+      "applyUrl": "https://scholarships.gov.in/",
+      "tag": "MINORITY",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-004",
+      "name": "C.H. MUHAMMED KOYA",
+      "provider": "MINORITY Scheme",
+      "amount": "₹10,000",
+      "category": "College & GECT Scholarships",
+      "eligibility": "Hosteller girls of Muslim minority whose annual family income is below ₹8 Lakh.",
+      "deadline": "Check Notice Board",
+      "applyUrl": "https://scholarships.gov.in",
+      "tag": "MINORITY",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-005",
+      "name": "E.K. NAYANAR CO-OP SCHOLARSHIP",
+      "provider": "MERIT Scheme",
+      "amount": "₹15,000",
+      "category": "College & GECT Scholarships",
+      "eligibility": "Students who scored 85% or above in HSE and annual family income below ₹2 Lakh.",
+      "deadline": "Check Notice Board",
+      "applyUrl": "https://scholarships.gov.in",
+      "tag": "MERIT",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-006",
+      "name": "CO-OP SECTOR RESERVED QUOTA",
+      "provider": "RESERVED Scheme",
+      "amount": "₹30,000",
+      "category": "College & GECT Scholarships",
+      "eligibility": "Students admitted under the quota reserved for employees of Co-operative sector.",
+      "deadline": "Check Notice Board",
+      "applyUrl": "https://scholarships.gov.in",
+      "tag": "RESERVED",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-007",
+      "name": "FISHERMEN E-GRANTZ",
+      "provider": "GOVERNMENT Scheme",
+      "amount": "All Fees Reimbursed",
+      "category": "College & GECT Scholarships",
+      "eligibility": "Wards of fishermen in Kerala.",
+      "deadline": "Every Semester",
+      "applyUrl": "https://egrantz.kerala.gov.in/",
+      "tag": "GOVERNMENT",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-008",
+      "name": "CENTRAL SECTOR SCHOLARSHIP",
+      "provider": "CENTRAL GOVT Scheme",
+      "amount": "₹10,000",
+      "category": "College & GECT Scholarships",
+      "eligibility": "Students whose annual family income is below ₹4 Lakh and scored 80%+ in previous exams.",
+      "deadline": "October 31",
+      "applyUrl": "https://scholarships.gov.in/",
+      "tag": "CENTRAL GOVT",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-009",
+      "name": "PM SCHOLARSHIP (CRPF / ASSAM RIFLES)",
+      "provider": "CENTRAL GOVT Scheme",
+      "amount": "₹2,250/mo (Girls) · ₹2,000/mo (Boys)",
+      "category": "College & GECT Scholarships",
+      "eligibility": "Wards of CRPF Jawans and Assam Rifles who scored above 60%.",
+      "deadline": "October 31",
+      "applyUrl": "https://scholarships.gov.in/",
+      "tag": "CENTRAL GOVT",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-010",
+      "name": "VIDHYA SAMUNNATHI",
+      "provider": "GOVERNMENT Scheme",
+      "amount": "₹8,000",
+      "category": "College & GECT Scholarships",
+      "eligibility": "Students of forward castes (non-reservation category) whose annual family income is below ₹2 Lakh.",
+      "deadline": "Check Notice Board",
+      "applyUrl": "https://scholarships.gov.in",
+      "tag": "GOVERNMENT",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-011",
+      "name": "PRAKATHI",
+      "provider": "FOR WOMEN Scheme",
+      "amount": "₹50,000",
+      "category": "College & GECT Scholarships",
+      "eligibility": "Female students whose annual family income is below ₹2 Lakh.",
+      "deadline": "Check Notice Board",
+      "applyUrl": "https://scholarships.gov.in",
+      "tag": "FOR WOMEN",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-012",
+      "name": "AICTE TUITION FEE WAIVER",
+      "provider": "AICTE Scheme",
+      "amount": "Tuition Fee Reimbursed",
+      "category": "College & GECT Scholarships",
+      "eligibility": "Selected by AICTE based on HSE marks and annual family income level.",
+      "deadline": "Check AICTE Portal",
+      "applyUrl": "https://www.aicte-india.org/",
+      "tag": "AICTE",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-013",
+      "name": "SCHOLARSHIP FOR STUDENTS WITH DISABILITIES (TOP CLASS)",
+      "provider": "DISABILITY Scheme",
+      "amount": "Check Portal",
+      "category": "National Scholarship Portal (NSP)",
+      "eligibility": "Differently abled students studying in premier institutions.",
+      "deadline": "October 31",
+      "applyUrl": "https://scholarships.gov.in/",
+      "tag": "DISABILITY",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-014",
+      "name": "POST MATRIC SCHOLARSHIP FOR STUDENTS WITH DISABILITIES",
+      "provider": "DISABILITY Scheme",
+      "amount": "Check Portal",
+      "category": "National Scholarship Portal (NSP)",
+      "eligibility": "Differently abled students studying in courses after 10th to PG.",
+      "deadline": "October 31",
+      "applyUrl": "https://scholarships.gov.in/",
+      "tag": "DISABILITY",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-015",
+      "name": "PRE-MATRIC SCHOLARSHIP FOR STUDENTS WITH DISABILITIES",
+      "provider": "DISABILITY Scheme",
+      "amount": "Check Portal",
+      "category": "National Scholarship Portal (NSP)",
+      "eligibility": "Differently abled students studying in 9th and 10th.",
+      "deadline": "September 30",
+      "applyUrl": "https://scholarships.gov.in/",
+      "tag": "DISABILITY",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-016",
+      "name": "CENTRAL SECTOR SCHEME FOR COLLEGE & UNIVERSITY STUDENTS",
+      "provider": "CENTRAL GOVT Scheme",
+      "amount": "Check Portal",
+      "category": "National Scholarship Portal (NSP)",
+      "eligibility": "First year UG students eligible to apply in Fresh category.",
+      "deadline": "October 31",
+      "applyUrl": "https://scholarships.gov.in/",
+      "tag": "CENTRAL GOVT",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-017",
+      "name": "AICTE SWANATH SCHOLARSHIP",
+      "provider": "AICTE Scheme",
+      "amount": "Check Portal",
+      "category": "National Scholarship Portal (NSP)",
+      "eligibility": "Orphan students studying B.Tech or technical diplomas.",
+      "deadline": "October 31",
+      "applyUrl": "https://scholarships.gov.in/",
+      "tag": "AICTE",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-018",
+      "name": "AICTE PRAGATI SCHOLARSHIP (GIRLS)",
+      "provider": "FOR WOMEN Scheme",
+      "amount": "Check Portal",
+      "category": "National Scholarship Portal (NSP)",
+      "eligibility": "Girls studying B.Tech or Technical Diploma.",
+      "deadline": "October 31",
+      "applyUrl": "https://scholarships.gov.in/",
+      "tag": "FOR WOMEN",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-019",
+      "name": "AICTE SAKSHAM SCHOLARSHIP",
+      "provider": "DISABILITY Scheme",
+      "amount": "Check Portal",
+      "category": "National Scholarship Portal (NSP)",
+      "eligibility": "Disabled students studying B.Tech or Technical Diploma.",
+      "deadline": "October 31",
+      "applyUrl": "https://scholarships.gov.in/",
+      "tag": "DISABILITY",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-020",
+      "name": "NATIONAL SCHOLARSHIP FOR POST GRADUATE STUDIES",
+      "provider": "CENTRAL GOVT Scheme",
+      "amount": "Check Portal",
+      "category": "National Scholarship Portal (NSP)",
+      "eligibility": "PG first year students qualified in fresh category.",
+      "deadline": "October 31",
+      "applyUrl": "https://scholarships.gov.in/",
+      "tag": "CENTRAL GOVT",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-021",
+      "name": "TOP-CLASS EDUCATION FOR SC STUDENTS",
+      "provider": "SC/ST Scheme",
+      "amount": "Check Portal",
+      "category": "National Scholarship Portal (NSP)",
+      "eligibility": "SC students studying in premier institutions.",
+      "deadline": "October 31",
+      "applyUrl": "https://scholarships.gov.in/",
+      "tag": "SC/ST",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-022",
+      "name": "PM YASASVI | TOP CLASS (OBC/EBC/DNT) COLLEGE",
+      "provider": "OBC/EBC Scheme",
+      "amount": "Check Portal",
+      "category": "National Scholarship Portal (NSP)",
+      "eligibility": "OBC, EBC, DNT students studying in premier institutions.",
+      "deadline": "October 31",
+      "applyUrl": "https://scholarships.gov.in/",
+      "tag": "OBC/EBC",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-023",
+      "name": "PM YASASVI | TOP CLASS (OBC/EBC/DNT) SCHOOLS",
+      "provider": "OBC/EBC Scheme",
+      "amount": "Check Portal",
+      "category": "National Scholarship Portal (NSP)",
+      "eligibility": "OBC, EBC, DNT students studying in selected schools.",
+      "deadline": "September 30",
+      "applyUrl": "https://scholarships.gov.in/",
+      "tag": "OBC/EBC",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-024",
+      "name": "NATIONAL FELLOWSHIP FOR ST STUDENTS",
+      "provider": "SC/ST Scheme",
+      "amount": "Check Portal",
+      "category": "National Scholarship Portal (NSP)",
+      "eligibility": "ST students in premier institutions.",
+      "deadline": "October 31",
+      "applyUrl": "https://scholarships.gov.in/",
+      "tag": "SC/ST",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-025",
+      "name": "PM SCHOLARSHIP | CAPF & ASSAM RIFLES",
+      "provider": "CENTRAL GOVT Scheme",
+      "amount": "Check Portal",
+      "category": "National Scholarship Portal (NSP)",
+      "eligibility": "Post-Matric wards of Central Armed Police Forces and Assam Rifles personnel.",
+      "deadline": "October 31",
+      "applyUrl": "https://scholarships.gov.in/",
+      "tag": "CENTRAL GOVT",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-026",
+      "name": "PM SCHOLARSHIP | STATE/UT POLICE MARTYRS",
+      "provider": "CENTRAL GOVT Scheme",
+      "amount": "Check Portal",
+      "category": "National Scholarship Portal (NSP)",
+      "eligibility": "Wards of States/UT's Police Personnel martyred during terror/naxal attacks.",
+      "deadline": "October 31",
+      "applyUrl": "https://scholarships.gov.in/",
+      "tag": "CENTRAL GOVT",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-027",
+      "name": "PM SCHOLARSHIP | MINISTRY OF RAILWAYS",
+      "provider": "CENTRAL GOVT Scheme",
+      "amount": "Check Portal",
+      "category": "National Scholarship Portal (NSP)",
+      "eligibility": "Pre-Matric scheme under Ministry of Railways.",
+      "deadline": "September 30",
+      "applyUrl": "https://scholarships.gov.in/",
+      "tag": "CENTRAL GOVT",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-028",
+      "name": "FINANCIAL ASSISTANCE | BEEDI/CINE/IOMC/LSDM",
+      "provider": "CENTRAL GOVT Scheme",
+      "amount": "Check Portal",
+      "category": "National Scholarship Portal (NSP)",
+      "eligibility": "Wards of Beedi, Cine, IOMC, and LSDM workers.",
+      "deadline": "September 30",
+      "applyUrl": "https://scholarships.gov.in/",
+      "tag": "CENTRAL GOVT",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-029",
+      "name": "INSPIRE SHE",
+      "provider": "SCIENCE Scheme",
+      "amount": "Check Portal",
+      "category": "State & Central Government",
+      "eligibility": "First year students of UG in Pure and Natural Sciences (B.Sc./BS/Integrated PG).",
+      "deadline": "October 15",
+      "applyUrl": "https://online-inspire.gov.in/",
+      "tag": "SCIENCE",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-030",
+      "name": "EMPLOYABILITY ENHANCEMENT PROGRAMME",
+      "provider": "GOVERNMENT Scheme",
+      "amount": "Check Portal",
+      "category": "State & Central Government",
+      "eligibility": "Students taking coaching for Medicine/Engineering Entrance, Civil Service, Banking, GATE/MAT, UGC-NET/JRF.",
+      "deadline": "September 15",
+      "applyUrl": "https://egrantz.kerala.gov.in/",
+      "tag": "GOVERNMENT",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-031",
+      "name": "OEC, OBC(H) POST MATRIC | OUTSIDE STATE",
+      "provider": "OBC/EBC Scheme",
+      "amount": "Check Portal",
+      "category": "State & Central Government",
+      "eligibility": "OEC, OBC(H) students studying outside Kerala (Fresh/Renewal).",
+      "deadline": "Check E-Grantz",
+      "applyUrl": "https://egrantz.kerala.gov.in/",
+      "tag": "OBC/EBC",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-032",
+      "name": "OEC, OBC(H), OBC POST MATRIC | INSIDE STATE",
+      "provider": "OBC/EBC Scheme",
+      "amount": "Check Portal",
+      "category": "State & Central Government",
+      "eligibility": "OEC, OBC(H), OBC students studying inside Kerala (except Higher Secondary and VHSC).",
+      "deadline": "Check E-Grantz",
+      "applyUrl": "https://egrantz.kerala.gov.in/",
+      "tag": "OBC/EBC",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-033",
+      "name": "OBC OVERSEAS SCHOLARSHIP",
+      "provider": "OBC/EBC Scheme",
+      "amount": "Check Portal",
+      "category": "State & Central Government",
+      "eligibility": "PG, PhD students studying abroad.",
+      "deadline": "September 20",
+      "applyUrl": "https://egrantz.kerala.gov.in/",
+      "tag": "OBC/EBC",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-034",
+      "name": "PM YASASVI | OBC/EBC 9TH-10TH",
+      "provider": "OBC/EBC Scheme",
+      "amount": "Check Portal",
+      "category": "State & Central Government",
+      "eligibility": "OBC, EBC students in 9th and 10th.",
+      "deadline": "September 30",
+      "applyUrl": "https://scholarships.gov.in/",
+      "tag": "OBC/EBC",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-035",
+      "name": "VIDHYADHANAM SCHEME",
+      "provider": "FOR WOMEN Scheme",
+      "amount": "Check Portal",
+      "category": "State & Central Government",
+      "eligibility": "1st class to UG students with single mothers (father passed away/fled/paralyzed).",
+      "deadline": "December 15",
+      "applyUrl": "https://schemes.wcd.kerala.gov.in/",
+      "tag": "FOR WOMEN",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-036",
+      "name": "RELIANCE FOUNDATION SCHOLARSHIPS",
+      "provider": "CORPORATE Scheme",
+      "amount": "Check Portal",
+      "category": "Corporate & CSR Grants",
+      "eligibility": "Any UG or PG student in Engineering, Technology, Energy, and Life Sciences.",
+      "deadline": "October 6",
+      "applyUrl": "https://www.buddy4study.com/",
+      "tag": "CORPORATE",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-037",
+      "name": "HDFC BANK PARIVARTAN ECSS",
+      "provider": "CORPORATE Scheme",
+      "amount": "Check Portal",
+      "category": "Corporate & CSR Grants",
+      "eligibility": "Students from 1st to 12th, UG and PG.",
+      "deadline": "October 30",
+      "applyUrl": "https://www.buddy4study.com/",
+      "tag": "CORPORATE",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-038",
+      "name": "SBIF ASHA SCHOLARSHIP",
+      "provider": "CORPORATE Scheme",
+      "amount": "Check Portal",
+      "category": "Corporate & CSR Grants",
+      "eligibility": "6th to 12th class, UG/PG in top colleges, IIT, IIM students.",
+      "deadline": "October 1",
+      "applyUrl": "https://www.buddy4study.com/",
+      "tag": "CORPORATE",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-039",
+      "name": "DXC PROGRESSING MINDS SCHOLARSHIP",
+      "provider": "FOR WOMEN Scheme",
+      "amount": "Check Portal",
+      "category": "Corporate & CSR Grants",
+      "eligibility": "Girls and Transgenders in STEM courses and female athletes.",
+      "deadline": "October 6",
+      "applyUrl": "https://www.buddy4study.com/",
+      "tag": "FOR WOMEN",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-040",
+      "name": "U-GO SCHOLARSHIP PROGRAM",
+      "provider": "CORPORATE Scheme",
+      "amount": "Check Portal",
+      "category": "Corporate & CSR Grants",
+      "eligibility": "Students in teaching, nursing, pharmacy, medicine, engineering, architecture, law, and other professional courses.",
+      "deadline": "September 30",
+      "applyUrl": "https://www.buddy4study.com/",
+      "tag": "CORPORATE",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-041",
+      "name": "ALSTOM INDIA SCHOLARSHIP",
+      "provider": "CORPORATE Scheme",
+      "amount": "Check Portal",
+      "category": "Corporate & CSR Grants",
+      "eligibility": "Students pursuing professional graduation courses in STEM.",
+      "deadline": "September 30",
+      "applyUrl": "https://www.buddy4study.com/",
+      "tag": "CORPORATE",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-042",
+      "name": "NIKON SCHOLARSHIP",
+      "provider": "CORPORATE Scheme",
+      "amount": "Check Portal",
+      "category": "Corporate & CSR Grants",
+      "eligibility": "Students in photography-related courses.",
+      "deadline": "September 20",
+      "applyUrl": "https://www.buddy4study.com/",
+      "tag": "CORPORATE",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-043",
+      "name": "INFOSYS FOUNDATION STEM STARS",
+      "provider": "FOR WOMEN Scheme",
+      "amount": "Check Portal",
+      "category": "Corporate & CSR Grants",
+      "eligibility": "Female students in undergraduate STEM degrees.",
+      "deadline": "September 15",
+      "applyUrl": "https://www.buddy4study.com/",
+      "tag": "FOR WOMEN",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-044",
+      "name": "CORTEVA AGRISCIENCE SCHOLARSHIP",
+      "provider": "FOR WOMEN Scheme",
+      "amount": "Check Portal",
+      "category": "Corporate & CSR Grants",
+      "eligibility": "Female students pursuing PG, doctoral, or UG courses in agriculture, and +1/+2.",
+      "deadline": "September 30",
+      "applyUrl": "https://www.buddy4study.com/",
+      "tag": "FOR WOMEN",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-045",
+      "name": "ASPIRE SCHOLARSHIP",
+      "provider": "MERIT Scheme",
+      "amount": "Check Portal",
+      "category": "Corporate & CSR Grants",
+      "eligibility": "Students in selected premier institutions.",
+      "deadline": "September 20",
+      "applyUrl": "https://www.buddy4study.com/",
+      "tag": "MERIT",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-046",
+      "name": "KOTAK KANYA SCHOLARSHIP",
+      "provider": "FOR WOMEN Scheme",
+      "amount": "Check Portal",
+      "category": "Corporate & CSR Grants",
+      "eligibility": "Girl students who passed Class 12 and aspire to pursue professional graduation or UG in premier research institutes.",
+      "deadline": "September 30",
+      "applyUrl": "https://www.buddy4study.com/",
+      "tag": "FOR WOMEN",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-047",
+      "name": "TATA CAPITAL PANKH SCHOLARSHIP",
+      "provider": "CORPORATE Scheme",
+      "amount": "Check Portal",
+      "category": "Corporate & CSR Grants",
+      "eligibility": "Students in Classes 11 and 12, or pursuing general graduation/diploma/polytechnic courses.",
+      "deadline": "September 15",
+      "applyUrl": "https://www.buddy4study.com/",
+      "tag": "CORPORATE",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-048",
+      "name": "NATIONAL FEDERATION OF TEACHERS WELFARE",
+      "provider": "MERIT Scheme",
+      "amount": "Cash Award",
+      "category": "Special & Alumni Aid",
+      "eligibility": "Wards of teachers who achieved full A+ in 10th or 12th.",
+      "deadline": "September 30",
+      "applyUrl": "https://www.nftwkerala.org/",
+      "tag": "MERIT",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-049",
+      "name": "MALAYALI ENGINEERS ASSOCIATION",
+      "provider": "ENGINEERING Scheme",
+      "amount": "Check Portal",
+      "category": "Special & Alumni Aid",
+      "eligibility": "1st year B.Tech or B.Arch students.",
+      "deadline": "November 30",
+      "applyUrl": "https://www.meahouston.org/",
+      "tag": "ENGINEERING",
+      "source": "Genome GECT Portal"
+    },
+    {
+      "id": "GECT-SCH-050",
+      "name": "ONGC MERIT SCHOLARSHIP",
+      "provider": "MERIT Scheme",
+      "amount": "Check Portal",
+      "category": "Special & Alumni Aid",
+      "eligibility": "Engineering, MBBS, or Masters in Management, Geology, and Geophysics.",
+      "deadline": "September 18",
+      "applyUrl": "https://www.ongcscholar.org/",
+      "tag": "MERIT",
+      "source": "Genome GECT Portal"
+    }
+  ],
+  "opportunities": [
+    {
+      "id": "OPP-01",
+      "title": "ISRO RESPOND — Student Research & Technical Internship 2026",
+      "type": "Internship / Research",
+      "organization": "Indian Space Research Organisation (VSSC / LPSC)",
+      "stipend": "₹15,000 / month",
+      "deadline": "2026-10-10",
+      "location": "Thiruvananthapuram, Kerala",
+      "eligibility": "S5/S7 B.Tech CPS students with CGPA >= 7.5; projects in Embedded Control Systems, Telemetry, and Avionics.",
+      "applyUrl": "https://www.isro.gov.in/Internships.html",
+      "description": "Work with ISRO scientists on real-time embedded flight software, sensor telemetry, and hardware-in-the-loop simulation testbenches."
+    },
+    {
+      "id": "OPP-02",
+      "title": "Texas Instruments India Embedded Systems Innovation Challenge",
+      "type": "Competition / Hackathon",
+      "organization": "Texas Instruments & DST",
+      "stipend": "₹5,00,000 Total Cash Prizes + TI MCU Kits",
+      "deadline": "2026-10-25",
+      "location": "National (Hybrid)",
+      "eligibility": "Undergraduate engineering student teams of 2-4 members.",
+      "applyUrl": "https://www.ti.com/university-program",
+      "description": "Design an autonomous CPS device or smart energy monitoring hardware node using TI MSPM0 or C2000 microcontrollers. Free dev boards shipped to shortlisted teams."
+    },
+    {
+      "id": "OPP-03",
+      "title": "Maker Village Hardware & Edge AI Startup Fellowship",
+      "type": "Incubation / Fellowship",
+      "organization": "Maker Village (Electronics Incubator, Kochi)",
+      "stipend": "₹20,000 / month + Lab & PCB Fabrication Access",
+      "deadline": "2026-11-05",
+      "location": "Kinfra Hi-Tech Park, Kalamassery, Kerala",
+      "eligibility": "Final year CPS students and recent graduates working on commercial IoT/Robotics hardware products.",
+      "applyUrl": "https://makervillage.in",
+      "description": "Comprehensive incubation support including 3D printing, surface-mount PCB assembly lines, and venture capital mentoring."
+    },
+    {
+      "id": "OPP-04",
+      "title": "DRDO Young Scientist Laboratory (DYSL) Autumn Practicum",
+      "type": "Research Internship",
+      "organization": "Defence Research & Development Organisation",
+      "stipend": "₹12,000 / month",
+      "deadline": "2026-10-30",
+      "location": "Bengaluru / Hyderabad Labs",
+      "eligibility": "Indian citizens pursuing B.Tech in CPS, Robotics, or Electronics with high academic standing.",
+      "applyUrl": "https://www.drdo.gov.in",
+      "description": "Internship in autonomous unmanned systems, multi-agent robotic swarms, and cyber security for tactical sensor networks."
+    }
+  ],
+  "support": {
+    "counsellors": [
+      {
+        "name": "Dr. Mini P. Nair",
+        "role": "Chief Campus Student Counsellor",
+        "office": "Student Welfare Centre, Ground Floor, Main Block",
+        "phone": "+91 487 2334144 (Ext: 1108)",
+        "email": "counselling@gect.ac.in",
+        "timings": "Mon to Fri: 10:00 AM - 04:00 PM",
+        "note": "Confidential, one-on-one sessions for stress management, exam anxiety, and emotional well-being."
+      },
+      {
+        "name": "Prof. Biju Mathew",
+        "role": "CPS Department Staff Advisor & Welfare Liaison",
+        "office": "Room B-318, Academic Block",
+        "phone": "+91 94472 18902",
+        "email": "biju.mathew@gect.ac.in",
+        "timings": "Daily: 03:00 PM - 04:30 PM",
+        "note": "Academic mentoring, scholarship endorsements, and grievance escalations."
+      }
+    ],
+    "helplines": [
+      {
+        "service": "Tele-MANAS (National Mental Health Helpline)",
+        "number": "14416 / 1800 891 4416",
+        "availability": "24 Hours / 7 Days (Toll Free, Multiple Languages)",
+        "description": "Govt. of India 24x7 psychological support and immediate counselling."
+      },
+      {
+        "service": "DISHA Kerala Health & Mental Health Helpline",
+        "number": "1056 / 0471 2552056",
+        "availability": "24x7 State Emergency Support",
+        "description": "Professional health guidance and crisis intervention in Malayalam & English."
+      },
+      {
+        "service": "Anti-Ragging 24x7 Toll-Free Helpline",
+        "number": "1800 180 5522",
+        "availability": "24 Hours (UGC Monitored)",
+        "description": "Zero-tolerance anonymous reporting directly monitored by Central UGC Cell."
+      }
+    ]
+  },
+  "emergency": [
+    {
+      "service": "GECT Main Campus Security Control Room",
+      "contact": "+91 487 2334144 (Ext: 9)",
+      "phone": "+91 94473 50201",
+      "location": "Main Entrance Gatehouse",
+      "availability": "24/7 On Duty"
+    },
+    {
+      "service": "Campus Health Centre & Resident Medical Officer",
+      "contact": "+91 487 2334144 (Ext: 1120)",
+      "phone": "+91 94951 88402",
+      "location": "Health Centre, Adjacent to PG Hostel",
+      "availability": "08:30 AM - 07:00 PM (Emergency on-call 24/7)"
+    },
+    {
+      "service": "Govt. Medical College Hospital Ambulance (MCH Thrissur)",
+      "contact": "108 / 102",
+      "phone": "0487 2200310",
+      "location": "Mulamkunnathukavu, Thrissur (7.5 km from campus)",
+      "availability": "24/7 Rapid Emergency Response"
+    },
+    {
+      "service": "Kerala Police Emergency Control",
+      "contact": "112",
+      "phone": "0487 2424100 (Viyyur Police Station)",
+      "location": "Viyyur Police Station (Jurisdiction)",
+      "availability": "24/7 Emergency Police Dispatch"
+    },
+    {
+      "service": "Women's Safety & Crime Prevention Helpline",
+      "contact": "1091 / 112",
+      "phone": "0487 2332100 (Vanitha Police Station Thrissur)",
+      "location": "Ramavarmapuram / Chembukkavu",
+      "availability": "24/7 Dedicated Women Police Desk"
+    },
+    {
+      "service": "Fire & Rescue Services (Thrissur Station)",
+      "contact": "101",
+      "phone": "0487 2333101",
+      "location": "Round South, Thrissur",
+      "availability": "24/7 Emergency Fire & Rescue"
+    }
+  ],
+  "announcements": [
+    {
+      "id": "ANN-501",
+      "title": "KTU End Semester Examination Fee Concession & Verification Desk",
+      "category": "Academic Welfare",
+      "date": "2026-09-21",
+      "summary": "Eligible SC/ST/OEC and forward community (EWS) students must submit verified income certificates at Counter 3 of Academic Section before September 28 for complete exam fee exemption.",
+      "issuedBy": "Senior Superintendent, Academic Section",
+      "urgent": true
+    },
+    {
+      "id": "ANN-502",
+      "title": "National Scholarship Portal (NSP) Biometric Authentication Camp",
+      "category": "Scholarships",
+      "date": "2026-09-20",
+      "summary": "Special biometric facial/fingerprint verification camp for all fresh and renewal NSP applicants will be held at Seminar Hall SH-401 from Sept 23 to Sept 25. Bring original Aadhaar card and registered mobile.",
+      "issuedBy": "Nodal Officer for National Scholarships",
+      "urgent": false
+    },
+    {
+      "id": "ANN-503",
+      "title": "KSRTC Student Concession Bus Pass Renewal for Academic Year 2026-27",
+      "category": "Student Welfare",
+      "date": "2026-09-18",
+      "summary": "Students requiring college bus concession endorsements must submit online applications via KSRTC Concession portal and submit signed printouts to Department Staff Advisor Prof. Biju Mathew.",
+      "issuedBy": "Student Welfare Committee",
+      "urgent": false
+    },
+    {
+      "id": "ANN-504",
+      "title": "CPS Laboratory Equipment & ESD Safety Protocol Briefing",
+      "category": "Safety Notice",
+      "date": "2026-09-16",
+      "summary": "All students working on FPGA boards and robotic arms in Labs H-101 and R-204 must wear grounded wrist straps. Non-compliance will result in suspension of workbench privileges.",
+      "issuedBy": "Er. Sreejith K. (Lab Superintendent)",
+      "urgent": false
+    }
+  ]
+}
