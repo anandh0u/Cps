@@ -15,11 +15,15 @@ import {
   Eye,
   CheckCircle2,
   Sparkles,
-  Bot
+  Bot,
+  Map as MapIcon,
+  ShieldCheck,
+  GraduationCap
 } from 'lucide-react';
+import { campusBounds, campusRoads, campusGrounds, campusLandmarks } from '../data/campusMapData';
 
 export default function CampusMap() {
-  const [activeTab, setActiveTab] = useState('2d-map'); // '2d-map' | 'photo-signboard'
+  const [activeTab, setActiveTab] = useState('vector-map'); // 'vector-map' | 'signboard-reference'
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [activeLocationId, setActiveLocationId] = useState(31); // Default to #31 (Robotics / CPS)
@@ -27,427 +31,8 @@ export default function CampusMap() {
   const [hoveredLocation, setHoveredLocation] = useState(null);
   const mapContainerRef = useRef(null);
 
-  // All 41 official campus locations from the GEC Thrissur Signboard with pixel-calibrated coordinates on the 905x327 master schematic
-  const allLocations = [
-    // ACADEMIC AND ADMINISTRATION (1-19) - Official Dark Blue
-    { 
-      id: 1, 
-      name: 'Administrative Block', 
-      category: 'Academic & Administration', 
-      catKey: 'acad', 
-      x: 202, 
-      y: 105, 
-      desc: "Main Heritage Administrative Block housing the Principal's Office, Dean Academics, Student Welfare Directorate, Accounts, and University Examination Cell.", 
-      highlight: false 
-    },
-    { 
-      id: 2, 
-      name: 'Civil Engineering Block', 
-      category: 'Academic & Administration', 
-      catKey: 'acad', 
-      x: 188, 
-      y: 248, 
-      desc: 'Civil Engineering Department lecture halls, classrooms, seminar hall, and faculty chambers.', 
-      highlight: false 
-    },
-    { 
-      id: 3, 
-      name: 'Civil Engineering Lab Block', 
-      category: 'Academic & Administration', 
-      catKey: 'acad', 
-      x: 153, 
-      y: 188, 
-      desc: 'Structural Engineering, Geotechnical, Surveying, and Material Testing laboratories.', 
-      highlight: false 
-    },
-    { 
-      id: 4, 
-      name: 'Physical Education Department', 
-      category: 'Academic & Administration', 
-      catKey: 'acad', 
-      x: 137, 
-      y: 232, 
-      desc: 'Physical education faculty offices, sports administration, athletics store, and fitness advisories.', 
-      highlight: false 
-    },
-    { 
-      id: 5, 
-      name: 'NSS Office', 
-      category: 'Academic & Administration', 
-      catKey: 'acad', 
-      x: 82, 
-      y: 168, 
-      desc: 'National Service Scheme Technical Cell (GECT units 101 & 102) headquarters and student community cell.', 
-      highlight: false 
-    },
-    { 
-      id: 6, 
-      name: 'Ideator', 
-      category: 'Academic & Administration', 
-      catKey: 'acad', 
-      x: 172, 
-      y: 248, 
-      desc: 'Student innovation centre, prototyping sandbox, design space, and competition workspace.', 
-      highlight: false 
-    },
-    { 
-      id: 7, 
-      name: 'Academic Block', 
-      category: 'Academic & Administration', 
-      catKey: 'acad', 
-      x: 160, 
-      y: 152, 
-      desc: 'First-year engineering foundational lecture halls, basic science divisions, and mathematics faculty.', 
-      highlight: false 
-    },
-    { 
-      id: 8, 
-      name: 'Electrical Extension Lab Block', 
-      category: 'Academic & Administration', 
-      catKey: 'acad', 
-      x: 114, 
-      y: 98, 
-      desc: 'Electrical machine testing, power electronics, sensor instrumentation, and drive extension labs.', 
-      highlight: false 
-    },
-    { 
-      id: 9, 
-      name: 'Civil Environment Lab', 
-      category: 'Academic & Administration', 
-      catKey: 'acad', 
-      x: 98, 
-      y: 138, 
-      desc: 'Environmental Engineering, water quality analysis, effluent treatment, and environmental pollution control labs.', 
-      highlight: false 
-    },
-    { 
-      id: 10, 
-      name: 'Mechanical Block', 
-      category: 'Academic & Administration', 
-      catKey: 'acad', 
-      x: 110, 
-      y: 74, 
-      desc: 'Mechanical Engineering Department headquarters, CAD/CAM design centre, automotive engineering lab, and departmental library.', 
-      highlight: false 
-    },
-    { 
-      id: 11, 
-      name: 'Mechanical Engineering Lab Block', 
-      category: 'Academic & Administration', 
-      catKey: 'acad', 
-      x: 80, 
-      y: 105, 
-      desc: 'Fluid mechanics, Thermal engineering, Heat engines testing, and Refrigeration/AC research labs.', 
-      highlight: false 
-    },
-    { 
-      id: 12, 
-      name: 'Production Engineering Lab', 
-      category: 'Academic & Administration', 
-      catKey: 'acad', 
-      x: 262, 
-      y: 56, 
-      desc: 'Central machine shop, Foundry, Welding bay, Metrology, and CNC precision machining labs.', 
-      highlight: false 
-    },
-    { 
-      id: 13, 
-      name: 'Electrical Engineering Block', 
-      category: 'Academic & Administration', 
-      catKey: 'acad', 
-      x: 235, 
-      y: 53, 
-      desc: 'Electrical & Electronics Department, High Voltage Lab, Power Systems simulation, and Control Automation.', 
-      highlight: false 
-    },
-    { 
-      id: 14, 
-      name: 'Chemical Engineering Block', 
-      category: 'Academic & Administration', 
-      catKey: 'acad', 
-      x: 285, 
-      y: 38, 
-      desc: 'Chemical Engineering Department, Reaction kinetics, Mass Transfer operations, and Process dynamics labs.', 
-      highlight: false 
-    },
-    { 
-      id: 15, 
-      name: 'Production Engineering Block', 
-      category: 'Academic & Administration', 
-      catKey: 'acad', 
-      x: 326, 
-      y: 90, 
-      desc: 'Production Engineering department classrooms, Industrial robotics, and Ergonomics workstations.', 
-      highlight: false 
-    },
-    { 
-      id: 16, 
-      name: 'Computer Science Block', 
-      category: 'Academic & Administration', 
-      catKey: 'acad', 
-      x: 410, 
-      y: 90, 
-      desc: 'Computer Science & Engineering Department, AI/ML research facilities, Network and Software Labs.', 
-      highlight: false 
-    },
-    { 
-      id: 17, 
-      name: 'Electronics & Communication Block', 
-      category: 'Academic & Administration', 
-      catKey: 'acad', 
-      x: 463, 
-      y: 92, 
-      desc: 'ECE Department, DSP labs, Microwave/Antenna radiation lab, and VLSI design centre.', 
-      highlight: false 
-    },
-    { 
-      id: 18, 
-      name: 'School of Architecture', 
-      category: 'Academic & Administration', 
-      catKey: 'acad', 
-      x: 505, 
-      y: 95, 
-      desc: 'Department of Architecture (B.Arch & M.Plan), design studios, climatology lab, and model exhibition hall.', 
-      highlight: false 
-    },
-    { 
-      id: 19, 
-      name: 'P.G and MCA Block', 
-      category: 'Academic & Administration', 
-      catKey: 'acad', 
-      x: 248, 
-      y: 254, 
-      desc: 'Postgraduate research, Computer Applications (MCA) department, and advanced technical laboratories.', 
-      highlight: false 
-    },
-
-    // CENTRAL FACILITIES (20-38) - Official Coral
-    { 
-      id: 20, 
-      name: 'College Canteen', 
-      category: 'Central Facilities', 
-      catKey: 'fac', 
-      x: 44, 
-      y: 136, 
-      desc: 'Central student cooperative dining canteen, refreshments, meals, and snacks for students and faculty.', 
-      highlight: false 
-    },
-    { 
-      id: 21, 
-      name: 'Post Office and bank building', 
-      category: 'Central Facilities', 
-      catKey: 'fac', 
-      x: 37, 
-      y: 202, 
-      desc: 'Sub-post office (PIN: 680009) and State Bank of India (SBI) campus branch with 24x7 ATM counter.', 
-      highlight: false 
-    },
-    { 
-      id: 22, 
-      name: 'Central Computing Facility', 
-      category: 'Central Facilities', 
-      catKey: 'fac', 
-      x: 254, 
-      y: 165, 
-      desc: 'Central Computing Facility (CCF) providing 24x7 high-speed gigabit computing, server room, and online examination terminals.', 
-      highlight: false 
-    },
-    { 
-      id: 23, 
-      name: 'Central Library', 
-      category: 'Central Facilities', 
-      catKey: 'fac', 
-      x: 160, 
-      y: 172, 
-      desc: 'Over 75,000 engineering volumes, IEEE digital access terminals, reading halls, and reference sections.', 
-      highlight: false 
-    },
-    { 
-      id: 24, 
-      name: 'PTA Office', 
-      category: 'Central Facilities', 
-      catKey: 'fac', 
-      x: 195, 
-      y: 197, 
-      desc: 'Parent Teacher Association administrative office coordinating student amenities and welfare grants.', 
-      highlight: false 
-    },
-    { 
-      id: 25, 
-      name: 'Alumni Office', 
-      category: 'Central Facilities', 
-      catKey: 'fac', 
-      x: 205, 
-      y: 197, 
-      desc: 'GECT Alumni Association (GECTAA) secretariat coordinating alumni endowments, mentorship, and welfare bursaries.', 
-      highlight: false 
-    },
-    { 
-      id: 26, 
-      name: 'Training and Placement Cell', 
-      category: 'Central Facilities', 
-      catKey: 'fac', 
-      x: 230, 
-      y: 200, 
-      desc: 'Career Guidance & Placement Cell (CGPC) auditorium, interview suites, GD rooms, and recruiter hospitality suites.', 
-      highlight: false 
-    },
-    { 
-      id: 27, 
-      name: 'Millennium Auditorium', 
-      category: 'Central Facilities', 
-      catKey: 'fac', 
-      x: 205, 
-      y: 165, 
-      desc: 'Grand 1,500-seat central auditorium for convocation, cultural fests, national conferences, and union events.', 
-      highlight: false 
-    },
-    { 
-      id: 28, 
-      name: 'General store', 
-      category: 'Central Facilities', 
-      catKey: 'fac', 
-      x: 178, 
-      y: 162, 
-      desc: 'Student cooperative store for engineering drawing supplies, records, stationery, and notebooks.', 
-      highlight: false 
-    },
-    { 
-      id: 29, 
-      name: 'Store', 
-      category: 'Central Facilities', 
-      catKey: 'fac', 
-      x: 178, 
-      y: 172, 
-      desc: 'Central college store and equipment maintenance inventory depot.', 
-      highlight: false 
-    },
-    { 
-      id: 30, 
-      name: 'Gloria Gopi Kumar Alumni Hall', 
-      category: 'Central Facilities', 
-      catKey: 'fac', 
-      x: 535, 
-      y: 160, 
-      desc: 'Alumni-endowed conference hall and presentation facility for tech symposiums and academic seminars.', 
-      highlight: false 
-    },
-    { 
-      id: 31, 
-      name: 'Nodal center for Robotics and AI', 
-      category: 'Central Facilities', 
-      catKey: 'fac', 
-      x: 505, 
-      y: 163, 
-      desc: '★ Academic and research home of Cyber Physical System (CPS) Engineering, Industrial Automation, Robotic manipulators, Embedded Systems, and AI/IoT prototyping.', 
-      highlight: true // CPS Spotlight!
-    },
-    { 
-      id: 32, 
-      name: 'Technology Buisiness Incubator', 
-      category: 'Central Facilities', 
-      catKey: 'fac', 
-      x: 550, 
-      y: 160, 
-      desc: 'Technology Business Incubator (TBI GECT) fostering campus student startups, seed funding guidance, and intellectual property development.', 
-      highlight: false 
-    },
-    { 
-      id: 33, 
-      name: 'Eastern Amphitheatre', 
-      category: 'Central Facilities', 
-      catKey: 'fac', 
-      x: 538, 
-      y: 185, 
-      desc: 'Open-air theatre and gathering arena for cultural performances, student union meetings, and college festivals.', 
-      highlight: false 
-    },
-    { 
-      id: 34, 
-      name: 'ITC & SR,CEC', 
-      category: 'Central Facilities', 
-      catKey: 'fac', 
-      x: 485, 
-      y: 178, 
-      desc: 'Information Technology Centre & Social Responsibility / Continuing Education Cell providing vocational and technical upskilling.', 
-      highlight: false 
-    },
-    { 
-      id: 35, 
-      name: 'Centre for Nano Materials', 
-      category: 'Central Facilities', 
-      catKey: 'fac', 
-      x: 440, 
-      y: 175, 
-      desc: 'Interdisciplinary centre for advanced nanomaterials research, spectroscopy, material characterization, and nanotechnology research.', 
-      highlight: false 
-    },
-    { 
-      id: 36, 
-      name: 'Hockey Ground', 
-      category: 'Central Facilities', 
-      catKey: 'fac', 
-      x: 65, 
-      y: 250, 
-      desc: 'Official full-size campus hockey field and team pavilions adjacent to the western campus gate.', 
-      highlight: false 
-    },
-    { 
-      id: 37, 
-      name: 'Multipurpose Sports Complex', 
-      category: 'Central Facilities', 
-      catKey: 'fac', 
-      x: 475, 
-      y: 175, 
-      desc: 'Indoor sports complex with wooden badminton courts, table tennis, weight training gym, and changing rooms.', 
-      highlight: false 
-    },
-    { 
-      id: 38, 
-      name: 'Stadium', 
-      category: 'Central Facilities', 
-      catKey: 'fac', 
-      x: 335, 
-      y: 205, 
-      desc: 'Central sports stadium featuring a standard 400m athletic track, football ground, cricket pitch, and spectator galleries.', 
-      highlight: false 
-    },
-
-    // RESIDENTIAL AREA (39-41) - Official Teal
-    { 
-      id: 39, 
-      name: 'Mens Hostel', 
-      category: 'Residential Area', 
-      catKey: 'res', 
-      x: 468, 
-      y: 235, 
-      desc: "Men's Hostels (MH 1, MH 2, MH 3, MH 4) featuring the iconic twin butterfly/X-wing architectural blocks, recreation halls, study rooms, and cooperative dining mess.", 
-      highlight: false 
-    },
-    { 
-      id: 40, 
-      name: 'Ladies Hostel', 
-      category: 'Residential Area', 
-      catKey: 'res', 
-      x: 888, 
-      y: 245, 
-      desc: "Ladies' Hostel complex (LH 1 & LH 2) with secured residential accommodation, study rooms, recreation centre, and dedicated dining facility.", 
-      highlight: false 
-    },
-    { 
-      id: 41, 
-      name: 'Staff Quarters', 
-      category: 'Residential Area', 
-      catKey: 'res', 
-      x: 730, 
-      y: 230, 
-      desc: 'Residential quarters and bungalows for faculty, administration officers, laboratory technical staff, and maintenance personnel.', 
-      highlight: false 
-    }
-  ];
-
-  // Filtering
-  const filteredLocations = allLocations.filter(loc => {
+  // Filter landmarks
+  const filteredLocations = campusLandmarks.filter(loc => {
     const matchesCat = 
       selectedCategory === 'All' ||
       (selectedCategory === 'Academic & Administration' && loc.catKey === 'acad') ||
@@ -465,7 +50,7 @@ export default function CampusMap() {
     return matchesCat && matchesQuery;
   });
 
-  const activeLoc = allLocations.find(l => l.id === activeLocationId) || allLocations[0];
+  const activeLoc = campusLandmarks.find(l => l.id === activeLocationId) || campusLandmarks[0];
 
   const handlePinClick = (loc) => {
     setActiveLocationId(loc.id);
@@ -479,48 +64,63 @@ export default function CampusMap() {
   };
 
   const getPinColor = (loc) => {
-    if (loc.id === 31) return { bg: '#eab308', text: '#000000', ring: '#ca8a04' }; // Gold for CPS
-    if (loc.catKey === 'acad') return { bg: '#1e3a8a', text: '#ffffff', ring: '#172554' }; // Deep Blue
-    if (loc.catKey === 'fac') return { bg: '#ea580c', text: '#ffffff', ring: '#c2410c' }; // Coral/Orange
-    return { bg: '#0d9488', text: '#ffffff', ring: '#0f766e' }; // Teal
+    if (loc.id === 31) return { bg: '#eab308', text: '#000000', ring: '#ca8a04', badge: 'tag-amber' }; // Gold for CPS
+    if (loc.catKey === 'acad') return { bg: '#1e40af', text: '#ffffff', ring: '#1d4ed8', badge: 'tag-blue' }; // Royal Blue
+    if (loc.catKey === 'fac') return { bg: '#ea580c', text: '#ffffff', ring: '#c2410c', badge: 'tag-amber' }; // Coral/Orange
+    return { bg: '#0d9488', text: '#ffffff', ring: '#0f766e', badge: 'tag-stone' }; // Teal for Hostels & Quarters
   };
 
   return (
     <div>
-      {/* Page Header */}
+      {/* Page Title & View Switcher */}
       <div className="page-title-row">
         <div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+            <span className="tag tag-blue" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+              True-North Geographic Layout &bull; Google Maps Aligned
+            </span>
+          </div>
           <h1>Government Engineering College Thrissur — Campus Map</h1>
           <p>
-            Official 2D architectural campus layout analyzing the signboard master map and campus landmarks. All 41 official numbered departments, labs, facilities, and residential quarters accurately positioned.
+            Redesigned digital 2D architectural master map finalized using real Google Maps and OpenStreetMap coordinates. All 41 campus departments, Central Computing Facility (CCF), athletic stadium, and residential blocks accurately positioned with True North alignment.
           </p>
         </div>
 
         {/* View Switcher Tabs */}
         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
           <button 
-            className={`btn ${activeTab === '2d-map' ? 'btn-primary' : 'btn-secondary'}`}
-            onClick={() => setActiveTab('2d-map')}
+            className={`btn ${activeTab === 'vector-map' ? 'btn-primary' : 'btn-secondary'}`}
+            onClick={() => setActiveTab('vector-map')}
             style={{ display: 'flex', alignItems: 'center', gap: '6px' }}
           >
             <Compass size={16} />
             <span>2D Interactive Map</span>
           </button>
           <button 
-            className={`btn ${activeTab === 'photo-signboard' ? 'btn-primary' : 'btn-secondary'}`}
-            onClick={() => setActiveTab('photo-signboard')}
+            className={`btn ${activeTab === 'signboard-reference' ? 'btn-primary' : 'btn-secondary'}`}
+            onClick={() => setActiveTab('signboard-reference')}
             style={{ display: 'flex', alignItems: 'center', gap: '6px' }}
           >
             <Eye size={16} />
-            <span>Signboard Photo &amp; Legend</span>
+            <span>Physical Signboard Reference</span>
           </button>
+          <a
+            href="https://www.google.com/maps/search/?api=1&query=Government+Engineering+College+Thrissur"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-secondary"
+            style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--text-muted)' }}
+          >
+            <ExternalLink size={15} />
+            <span>Google Maps</span>
+          </a>
         </div>
       </div>
 
-      {/* CPS Spotlight Banner */}
+      {/* CPS Department Spotlight Banner */}
       <div className="card" style={{ 
-        background: 'linear-gradient(135deg, rgba(234, 179, 8, 0.08) 0%, rgba(202, 138, 4, 0.04) 100%)', 
-        border: '1px solid rgba(234, 179, 8, 0.3)',
+        background: 'linear-gradient(135deg, rgba(234, 179, 8, 0.1) 0%, rgba(202, 138, 4, 0.05) 100%)', 
+        border: '1px solid rgba(234, 179, 8, 0.35)',
         marginBottom: '20px',
         padding: '16px 20px',
         display: 'flex',
@@ -531,17 +131,17 @@ export default function CampusMap() {
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
           <div style={{ 
-            width: '42px', 
-            height: '42px', 
+            width: '44px', 
+            height: '44px', 
             borderRadius: '10px', 
             background: 'var(--amber-bg)', 
             display: 'flex', 
             alignItems: 'center', 
             justifyContent: 'center',
             border: '1px solid rgba(234, 179, 8, 0.4)',
-            boxShadow: '0 2px 8px rgba(234, 179, 8, 0.2)'
+            boxShadow: '0 2px 10px rgba(234, 179, 8, 0.25)'
           }}>
-            <Bot size={22} style={{ color: 'var(--amber-text)' }} />
+            <Bot size={24} style={{ color: 'var(--amber-text)' }} />
           </div>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -549,34 +149,36 @@ export default function CampusMap() {
                 Cyber Physical Systems (CPS) Department Location: #31
               </span>
               <span className="tag tag-amber" style={{ fontSize: '0.7rem' }}>
-                Key Landmark
+                Department Headquarters
               </span>
             </div>
             <p style={{ margin: '2px 0 0', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-              Located at <strong>#31 Nodal Center for Robotics and AI</strong> (adjoining Gloria Gopi Kumar Alumni Hall #30 and TBI #32), directly east of the central stadium avenue.
+              Situated at <strong>#31 Nodal Center for Robotics and AI (NCRAI)</strong>, directly north of the Central Library and Main Administrative Quadrangle (Lat: 10.5545° N, Lon: 76.2243° E).
             </p>
           </div>
         </div>
 
-        <button 
-          className="btn btn-secondary"
-          onClick={() => {
-            setActiveTab('2d-map');
-            setActiveLocationId(31);
-            setZoomLevel(1.5);
-            if (mapContainerRef.current) {
-              mapContainerRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-          }}
-          style={{ fontSize: '0.82rem', padding: '6px 14px', borderColor: 'rgba(234, 179, 8, 0.4)' }}
-        >
-          <Sparkles size={14} style={{ color: 'var(--amber-text)', marginRight: '4px' }} />
-          Spotlight #31 on Map
-        </button>
+        <div style={{ display: 'flex', gap: '8px' }}>
+          <button 
+            className="btn btn-secondary"
+            onClick={() => {
+              setActiveTab('vector-map');
+              setActiveLocationId(31);
+              setZoomLevel(1.5);
+              if (mapContainerRef.current) {
+                mapContainerRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              }
+            }}
+            style={{ fontSize: '0.82rem', padding: '6px 14px', borderColor: 'rgba(234, 179, 8, 0.4)' }}
+          >
+            <Sparkles size={14} style={{ color: 'var(--amber-text)', marginRight: '4px' }} />
+            Spotlight #31 on Map
+          </button>
+        </div>
       </div>
 
-      {/* TAB 1: 2D INTERACTIVE MAP */}
-      {activeTab === '2d-map' && (
+      {/* TAB 1: 2D VECTOR INTERACTIVE MAP */}
+      {activeTab === 'vector-map' && (
         <>
           {/* Controls Bar */}
           <div className="filter-shelf" style={{ marginBottom: '14px' }}>
@@ -626,7 +228,7 @@ export default function CampusMap() {
                 <Search size={14} />
                 <input 
                   type="text" 
-                  placeholder="Search landmark or #..." 
+                  placeholder="Search landmark, CCF, #..." 
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
@@ -634,7 +236,7 @@ export default function CampusMap() {
             </div>
           </div>
 
-          {/* Master 2D Map Canvas Container */}
+          {/* Master 2D Vector Map Canvas Container */}
           <div 
             ref={mapContainerRef}
             className="card" 
@@ -642,13 +244,13 @@ export default function CampusMap() {
               padding: '0', 
               overflow: 'hidden', 
               position: 'relative', 
-              background: '#e2e8f0', 
+              background: '#0f172a', 
               border: '2px solid var(--border-color)',
               borderRadius: '10px',
               marginBottom: '20px'
             }}
           >
-            {/* Map Legend Banner Header */}
+            {/* Map Top Bar with Compass and Legend */}
             <div style={{ 
               padding: '10px 16px', 
               background: 'var(--bg-card)', 
@@ -660,15 +262,27 @@ export default function CampusMap() {
               gap: '10px',
               fontSize: '0.82rem'
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <Compass size={16} style={{ color: 'var(--accent-primary)' }} />
-                <span style={{ fontWeight: 700 }}>Official Campus Schematic (2D Architectural Master Layout)</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                {/* Compass Rose */}
+                <div style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '4px',
+                  background: 'rgba(59, 130, 246, 0.1)',
+                  padding: '3px 8px',
+                  borderRadius: '4px',
+                  border: '1px solid rgba(59, 130, 246, 0.3)'
+                }}>
+                  <Navigation size={14} style={{ transform: 'rotate(0deg)', color: '#3b82f6' }} />
+                  <span style={{ fontWeight: 800, fontSize: '0.75rem', color: '#3b82f6' }}>N ↑ TRUE NORTH</span>
+                </div>
+                <span style={{ fontWeight: 700 }}>GEC Thrissur Digital 2D Campus Layout</span>
               </div>
               
               {/* Legend Badges */}
               <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexWrap: 'wrap' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                  <span style={{ width: '11px', height: '11px', borderRadius: '3px', background: '#1e3a8a', display: 'inline-block' }} />
+                  <span style={{ width: '11px', height: '11px', borderRadius: '3px', background: '#1e40af', display: 'inline-block' }} />
                   <span style={{ color: 'var(--text-muted)', fontSize: '0.78rem' }}>1-19 Academic &amp; Admin</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
@@ -689,48 +303,38 @@ export default function CampusMap() {
             {/* Scrollable / Zoomable Wrapper */}
             <div style={{ 
               overflow: 'auto', 
-              maxHeight: '620px', 
+              maxHeight: '660px', 
               position: 'relative',
-              background: '#f1f5f9',
+              background: '#090d16',
               cursor: zoomLevel > 1 ? 'grab' : 'default'
             }}>
               <div style={{ 
                 position: 'relative', 
                 width: '100%', 
-                minWidth: '850px',
+                minWidth: '950px',
                 transform: `scale(${zoomLevel})`,
                 transformOrigin: 'top left',
                 transition: 'transform 0.2s cubic-bezier(0.16, 1, 0.3, 1)'
               }}>
-                {/* 1. Base 2D Master Signboard Image */}
-                <img 
-                  src="/gec-campus-map-2d-master.png" 
-                  alt="GEC Thrissur Official 2D Campus Map"
+                {/* SVG Vector Campus Blueprint */}
+                <svg
+                  viewBox={`0 0 ${campusBounds.width} ${campusBounds.height}`}
                   style={{
                     display: 'block',
                     width: '100%',
                     height: 'auto',
-                    userSelect: 'none',
-                    pointerEvents: 'none'
-                  }}
-                />
-
-                {/* 2. Interactive SVG Pin Overlay (Calibrated precisely to 905x327) */}
-                <svg
-                  viewBox="0 0 905 327"
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    pointerEvents: 'auto'
+                    background: '#0f172a'
                   }}
                 >
                   <defs>
-                    {/* Pulsing beacon filter for #31 */}
-                    <filter id="beacon-glow" x="-50%" y="-50%" width="200%" height="200%">
-                      <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur" />
+                    {/* Grid Pattern */}
+                    <pattern id="campus-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255, 255, 255, 0.03)" strokeWidth="1" />
+                    </pattern>
+
+                    {/* Beacon glow for CPS #31 */}
+                    <filter id="beacon-glow-2d" x="-50%" y="-50%" width="200%" height="200%">
+                      <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur" />
                       <feMerge>
                         <feMergeNode in="blur" />
                         <feMergeNode in="SourceGraphic" />
@@ -738,15 +342,78 @@ export default function CampusMap() {
                     </filter>
                   </defs>
 
-                  {/* Render Pins for Each Location */}
-                  {allLocations.map((loc) => {
+                  {/* 1. Background Grid */}
+                  <rect width="100%" height="100%" fill="#0f172a" />
+                  <rect width="100%" height="100%" fill="url(#campus-grid)" />
+
+                  {/* 2. Campus Grounds / Fields / Stadium */}
+                  {campusGrounds.map((g, idx) => {
+                    const isStadium = g.d.includes('683.5 418.0') || g.type === 'stadium' || g.name.includes('Main Ground');
+                    const fill = isStadium ? 'rgba(16, 185, 129, 0.12)' : 'rgba(34, 197, 94, 0.08)';
+                    const stroke = isStadium ? 'rgba(16, 185, 129, 0.4)' : 'rgba(34, 197, 94, 0.25)';
+                    return (
+                      <path
+                        key={`ground-${idx}`}
+                        d={g.d}
+                        fill={fill}
+                        stroke={stroke}
+                        strokeWidth="1.5"
+                      />
+                    );
+                  })}
+
+                  {/* 3. Real Campus Road Network */}
+                  {campusRoads.map((r, idx) => {
+                    const isMain = r.hw === 'secondary' || r.name.includes('Viyyur') || r.name.includes('Cheroor');
+                    const w = isMain ? 7 : 3.5;
+                    return (
+                      <g key={`road-${idx}`}>
+                        {/* Road Base Underlay */}
+                        <path
+                          d={r.d}
+                          fill="none"
+                          stroke="#1e293b"
+                          strokeWidth={w + 3}
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        {/* Road Surface */}
+                        <path
+                          d={r.d}
+                          fill="none"
+                          stroke={isMain ? '#475569' : '#334155'}
+                          strokeWidth={w}
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </g>
+                    );
+                  })}
+
+                  {/* 4. Road Labels */}
+                  <text x="600" y="735" fill="rgba(255, 255, 255, 0.4)" fontSize="11" fontWeight="700" letterSpacing="0.08em" textAnchor="middle">
+                    ← VIYYUR / CHEROOR ROAD (SOUTH PERIMETER) →
+                  </text>
+                  <text x="618" y="300" fill="rgba(16, 185, 129, 0.6)" fontSize="13" fontWeight="800" letterSpacing="0.1em" textAnchor="middle">
+                    GECT ATHLETIC STADIUM (#38)
+                  </text>
+                  <text x="960" y="150" fill="rgba(16, 185, 129, 0.6)" fontSize="11" fontWeight="700" letterSpacing="0.08em" textAnchor="middle">
+                    HOCKEY GROUND (#36)
+                  </text>
+                  <text x="120" y="270" fill="rgba(13, 148, 136, 0.6)" fontSize="11" fontWeight="700" letterSpacing="0.08em" textAnchor="middle">
+                    STAFF QUARTERS COLONY (#41)
+                  </text>
+                  <text x="470" y="180" fill="rgba(13, 148, 136, 0.6)" fontSize="11" fontWeight="700" letterSpacing="0.08em" textAnchor="middle">
+                    MENS HOSTELS (#39)
+                  </text>
+
+                  {/* 5. Interactive Calibrated Landmarks (1-41) */}
+                  {campusLandmarks.map((loc) => {
                     const isSelected = loc.id === activeLocationId;
                     const isHovered = hoveredLocation?.id === loc.id;
                     const isFiltered = filteredLocations.some(f => f.id === loc.id);
                     const colors = getPinColor(loc);
                     const isCPS = loc.id === 31;
-
-                    // If filtered out by category or search, dim it
                     const opacity = isFiltered ? 1 : 0.2;
 
                     return (
@@ -761,36 +428,35 @@ export default function CampusMap() {
                         {/* Selected / Hover Ring */}
                         {(isSelected || isHovered) && (
                           <circle
-                            r={isCPS ? 18 : 14}
+                            r={isCPS ? 22 : 17}
                             fill="none"
-                            stroke={isCPS ? '#eab308' : 'var(--accent-primary)'}
+                            stroke={isCPS ? '#eab308' : '#38bdf8'}
                             strokeWidth={isSelected ? 3 : 2}
                             strokeDasharray={isSelected ? 'none' : '3 2'}
-                            style={{
-                              animation: 'pulse 1.5s infinite'
-                            }}
+                            style={{ animation: 'pulse 1.5s infinite' }}
                           />
                         )}
 
-                        {/* Extra Halo for CPS #31 */}
+                        {/* Extra Beacon for CPS #31 */}
                         {isCPS && (
                           <circle
-                            r={14}
-                            fill="rgba(234, 179, 8, 0.35)"
-                            filter="url(#beacon-glow)"
+                            r={18}
+                            fill="rgba(234, 179, 8, 0.4)"
+                            filter="url(#beacon-glow-2d)"
                           />
                         )}
 
-                        {/* Pin Center Circle */}
+                        {/* Center Pin Circle */}
                         <circle
-                          r={isCPS ? 10 : 8}
+                          r={isCPS ? 13 : 10}
                           fill={colors.bg}
                           stroke="#ffffff"
-                          strokeWidth={isCPS ? 2 : 1.5}
+                          strokeWidth={isCPS ? 2.5 : 1.5}
                           style={{
                             transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)',
                             transform: (isSelected || isHovered) ? 'scale(1.25)' : 'scale(1)',
-                            transformOrigin: '0 0'
+                            transformOrigin: '0 0',
+                            filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.5))'
                           }}
                         />
 
@@ -799,43 +465,43 @@ export default function CampusMap() {
                           textAnchor="middle"
                           dominantBaseline="central"
                           fill={colors.text}
-                          fontSize={isCPS ? '8px' : '7px'}
-                          fontWeight="700"
+                          fontSize={isCPS ? '10px' : '9px'}
+                          fontWeight="800"
                           fontFamily="monospace"
                           style={{ pointerEvents: 'none', userSelect: 'none' }}
                         >
                           {loc.id}
                         </text>
 
-                        {/* Hover Tooltip Card */}
+                        {/* Hover / Focused Tooltip Card */}
                         {(isHovered || (isSelected && zoomLevel > 1.2)) && (
-                          <g transform="translate(0, -18)" style={{ pointerEvents: 'none' }}>
+                          <g transform="translate(0, -22)" style={{ pointerEvents: 'none' }}>
                             <rect
-                              x={-75}
-                              y={-28}
-                              width={150}
-                              height={28}
-                              rx={5}
+                              x={-90}
+                              y={-34}
+                              width={180}
+                              height={34}
+                              rx={6}
                               fill="rgba(15, 23, 42, 0.95)"
-                              stroke={isCPS ? '#eab308' : 'rgba(255, 255, 255, 0.2)'}
-                              strokeWidth={1}
+                              stroke={isCPS ? '#eab308' : 'rgba(255, 255, 255, 0.25)'}
+                              strokeWidth={1.5}
                             />
                             <text
                               x={0}
-                              y={-17}
+                              y={-20}
                               textAnchor="middle"
                               fill="#ffffff"
-                              fontSize="8.5px"
+                              fontSize="10px"
                               fontWeight="700"
                             >
                               #{loc.id} {loc.name.length > 22 ? loc.name.slice(0, 20) + '...' : loc.name}
                             </text>
                             <text
                               x={0}
-                              y={-7}
+                              y={-8}
                               textAnchor="middle"
                               fill={isCPS ? '#fde047' : '#94a3b8'}
-                              fontSize="7px"
+                              fontSize="8px"
                             >
                               {loc.category}
                             </text>
@@ -860,7 +526,7 @@ export default function CampusMap() {
               color: 'var(--text-muted)'
             }}>
               <span>
-                Click any numbered pinpoint on the map or select from the directory below to view department details.
+                Accurate True-North Layout. Click any numbered pinpoint on the map to inspect department details.
               </span>
               <span>
                 Showing <strong>{filteredLocations.length}</strong> of 41 locations
@@ -868,28 +534,28 @@ export default function CampusMap() {
             </div>
           </div>
 
-          {/* Active Landmark Spotlight Card */}
+          {/* Active Landmark Detail Spotlight Card */}
           {activeLoc && (
             <div className="card" style={{ 
               marginBottom: '28px',
-              borderLeft: `4px solid ${getPinColor(activeLoc).bg}`,
+              borderLeft: `5px solid ${getPinColor(activeLoc).bg}`,
               background: 'var(--bg-card)'
             }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '12px' }}>
-                <div style={{ display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '14px' }}>
+                <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
                   <div style={{ 
-                    width: '46px', 
-                    height: '46px', 
-                    borderRadius: '8px', 
+                    width: '50px', 
+                    height: '50px', 
+                    borderRadius: '10px', 
                     background: getPinColor(activeLoc).bg, 
                     color: getPinColor(activeLoc).text,
                     display: 'flex', 
                     alignItems: 'center', 
                     justifyContent: 'center',
                     fontWeight: 800,
-                    fontSize: '1.2rem',
+                    fontSize: '1.3rem',
                     fontFamily: 'monospace',
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+                    boxShadow: '0 3px 10px rgba(0,0,0,0.2)',
                     flexShrink: 0
                   }}>
                     #{activeLoc.id}
@@ -897,11 +563,8 @@ export default function CampusMap() {
 
                   <div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
-                      <h2 style={{ margin: 0, fontSize: '1.15rem' }}>{activeLoc.name}</h2>
-                      <span className={`tag ${
-                        activeLoc.catKey === 'acad' ? 'tag-blue' : 
-                        activeLoc.catKey === 'fac' ? 'tag-amber' : 'tag-stone'
-                      }`}>
+                      <h2 style={{ margin: 0, fontSize: '1.2rem' }}>{activeLoc.name}</h2>
+                      <span className={`tag ${getPinColor(activeLoc).badge}`}>
                         {activeLoc.category}
                       </span>
                       {activeLoc.id === 31 && (
@@ -909,14 +572,18 @@ export default function CampusMap() {
                           ★ CPS Department Hub
                         </span>
                       )}
+                      <span className="tag tag-stone font-mono" style={{ fontSize: '0.7rem' }}>
+                        {activeLoc.lat.toFixed(4)}° N, {activeLoc.lon.toFixed(4)}° E
+                      </span>
                     </div>
-                    <p style={{ margin: '6px 0 0', color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: '1.5' }}>
+
+                    <p style={{ margin: '8px 0 0', color: 'var(--text-muted)', fontSize: '0.92rem', lineHeight: '1.55' }}>
                       {activeLoc.desc}
                     </p>
                   </div>
                 </div>
 
-                <div style={{ display: 'flex', gap: '8px' }}>
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                   <button 
                     className="btn btn-secondary"
                     onClick={() => {
@@ -925,11 +592,22 @@ export default function CampusMap() {
                         mapContainerRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
                       }
                     }}
-                    style={{ fontSize: '0.8rem', padding: '6px 12px' }}
+                    style={{ fontSize: '0.82rem', padding: '6px 12px' }}
                   >
-                    <ZoomIn size={13} style={{ marginRight: '4px' }} />
+                    <ZoomIn size={14} style={{ marginRight: '4px' }} />
                     Center &amp; Zoom
                   </button>
+
+                  <a 
+                    href={`https://www.google.com/maps/search/?api=1&query=${activeLoc.lat},${activeLoc.lon}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-primary"
+                    style={{ fontSize: '0.82rem', padding: '6px 12px', display: 'inline-flex', alignItems: 'center', gap: '5px' }}
+                  >
+                    <ExternalLink size={14} />
+                    <span>Open in Google Maps</span>
+                  </a>
                 </div>
               </div>
             </div>
@@ -941,7 +619,7 @@ export default function CampusMap() {
               Campus Landmark Directory ({filteredLocations.length} locations)
             </h2>
             <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>
-              Numbered exactly according to the GECT campus signboard
+              Numbered 1 through 41 with verified Google Maps GPS coordinates
             </span>
           </div>
 
@@ -965,7 +643,7 @@ export default function CampusMap() {
                       ? `2px solid ${isCPS ? '#eab308' : 'var(--accent-primary)'}` 
                       : '1px solid var(--border-color)',
                     background: isSelected 
-                      ? (isCPS ? 'rgba(234, 179, 8, 0.05)' : 'var(--bg-card)') 
+                      ? (isCPS ? 'rgba(234, 179, 8, 0.06)' : 'var(--bg-card)') 
                       : 'var(--bg-card)',
                     padding: '14px 16px',
                     transition: 'all 0.15s ease'
@@ -975,16 +653,16 @@ export default function CampusMap() {
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                         <span style={{ 
-                          width: '26px', 
-                          height: '26px', 
+                          width: '28px', 
+                          height: '28px', 
                           borderRadius: '6px', 
                           background: colors.bg, 
                           color: colors.text,
                           display: 'inline-flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          fontWeight: 700,
-                          fontSize: '0.82rem',
+                          fontWeight: 800,
+                          fontSize: '0.85rem',
                           fontFamily: 'monospace'
                         }}>
                           {loc.id}
@@ -994,10 +672,7 @@ export default function CampusMap() {
                         </h3>
                       </div>
                       
-                      <span className={`tag ${
-                        loc.catKey === 'acad' ? 'tag-blue' : 
-                        loc.catKey === 'fac' ? 'tag-amber' : 'tag-stone'
-                      }`} style={{ fontSize: '0.7rem' }}>
+                      <span className={`tag ${colors.badge}`} style={{ fontSize: '0.7rem' }}>
                         {loc.category.split('&')[0].trim()}
                       </span>
                     </div>
@@ -1009,7 +684,7 @@ export default function CampusMap() {
 
                   <div style={{ marginTop: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid var(--border-subtle)', paddingTop: '8px' }}>
                     <span style={{ fontSize: '0.75rem', color: isCPS ? 'var(--amber-text)' : 'var(--text-muted)', fontWeight: isCPS ? 700 : 500 }}>
-                      {isCPS ? '★ CPS Department Hub' : `Signboard Index #${loc.id}`}
+                      {isCPS ? '★ CPS Department Hub' : `Index #${loc.id} &bull; ${loc.lat.toFixed(4)}° N`}
                     </span>
                     <span style={{ fontSize: '0.78rem', color: 'var(--accent-primary)', fontWeight: 600 }}>
                       {isSelected ? 'Currently Selected' : 'Locate on Map →'}
@@ -1022,13 +697,13 @@ export default function CampusMap() {
         </>
       )}
 
-      {/* TAB 2: ORIGINAL SIGNBOARD PHOTO & LEGEND INSPECTOR */}
-      {activeTab === 'photo-signboard' && (
+      {/* TAB 2: PHYSICAL SIGNBOARD REFERENCE */}
+      {activeTab === 'signboard-reference' && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           <div className="card" style={{ padding: '16px 20px' }}>
             <h2 style={{ fontSize: '1.1rem', margin: '0 0 6px' }}>Original Physical Campus Signboard (GECT)</h2>
             <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '0.88rem' }}>
-              High-resolution photograph of the official Government Engineering College Thrissur campus map board situated near the main entrance, listing all 41 landmarks and the official printed legend table.
+              Photograph of the original physical campus signboard positioned near the college entrance gate. Note that some locations on this historical board (such as CCF #22 and the residential quadrant) differed in orientation compared to the real-world Google Maps geographic layout.
             </p>
           </div>
 
@@ -1041,26 +716,14 @@ export default function CampusMap() {
             />
           </div>
 
-          {/* Close-up Layout Photo */}
-          <div className="card" style={{ padding: '16px 20px' }}>
-            <h3 style={{ fontSize: '1rem', margin: '0 0 10px' }}>Signboard Blueprint Crop (Close-up View)</h3>
-            <div style={{ borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--border-color)' }}>
-              <img 
-                src="/gec-campus-map-layout.jpg" 
-                alt="GEC Thrissur Campus Map Close-up" 
-                style={{ width: '100%', display: 'block' }}
-              />
-            </div>
-          </div>
-
-          {/* Master 41 Landmark Printed Table */}
+          {/* Master 41 Landmark Table */}
           <div className="card">
             <h3 style={{ fontSize: '1rem', margin: '0 0 14px' }}>Official Campus Signboard Legend Table</h3>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
               
               {/* Column 1 */}
               <div>
-                <h4 style={{ color: '#1e3a8a', borderBottom: '2px solid #1e3a8a', paddingBottom: '4px', margin: '0 0 10px' }}>
+                <h4 style={{ color: '#1e40af', borderBottom: '2px solid #1e40af', paddingBottom: '4px', margin: '0 0 10px' }}>
                   ACADEMIC AND ADMINISTRATION (1-19)
                 </h4>
                 <ol start={1} style={{ paddingLeft: '20px', margin: 0, fontSize: '0.85rem', lineHeight: '1.8' }}>
@@ -1094,7 +757,7 @@ export default function CampusMap() {
                 <ol start={20} style={{ paddingLeft: '20px', margin: 0, fontSize: '0.85rem', lineHeight: '1.8' }}>
                   <li>College Canteen</li>
                   <li>Post Office and bank building</li>
-                  <li>Central Computing Facility</li>
+                  <li>Central Computing Facility (CCF)</li>
                   <li>Central Library</li>
                   <li>PTA Office</li>
                   <li>Alumni Office</li>
