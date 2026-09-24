@@ -15,9 +15,9 @@ import { RefreshCw, Building2 } from 'lucide-react';
 const getRouteFromUrl = () => {
   const path = window.location.pathname.replace(/^\/+/, '').split('/')[0].toLowerCase();
   if (path === 'admin') return 'admin';
-  const validStudentRoutes = ['events', 'scholarships', 'suggestions', 'announcements', 'emergency', 'issues', 'support', 'map'];
+  const validStudentRoutes = ['map', 'events', 'scholarships', 'suggestions', 'support', 'announcements', 'emergency', 'issues'];
   if (validStudentRoutes.includes(path)) return path;
-  return 'events'; // showcase events and hackathons
+  return 'map'; // GEC Campus Map is top landing page
 };
 
 export default function App() {
@@ -97,7 +97,7 @@ export default function App() {
 
   const navigate = (route) => {
     setCurrentRoute(route);
-    const targetPath = route === 'admin' ? '/admin' : route === 'scholarships' ? '/' : `/${route}`;
+    const targetPath = route === 'admin' ? '/admin' : route === 'map' ? '/' : `/${route}`;
     if (window.location.pathname !== targetPath) {
       window.history.pushState({ route }, '', targetPath);
     }
@@ -129,7 +129,7 @@ export default function App() {
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <button 
               className="btn btn-secondary"
-              onClick={() => navigate('scholarships')}
+              onClick={() => navigate('map')}
               style={{ fontSize: '0.82rem' }}
             >
               <span>&larr; Return to Student Portal</span>
@@ -146,7 +146,7 @@ export default function App() {
             onRefresh={fetchAllData} 
             isAdminLoggedIn={isAdminLoggedIn} 
             setIsAdminLoggedIn={setIsAdminLoggedIn} 
-            onNavigateToStudentPortal={() => navigate('events')}
+            onNavigateToStudentPortal={() => navigate('map')}
           />
         </div>
 

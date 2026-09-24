@@ -12,22 +12,22 @@ import {
 } from 'lucide-react';
 
 export default function Sidebar({ currentRoute, setCurrentRoute }) {
-  // Student Portal Navigation Items (Opportunities removed per user instruction)
+  // Student Portal Navigation Items in user-specified order
   const navItems = [
+    { id: 'map', label: 'GEC Campus Map', icon: MapPin },
     { id: 'events', label: 'College Events', icon: CalendarDays },
     { id: 'scholarships', label: 'Scholarships', icon: GraduationCap },
     { id: 'suggestions', label: 'Suggestions', icon: Lightbulb },
+    { id: 'support', label: 'Student Support', icon: HeartHandshake },
     { id: 'announcements', label: 'Announcements', icon: Bell },
     { id: 'emergency', label: 'Emergency Contacts', icon: PhoneCall },
     { id: 'issues', label: 'Report an Issue', icon: AlertCircle },
-    { id: 'support', label: 'Student Support', icon: HeartHandshake },
-    { id: 'map', label: 'GEC Campus Map', icon: MapPin },
   ];
 
   return (
     <aside className="sidebar">
       {/* CPS Welfare Branding at top of sidebar */}
-      <div className="sidebar-brand" onClick={() => setCurrentRoute('scholarships')} style={{ cursor: 'pointer' }}>
+      <div className="sidebar-brand" onClick={() => setCurrentRoute('map')} style={{ cursor: 'pointer' }}>
         <div className="brand-icon-box" style={{ background: '#0f172a', padding: '2px', overflow: 'hidden' }}>
           <img src="/cps-gect-emblem.png" alt="CPS GECT" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
         </div>

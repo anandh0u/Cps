@@ -625,29 +625,22 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex: 1.5;
+  flex: 1.2;
 }
 
 .association-logo-box {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 6px 24px;
-  border-radius: var(--radius-lg);
-  background: #ffffff;
-  border: 2px solid rgba(202, 138, 4, 0.45);
-  box-shadow: 0 4px 16px rgba(202, 138, 4, 0.16);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.association-logo-box:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(202, 138, 4, 0.24);
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
 }
 
 .association-img {
-  height: 72px;
-  max-width: 420px;
+  height: 48px;
+  max-width: 300px;
   width: auto;
   object-fit: contain;
   display: block;

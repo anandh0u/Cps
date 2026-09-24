@@ -208,6 +208,21 @@ export default function CommitteeAdmin({
     }
   };
 
+  const handleDeleteAnnouncement = async (ann) => {
+    if (!window.confirm(`Delete circular "${ann.title}"?`)) return;
+    try {
+      const res = await fetch(`/api/announcements/${ann.id}`, { method: 'DELETE' });
+      const data = await res.json();
+      if (data.success) {
+        setEventFeedbackMsg(`Circular "${ann.title}" removed.`);
+        if (onRefresh) onRefresh();
+        setTimeout(() => setEventFeedbackMsg(''), 3000);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   // Event Management Handlers
   const handleOpenCreateEvent = () => {
     setEventFormMode('create');
@@ -1254,67 +1269,121 @@ export default function CommitteeAdmin({
 
       {/* TAB 4: PUBLISH CIRCULARS */}
       {adminTab === 'announcements' && (
-        <div style={{ maxWidth: '680px', margin: '0 auto' }} className="card">
-          <h3 style={{ fontSize: '1.2rem', color: 'var(--navy-dark)', marginBottom: '6px' }}>
-            Publish Student Welfare Circular
-          </h3>
-          <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginBottom: '18px' }}>
-            Post official notifications directly to the Announcements page for all students to see.
-          </p>
+        <div style={{ maxWidth: '800px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '24px' }}>
+          <div className="card">
+            <h3 style={{ fontSize: '1.2rem', color: 'var(--navy-dark)', marginBottom: '6px' }}>
+              Publish Student Welfare Circular
+            </h3>
+            <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginBottom: '18px' }}>
+              Post official notifications directly to the Announcements page for all students to see.
+            </p>
 
-          <form onSubmit={handlePostAnnouncement}>
-            <div className="form-row">
-              <label className="form-label">Circular Title *</label>
-              <input
-                type="text"
-                className="form-input"
-                placeholder="e.g. Exam Fee Concession Verification Camp..."
-                value={newAnnTitle}
-                onChange={(e) => setNewAnnTitle(e.target.value)}
-                required
-              />
-            </div>
-
-            <div className="form-row">
-              <label className="form-label">Category</label>
-              <select className="form-select" value={newAnnCategory} onChange={(e) => setNewAnnCategory(e.target.value)}>
-                <option value="Academic Welfare">Academic Welfare</option>
-                <option value="Scholarships">Scholarships</option>
-                <option value="Student Welfare">Student Welfare</option>
-                <option value="Safety Notice">Safety Notice</option>
-              </select>
-            </div>
-
-            <div className="form-row">
-              <label className="form-label">Full Circular Text / Summary *</label>
-              <textarea
-                className="form-textarea"
-                rows={4}
-                placeholder="Details of the announcement, venue, dates, and instructions for students..."
-                value={newAnnSummary}
-                onChange={(e) => setNewAnnSummary(e.target.value)}
-                required
-              />
-            </div>
-
-            <div className="form-row">
-              <label style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.84rem', cursor: 'pointer' }}>
+            <form onSubmit={handlePostAnnouncement}>
+              <div className="form-row">
+                <label className="form-label">Circular Title *</label>
                 <input
-                  type="checkbox"
-                  checked={newAnnUrgent}
-                  onChange={(e) => setNewAnnUrgent(e.target.checked)}
+                  type="text"
+                  className="form-input"
+                  placeholder="e.g. Exam Fee Concession Verification Camp..."
+                  value={newAnnTitle}
+                  onChange={(e) => setNewAnnTitle(e.target.value)}
+                  required
                 />
-                <span style={{ fontWeight: 600, color: 'var(--red-crimson)' }}>Mark as Urgent Notification</span>
-              </label>
-            </div>
+              </div>
 
-            <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '16px' }}>
-              <button type="submit" className="btn btn-primary" disabled={isPostingAnn}>
-                <PlusCircle size={15} />
-                <span>{isPostingAnn ? 'Publishing...' : 'Publish Announcement'}</span>
-              </button>
-            </div>
-          </form>
+              <div className="form-row">
+                <label className="form-label">Category</label>
+                <select className="form-select" value={newAnnCategory} onChange={(e) => setNewAnnCategory(e.target.value)}>
+                  <option value="Academic Welfare">Academic Welfare</option>
+                  <option value="Scholarships">Scholarships</option>
+                  <option value="Student Welfare">Student Welfare</option>
+                  <option value="Safety Notice">Safety Notice</option>
+                </select>
+              </div>
+
+              <div className="form-row">
+                <label className="form-label">Full Circular Text / Summary *</label>
+                <textarea
+                  className="form-textarea"
+                  rows={4}
+                  placeholder="Details of the announcement, venue, dates, and instructions for students..."
+                  value={newAnnSummary}
+                  onChange={(e) => setNewAnnSummary(e.target.value)}
+                  required
+                />
+              </div>
+
+              <div className="form-row">
+                <label style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.84rem', cursor: 'pointer' }}>
+                  <input
+                    type="checkbox"
+                    checked={newAnnUrgent}
+                    onChange={(e) => setNewAnnUrgent(e.target.checked)}
+                  />
+                  <span style={{ fontWeight: 600, color: 'var(--red-crimson)' }}>Mark as Urgent Notification</span>
+                </label>
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '16px' }}>
+                <button type="submit" className="btn btn-primary" disabled={isPostingAnn}>
+                  <PlusCircle size={15} />
+                  <span>{isPostingAnn ? 'Publishing...' : 'Publish Announcement'}</span>
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div className="card">
+            <h4 style={{ fontSize: '1.05rem', color: 'var(--navy-dark)', marginBottom: '12px' }}>
+              Active Published Circulars ({announcements.length})
+            </h4>
+            {announcements.length === 0 ? (
+              <p style={{ color: 'var(--text-dim)', fontSize: '0.84rem', textAlign: 'center', padding: '16px 0' }}>
+                No active circulars currently published. Use the form above to publish official circulars.
+              </p>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                {announcements.map((ann) => (
+                  <div 
+                    key={ann.id}
+                    style={{ 
+                      display: 'flex', 
+                      justifyContent: 'space-between', 
+                      alignItems: 'flex-start',
+                      gap: '12px',
+                      padding: '12px 14px', 
+                      background: 'var(--bg-subtle)', 
+                      borderRadius: 'var(--radius-sm)',
+                      borderLeft: `3px solid ${ann.urgent ? 'var(--red-crimson)' : 'var(--navy-primary)'}`
+                    }}
+                  >
+                    <div style={{ flex: 1 }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                        <span className={`tag ${ann.urgent ? 'tag-red' : 'tag-navy'}`} style={{ fontSize: '0.72rem' }}>
+                          {ann.category}
+                        </span>
+                        <span className="tag tag-stone font-mono" style={{ fontSize: '0.72rem' }}>{ann.id}</span>
+                        <span style={{ fontSize: '0.76rem', color: 'var(--text-dim)' }}>{ann.date}</span>
+                      </div>
+                      <strong style={{ fontSize: '0.92rem', color: 'var(--navy-dark)', display: 'block' }}>{ann.title}</strong>
+                      <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: '2px', lineHeight: '1.4' }}>{ann.summary}</p>
+                    </div>
+
+                    <button
+                      type="button"
+                      className="btn btn-secondary"
+                      style={{ color: 'var(--red-crimson)', borderColor: 'var(--red-border)', padding: '6px 10px', fontSize: '0.78rem' }}
+                      onClick={() => handleDeleteAnnouncement(ann)}
+                      title="Delete circular"
+                    >
+                      <Trash2 size={13} />
+                      <span>Delete</span>
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       )}
     </div>

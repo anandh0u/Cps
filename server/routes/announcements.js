@@ -49,4 +49,16 @@ router.post('/', (req, res) => {
   res.status(201).json({ success: true, message: 'Announcement published.', data: newAnn });
 });
 
+router.delete('/:id', (req, res) => {
+  const store = getStore();
+  const { id } = req.params;
+  const initialLength = (store.announcements || []).length;
+  store.announcements = (store.announcements || []).filter(a => a.id !== id);
+  if (store.announcements.length === initialLength) {
+    return res.status(404).json({ success: false, error: 'Announcement not found.' });
+  }
+  saveStore();
+  res.json({ success: true, message: 'Announcement deleted.' });
+});
+
 export default router;

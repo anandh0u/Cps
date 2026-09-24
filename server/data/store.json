@@ -861,43 +861,6 @@
       "availability": "24/7 Emergency Fire & Rescue"
     }
   ],
-  "announcements": [
-    {
-      "id": "ANN-501",
-      "title": "KTU End Semester Examination Fee Concession & Verification Desk",
-      "category": "Academic Welfare",
-      "date": "2026-09-21",
-      "summary": "Eligible SC/ST/OEC and forward community (EWS) students must submit verified income certificates at Counter 3 of Academic Section before September 28 for complete exam fee exemption.",
-      "issuedBy": "Senior Superintendent, Academic Section",
-      "urgent": true
-    },
-    {
-      "id": "ANN-502",
-      "title": "National Scholarship Portal (NSP) Biometric Authentication Camp",
-      "category": "Scholarships",
-      "date": "2026-09-20",
-      "summary": "Special biometric facial/fingerprint verification camp for all fresh and renewal NSP applicants will be held at Seminar Hall SH-401 from Sept 23 to Sept 25. Bring original Aadhaar card and registered mobile.",
-      "issuedBy": "Nodal Officer for National Scholarships",
-      "urgent": false
-    },
-    {
-      "id": "ANN-503",
-      "title": "KSRTC Student Concession Bus Pass Renewal for Academic Year 2026-27",
-      "category": "Student Welfare",
-      "date": "2026-09-18",
-      "summary": "Students requiring college bus concession endorsements must submit online applications via KSRTC Concession portal and submit signed printouts to Department Staff Advisor Prof. Biju Mathew.",
-      "issuedBy": "Student Welfare Committee",
-      "urgent": false
-    },
-    {
-      "id": "ANN-504",
-      "title": "CPS Laboratory Equipment & ESD Safety Protocol Briefing",
-      "category": "Safety Notice",
-      "date": "2026-09-16",
-      "summary": "All students working on FPGA boards and robotic arms in Labs H-101 and R-204 must wear grounded wrist straps. Non-compliance will result in suspension of workbench privileges.",
-      "issuedBy": "Er. Sreejith K. (Lab Superintendent)",
-      "urgent": false
-    }
-  ],
+  "announcements": [],
   "events": []
 }
