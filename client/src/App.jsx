@@ -9,15 +9,16 @@ import StudentSupport from './pages/StudentSupport';
 import EmergencyContacts from './pages/EmergencyContacts';
 import Announcements from './pages/Announcements';
 import CampusMap from './pages/CampusMap';
+import Events from './pages/Events';
 import CommitteeAdmin from './pages/CommitteeAdmin';
 import { RefreshCw, Building2 } from 'lucide-react';
 
 const getRouteFromUrl = () => {
   const path = window.location.pathname.replace(/^\/+/, '').split('/')[0].toLowerCase();
   if (path === 'admin') return 'admin';
-  const validStudentRoutes = ['scholarships', 'opportunities', 'suggestions', 'announcements', 'emergency', 'issues', 'support', 'map'];
+  const validStudentRoutes = ['events', 'scholarships', 'opportunities', 'suggestions', 'announcements', 'emergency', 'issues', 'support', 'map'];
   if (validStudentRoutes.includes(path)) return path;
-  return 'scholarships'; // default student landing page
+  return 'events'; // showcase events and hackathons
 };
 
 export default function App() {
@@ -32,6 +33,7 @@ export default function App() {
 
   const [data, setData] = useState({
     department: null,
+    events: [],
     issues: [],
     suggestions: [],
     scholarships: [],
@@ -47,6 +49,7 @@ export default function App() {
     try {
       setLoading(true);
       const [
+        eventsRes,
         issuesRes,
         sugRes,
         schRes,
@@ -56,6 +59,7 @@ export default function App() {
         annRes,
         deptRes
       ] = await Promise.all([
+        fetch('/api/events').then(r => r.json()).catch(() => ({ data: [] })),
         fetch('/api/issues').then(r => r.json()),
         fetch('/api/suggestions').then(r => r.json()),
         fetch('/api/scholarships').then(r => r.json()),
@@ -68,6 +72,7 @@ export default function App() {
 
       setData({
         department: deptRes.data || {},
+        events: eventsRes.data || [],
         issues: issuesRes.data || [],
         suggestions: sugRes.data || [],
         scholarships: schRes.data || [],
@@ -142,10 +147,11 @@ export default function App() {
             issues={data.issues} 
             suggestions={data.suggestions} 
             announcements={data.announcements} 
+            events={data.events}
             onRefresh={fetchAllData} 
             isAdminLoggedIn={isAdminLoggedIn} 
             setIsAdminLoggedIn={setIsAdminLoggedIn} 
-            onNavigateToStudentPortal={() => navigate('scholarships')}
+            onNavigateToStudentPortal={() => navigate('events')}
           />
         </div>
 
@@ -197,6 +203,9 @@ export default function App() {
               </div>
             ) : (
               <>
+                {currentRoute === 'events' && (
+                  <Events events={data.events} onRefresh={fetchAllData} />
+                )}
                 {currentRoute === 'scholarships' && (
                   <Scholarships scholarships={data.scholarships} />
                 )}

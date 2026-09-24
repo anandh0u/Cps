@@ -12,6 +12,7 @@ import emergencyRoutes from './routes/emergency.js';
 import announcementsRoutes from './routes/announcements.js';
 import adminRoutes from './routes/admin.js';
 import departmentRoutes from './routes/department.js';
+import eventsRoutes from './routes/events.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -50,6 +51,7 @@ app.use('/api/opportunities', opportunitiesRoutes);
 app.use('/api/support', supportRoutes);
 app.use('/api/emergency', emergencyRoutes);
 app.use('/api/announcements', announcementsRoutes);
+app.use('/api/events', eventsRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/department', departmentRoutes);
 
@@ -84,6 +86,7 @@ app.get('*', (req, res, next) => {
               <li><a href="/api/support">/api/support</a></li>
               <li><a href="/api/emergency">/api/emergency</a></li>
               <li><a href="/api/announcements">/api/announcements</a></li>
+              <li><a href="/api/events">/api/events</a></li>
               <li><a href="/api/admin/metrics">/api/admin/metrics</a></li>
             </ul>
           </body>

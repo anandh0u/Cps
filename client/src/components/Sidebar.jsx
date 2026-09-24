@@ -1,5 +1,6 @@
 import React from 'react';
 import { 
+  CalendarDays,
   GraduationCap, 
   Briefcase, 
   Lightbulb, 
@@ -14,6 +15,7 @@ import {
 export default function Sidebar({ currentRoute, setCurrentRoute }) {
   // Student Portal Navigation Items
   const navItems = [
+    { id: 'events', label: 'College Events', icon: CalendarDays },
     { id: 'scholarships', label: 'Scholarships', icon: GraduationCap },
     { id: 'opportunities', label: 'Opportunities', icon: Briefcase },
     { id: 'suggestions', label: 'Suggestions', icon: Lightbulb },
