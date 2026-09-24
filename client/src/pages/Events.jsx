@@ -12,10 +12,8 @@ import {
   ExternalLink,
   Trophy,
   Sparkles,
-  Zap,
   Building,
   Check,
-  Award,
   Filter
 } from 'lucide-react';
 import Modal from '../components/Modal';
@@ -34,25 +32,25 @@ export default function Events({ events = [], onRefresh }) {
   const [submittingReg, setSubmittingReg] = useState(false);
   const [regError, setRegError] = useState('');
 
-  // Flagship event (e.g. HackCPS or highest prize hackathon)
+  // Flagship event (e.g. hackathon or highest prize competition)
   const featuredHackathon = events.find(e => 
-    e.category.toLowerCase().includes('hackathon') || 
-    (e.prizePool && e.status.toLowerCase() !== 'past')
+    e.category?.toLowerCase().includes('hackathon') || 
+    (e.prizePool && e.status?.toLowerCase() !== 'past')
   );
 
   const filteredEvents = events.filter(event => {
     // Status filter
     const matchesStatus = filterStatus === 'All' || 
-      (filterStatus === 'Ongoing' && event.status.toLowerCase().includes('ongoing')) ||
-      (filterStatus === 'Upcoming' && event.status.toLowerCase() === 'upcoming') ||
-      (filterStatus === 'Past' && event.status.toLowerCase() === 'past');
+      (filterStatus === 'Ongoing' && event.status?.toLowerCase().includes('ongoing')) ||
+      (filterStatus === 'Upcoming' && event.status?.toLowerCase() === 'upcoming') ||
+      (filterStatus === 'Past' && event.status?.toLowerCase() === 'past');
 
     // Category filter
     const matchesCategory = filterCategory === 'All' || 
-      (filterCategory === 'Hackathons' && (event.category.toLowerCase().includes('hack') || event.category.toLowerCase().includes('ctf'))) ||
-      (filterCategory === 'Workshops' && event.category.toLowerCase().includes('workshop')) ||
-      (filterCategory === 'Symposium' && (event.category.toLowerCase().includes('symposium') || event.category.toLowerCase().includes('expo'))) ||
-      (filterCategory === 'Talks' && event.category.toLowerCase().includes('talk'));
+      (filterCategory === 'Hackathons' && (event.category?.toLowerCase().includes('hack') || event.category?.toLowerCase().includes('ctf'))) ||
+      (filterCategory === 'Workshops' && event.category?.toLowerCase().includes('workshop')) ||
+      (filterCategory === 'Symposium' && (event.category?.toLowerCase().includes('symposium') || event.category?.toLowerCase().includes('expo'))) ||
+      (filterCategory === 'Talks' && event.category?.toLowerCase().includes('talk'));
 
     // Search query
     const q = searchTerm.toLowerCase();
@@ -70,7 +68,7 @@ export default function Events({ events = [], onRefresh }) {
   const handleRegister = async (e) => {
     e.preventDefault();
     setRegError('');
-    if (!regName || !regEmail) {
+    if (!regName.trim() || !regEmail.trim()) {
       setRegError('Please provide both your name and email address.');
       return;
     }
@@ -80,7 +78,7 @@ export default function Events({ events = [], onRefresh }) {
       const res = await fetch(`/api/events/${registeringEvent.id}/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: regName, email: regEmail, year: regYear })
+        body: JSON.stringify({ name: regName.trim(), email: regEmail.trim(), year: regYear })
       });
       const data = await res.json();
       if (data.success) {
@@ -107,12 +105,12 @@ export default function Events({ events = [], onRefresh }) {
           </div>
           <h1 className="page-title">College Events &amp; Hackathons Hub</h1>
           <p className="page-subtitle">
-            Explore national IoT hackathons, robotics workshops, cybersecurity CTFs, and tech symposiums conducting at GEC Thrissur. Register directly or access official portals.
+            Official technical symposia, hackathons, robotics workshops, and symposiums conducting at Government Engineering College Thrissur.
           </p>
         </div>
       </div>
 
-      {/* Featured Hackathon Spotlight Banner */}
+      {/* Featured Spotlight Banner (only if real hackathon exists) */}
       {featuredHackathon && (
         <div 
           className="card" 
@@ -127,7 +125,6 @@ export default function Events({ events = [], onRefresh }) {
             border: '1px solid rgba(255, 255, 255, 0.1)'
           }}
         >
-          {/* Subtle background glow */}
           <div style={{
             position: 'absolute',
             top: '-50px',
@@ -196,27 +193,31 @@ export default function Events({ events = [], onRefresh }) {
                 {featuredHackathon.description}
               </p>
 
-              {/* Key metadata pills */}
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', fontSize: '0.82rem', color: '#94a3b8', marginBottom: '20px' }}>
                 <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                   <CalendarDays size={15} color="#38bdf8" />
                   <strong style={{ color: '#f8fafc' }}>{featuredHackathon.date}</strong>
                 </span>
-                <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <Clock size={15} color="#38bdf8" />
-                  <span>{featuredHackathon.time}</span>
-                </span>
-                <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <MapPin size={15} color="#4ade80" />
-                  <span>{featuredHackathon.venue}</span>
-                </span>
-                <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <Building size={15} color="#facc15" />
-                  <span>{featuredHackathon.organizer}</span>
-                </span>
+                {featuredHackathon.time && (
+                  <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <Clock size={15} color="#38bdf8" />
+                    <span>{featuredHackathon.time}</span>
+                  </span>
+                )}
+                {featuredHackathon.venue && (
+                  <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <MapPin size={15} color="#4ade80" />
+                    <span>{featuredHackathon.venue}</span>
+                  </span>
+                )}
+                {featuredHackathon.organizer && (
+                  <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <Building size={15} color="#facc15" />
+                    <span>{featuredHackathon.organizer}</span>
+                  </span>
+                )}
               </div>
 
-              {/* Action buttons */}
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
                 {featuredHackathon.registrationOpen ? (
                   <button 
@@ -257,281 +258,298 @@ export default function Events({ events = [], onRefresh }) {
                       fontSize: '0.88rem'
                     }}
                   >
-                    <span>External Portal / Devfolio</span>
+                    <span>External Portal / Link</span>
                     <ExternalLink size={14} />
                   </a>
                 )}
               </div>
             </div>
 
-            {/* Right side stats badge */}
-            <div style={{
-              background: 'rgba(255, 255, 255, 0.05)',
-              border: '1px solid rgba(255, 255, 255, 0.12)',
-              borderRadius: 'var(--radius-md)',
-              padding: '18px 22px',
-              minWidth: '220px',
-              textAlign: 'center'
-            }}>
-              <span style={{ fontSize: '0.72rem', textTransform: 'uppercase', color: '#94a3b8', letterSpacing: '0.06em', fontWeight: 700, display: 'block' }}>
-                Current Registrations
-              </span>
-              <div className="font-mono" style={{ fontSize: '2.2rem', fontWeight: 800, color: '#f8fafc', margin: '4px 0' }}>
-                {featuredHackathon.registeredCount} <span style={{ fontSize: '1.1rem', color: '#64748b' }}>/ {featuredHackathon.capacity}</span>
+            {featuredHackathon.capacity > 0 && (
+              <div style={{
+                background: 'rgba(255, 255, 255, 0.05)',
+                border: '1px solid rgba(255, 255, 255, 0.12)',
+                borderRadius: 'var(--radius-md)',
+                padding: '18px 22px',
+                minWidth: '220px',
+                textAlign: 'center'
+              }}>
+                <span style={{ fontSize: '0.72rem', textTransform: 'uppercase', color: '#94a3b8', letterSpacing: '0.06em', fontWeight: 700, display: 'block' }}>
+                  Current Registrations
+                </span>
+                <div className="font-mono" style={{ fontSize: '2.2rem', fontWeight: 800, color: '#f8fafc', margin: '4px 0' }}>
+                  {featuredHackathon.registeredCount || 0} <span style={{ fontSize: '1.1rem', color: '#64748b' }}>/ {featuredHackathon.capacity}</span>
+                </div>
+                <div style={{ height: '6px', background: 'rgba(255,255,255,0.15)', borderRadius: '3px', overflow: 'hidden', margin: '10px 0' }}>
+                  <div style={{ 
+                    height: '100%', 
+                    width: `${Math.min(100, Math.round(((featuredHackathon.registeredCount || 0) / featuredHackathon.capacity) * 100))}%`, 
+                    background: '#38bdf8', 
+                    borderRadius: '3px' 
+                  }} />
+                </div>
+                <span style={{ fontSize: '0.75rem', color: '#38bdf8', fontWeight: 600 }}>
+                  {Math.round(((featuredHackathon.registeredCount || 0) / featuredHackathon.capacity) * 100)}% Seats Filled
+                </span>
               </div>
-              <div style={{ height: '6px', background: 'rgba(255,255,255,0.15)', borderRadius: '3px', overflow: 'hidden', margin: '10px 0' }}>
-                <div style={{ 
-                  height: '100%', 
-                  width: `${Math.min(100, Math.round((featuredHackathon.registeredCount / featuredHackathon.capacity) * 100))}%`, 
-                  background: '#38bdf8', 
-                  borderRadius: '3px' 
-                }} />
-              </div>
-              <span style={{ fontSize: '0.75rem', color: '#38bdf8', fontWeight: 600 }}>
-                {Math.round((featuredHackathon.registeredCount / featuredHackathon.capacity) * 100)}% Seats Filled
-              </span>
-            </div>
+            )}
           </div>
         </div>
       )}
 
-      {/* Filter and Search Bar */}
-      <div className="filter-bar" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
-          {/* Category Tabs */}
-          <div className="filter-tabs">
-            {[
-              { id: 'All', label: 'All Categories' },
-              { id: 'Hackathons', label: 'Hackathons & CTF' },
-              { id: 'Workshops', label: 'Workshops & Labs' },
-              { id: 'Symposium', label: 'Symposia & Expos' },
-              { id: 'Talks', label: 'Tech Talks' }
-            ].map(cat => (
-              <button
-                key={cat.id}
-                className={`filter-tab-btn ${filterCategory === cat.id ? 'active' : ''}`}
-                onClick={() => setFilterCategory(cat.id)}
-              >
-                {cat.label}
-              </button>
-            ))}
+      {/* When no events exist at all (clean state without placeholders) */}
+      {events.length === 0 ? (
+        <div className="card" style={{ padding: '60px 24px', textAlign: 'center', background: '#ffffff', maxWidth: '680px', margin: '0 auto', boxShadow: '0 4px 16px rgba(0, 0, 0, 0.04)' }}>
+          <div style={{ display: 'inline-flex', padding: '16px', background: 'var(--navy-subtle)', borderRadius: '50%', color: 'var(--navy-primary)', marginBottom: '16px' }}>
+            <CalendarDays size={42} />
           </div>
-
-          {/* Search Input */}
-          <div className="search-input-box" style={{ maxWidth: '320px', width: '100%' }}>
-            <Search size={16} />
-            <input
-              type="text"
-              placeholder="Search event, venue, hackathon..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-        </div>
-
-        {/* Status Sub-Filters */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.8rem', color: 'var(--text-dim)' }}>
-          <span style={{ fontWeight: 600, display: 'flex', alignItems: 'center', gap: '4px' }}>
-            <Filter size={13} /> Timeline:
-          </span>
-          {['All', 'Upcoming', 'Ongoing', 'Past'].map(st => (
-            <button
-              key={st}
-              onClick={() => setFilterStatus(st)}
-              style={{
-                background: filterStatus === st ? 'var(--navy-dark)' : 'transparent',
-                color: filterStatus === st ? '#ffffff' : 'var(--text-muted)',
-                border: filterStatus === st ? 'none' : '1px solid var(--border-light)',
-                borderRadius: '16px',
-                padding: '3px 12px',
-                fontSize: '0.76rem',
-                fontWeight: 600,
-                cursor: 'pointer',
-                transition: 'all 0.15s ease'
-              }}
-            >
-              {st === 'All' ? 'All Timelines' : st === 'Ongoing' ? 'Ongoing Today' : st}
-            </button>
-          ))}
-          <span style={{ marginLeft: 'auto', fontSize: '0.78rem' }}>
-            Showing <strong>{filteredEvents.length}</strong> college event{filteredEvents.length === 1 ? '' : 's'}
-          </span>
-        </div>
-      </div>
-
-      {/* Events Grid */}
-      {filteredEvents.length === 0 ? (
-        <div className="card" style={{ padding: '48px 24px', textAlign: 'center', background: '#ffffff' }}>
-          <CalendarDays size={42} color="var(--text-dim)" style={{ margin: '0 auto 12px' }} />
-          <h3 style={{ fontSize: '1.15rem', color: 'var(--navy-dark)', marginBottom: '4px' }}>
-            No matching events found
-          </h3>
-          <p style={{ color: 'var(--text-dim)', fontSize: '0.85rem', marginBottom: '16px' }}>
-            Try adjusting your search query or reset the filters to see all campus activities.
+          <h2 style={{ fontSize: '1.3rem', color: 'var(--navy-dark)', fontWeight: 800, marginBottom: '8px' }}>
+            No College Events Currently Scheduled
+          </h2>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: 1.6, marginBottom: '22px' }}>
+            Upcoming hackathons, workshops, and technical symposia conducted by the Department of Cyber Physical System Engineering, ACPS, and campus clubs will appear here once officially published.
           </p>
-          <button 
-            className="btn btn-secondary" 
-            onClick={() => { setFilterCategory('All'); setFilterStatus('All'); setSearchTerm(''); }}
-            style={{ fontSize: '0.82rem' }}
-          >
-            Clear Filters
-          </button>
+          <div style={{ background: 'var(--bg-subtle)', padding: '14px 20px', borderRadius: 'var(--radius-md)', fontSize: '0.82rem', color: 'var(--text-dim)', display: 'inline-block' }}>
+            Are you a faculty member or student convener? Official events can be registered through the <a href="/admin" onClick={(e) => { e.preventDefault(); if (window.location.pathname !== '/admin') window.history.pushState({}, '', '/admin'); window.dispatchEvent(new PopStateEvent('popstate')); }} style={{ color: 'var(--navy-primary)', fontWeight: 700, textDecoration: 'underline' }}>Committee Desk</a>.
+          </div>
         </div>
       ) : (
-        <div className="grid-2" style={{ gap: '24px' }}>
-          {filteredEvents.map(event => {
-            const isOngoing = event.status.toLowerCase().includes('ongoing');
-            const isPast = event.status.toLowerCase() === 'past';
-            const fillPercentage = Math.min(100, Math.round(((event.registeredCount || 0) / (event.capacity || 100)) * 100));
+        <>
+          {/* Filter and Search Bar */}
+          <div className="filter-bar" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
+              <div className="filter-tabs">
+                {[
+                  { id: 'All', label: 'All Categories' },
+                  { id: 'Hackathons', label: 'Hackathons & CTF' },
+                  { id: 'Workshops', label: 'Workshops & Labs' },
+                  { id: 'Symposium', label: 'Symposia & Expos' },
+                  { id: 'Talks', label: 'Tech Talks' }
+                ].map(cat => (
+                  <button
+                    key={cat.id}
+                    className={`filter-tab-btn ${filterCategory === cat.id ? 'active' : ''}`}
+                    onClick={() => setFilterCategory(cat.id)}
+                  >
+                    {cat.label}
+                  </button>
+                ))}
+              </div>
 
-            return (
-              <div 
-                key={event.id} 
-                className="card" 
-                style={{ 
-                  display: 'flex', 
-                  flexDirection: 'column', 
-                  justifyContent: 'space-between',
-                  borderTop: `4px solid ${isOngoing ? 'var(--green-emerald)' : isPast ? '#94a3b8' : 'var(--navy-primary)'}`,
-                  position: 'relative'
-                }}
+              <div className="search-input-box" style={{ maxWidth: '320px', width: '100%' }}>
+                <Search size={16} />
+                <input
+                  type="text"
+                  placeholder="Search events..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.8rem', color: 'var(--text-dim)' }}>
+              <span style={{ fontWeight: 600, display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <Filter size={13} /> Timeline:
+              </span>
+              {['All', 'Upcoming', 'Ongoing', 'Past'].map(st => (
+                <button
+                  key={st}
+                  onClick={() => setFilterStatus(st)}
+                  style={{
+                    background: filterStatus === st ? 'var(--navy-dark)' : 'transparent',
+                    color: filterStatus === st ? '#ffffff' : 'var(--text-muted)',
+                    border: filterStatus === st ? 'none' : '1px solid var(--border-light)',
+                    borderRadius: '16px',
+                    padding: '3px 12px',
+                    fontSize: '0.76rem',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    transition: 'all 0.15s ease'
+                  }}
+                >
+                  {st === 'All' ? 'All Timelines' : st === 'Ongoing' ? 'Ongoing Today' : st}
+                </button>
+              ))}
+              <span style={{ marginLeft: 'auto', fontSize: '0.78rem' }}>
+                Showing <strong>{filteredEvents.length}</strong> college event{filteredEvents.length === 1 ? '' : 's'}
+              </span>
+            </div>
+          </div>
+
+          {/* Events Grid */}
+          {filteredEvents.length === 0 ? (
+            <div className="card" style={{ padding: '48px 24px', textAlign: 'center', background: '#ffffff' }}>
+              <CalendarDays size={38} color="var(--text-dim)" style={{ margin: '0 auto 12px' }} />
+              <h3 style={{ fontSize: '1.15rem', color: 'var(--navy-dark)', marginBottom: '4px' }}>
+                No matching events found
+              </h3>
+              <p style={{ color: 'var(--text-dim)', fontSize: '0.85rem', marginBottom: '16px' }}>
+                Try adjusting your search query or reset the filters.
+              </p>
+              <button 
+                className="btn btn-secondary" 
+                onClick={() => { setFilterCategory('All'); setFilterStatus('All'); setSearchTerm(''); }}
+                style={{ fontSize: '0.82rem' }}
               >
-                <div>
-                  {/* Top Status & Category Badges */}
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
-                      <span className={`badge ${isOngoing ? 'badge-green' : isPast ? 'badge-slate' : 'badge-blue'}`}>
-                        {isOngoing && <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'currentColor', display: 'inline-block', marginRight: '4px', animation: 'pulse 1.5s infinite' }} />}
-                        {event.status}
-                      </span>
-                      <span className="badge badge-slate">
-                        {event.category}
-                      </span>
-                      {event.prizePool && (
-                        <span className="badge badge-amber" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                          <Trophy size={11} />
-                          {event.prizePool}
+                Clear Filters
+              </button>
+            </div>
+          ) : (
+            <div className="grid-2" style={{ gap: '24px' }}>
+              {filteredEvents.map(event => {
+                const isOngoing = event.status?.toLowerCase().includes('ongoing');
+                const isPast = event.status?.toLowerCase() === 'past';
+                const fillPercentage = event.capacity ? Math.min(100, Math.round(((event.registeredCount || 0) / event.capacity) * 100)) : 0;
+
+                return (
+                  <div 
+                    key={event.id} 
+                    className="card" 
+                    style={{ 
+                      display: 'flex', 
+                      flexDirection: 'column', 
+                      justifyContent: 'space-between',
+                      borderTop: `4px solid ${isOngoing ? 'var(--green-emerald)' : isPast ? '#94a3b8' : 'var(--navy-primary)'}`,
+                      position: 'relative'
+                    }}
+                  >
+                    <div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                          <span className={`badge ${isOngoing ? 'badge-green' : isPast ? 'badge-slate' : 'badge-blue'}`}>
+                            {isOngoing && <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'currentColor', display: 'inline-block', marginRight: '4px' }} />}
+                            {event.status}
+                          </span>
+                          <span className="badge badge-slate">
+                            {event.category}
+                          </span>
+                          {event.prizePool && (
+                            <span className="badge badge-amber" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                              <Trophy size={11} />
+                              {event.prizePool}
+                            </span>
+                          )}
+                        </div>
+
+                        <span className="font-mono" style={{ fontSize: '0.78rem', color: 'var(--text-dim)', fontWeight: 600 }}>
+                          {event.date}
                         </span>
+                      </div>
+
+                      <h3 style={{ fontSize: '1.2rem', color: 'var(--navy-dark)', marginBottom: '10px', lineHeight: 1.3 }}>
+                        {event.title}
+                      </h3>
+
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '0.82rem', color: 'var(--text-muted)', marginBottom: '14px', background: 'var(--bg-subtle)', padding: '10px 12px', borderRadius: 'var(--radius-sm)' }}>
+                        {event.time && (
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '7px' }}>
+                            <Clock size={14} color="var(--navy-primary)" />
+                            <span>Time: <strong>{event.time}</strong></span>
+                          </div>
+                        )}
+                        {event.venue && (
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '7px' }}>
+                            <MapPin size={14} color="var(--green-forest)" />
+                            <span>Venue: <strong>{event.venue}</strong></span>
+                          </div>
+                        )}
+                        {event.organizer && (
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '7px' }}>
+                            <Building size={14} color="var(--amber-warm)" />
+                            <span>Organized By: <strong>{event.organizer}</strong></span>
+                          </div>
+                        )}
+                        {event.speaker && (
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '7px' }}>
+                            <User size={14} color="var(--navy-dark)" />
+                            <span>Speaker / Lead: <strong>{event.speaker}</strong></span>
+                          </div>
+                        )}
+                      </div>
+
+                      {event.description && (
+                        <p style={{ fontSize: '0.84rem', color: 'var(--text-muted)', marginBottom: '14px', lineHeight: 1.5 }}>
+                          {event.description}
+                        </p>
+                      )}
+
+                      {Array.isArray(event.highlights) && event.highlights.length > 0 && (
+                        <div style={{ marginBottom: '16px' }}>
+                          <span style={{ fontSize: '0.74rem', textTransform: 'uppercase', color: 'var(--text-dim)', fontWeight: 700, display: 'block', marginBottom: '6px' }}>
+                            Event Highlights
+                          </span>
+                          <ul style={{ margin: 0, paddingLeft: '18px', fontSize: '0.8rem', color: 'var(--text-dim)', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                            {event.highlights.map((h, i) => (
+                              <li key={i}>{h}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+
+                      {!isPast && event.capacity > 0 && (
+                        <div style={{ marginBottom: '16px' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: 'var(--text-dim)', marginBottom: '4px' }}>
+                            <span>Registrations</span>
+                            <span className="font-mono">
+                              <strong>{event.registeredCount || 0}</strong> / {event.capacity} seats ({fillPercentage}%)
+                            </span>
+                          </div>
+                          <div style={{ height: '6px', background: 'var(--border-light)', borderRadius: '3px', overflow: 'hidden' }}>
+                            <div style={{ 
+                              height: '100%', 
+                              width: `${fillPercentage}%`, 
+                              background: isOngoing ? 'var(--green-emerald)' : 'var(--navy-primary)', 
+                              borderRadius: '3px' 
+                            }} />
+                          </div>
+                        </div>
                       )}
                     </div>
 
-                    <span className="font-mono" style={{ fontSize: '0.78rem', color: 'var(--text-dim)', fontWeight: 600 }}>
-                      {event.date}
-                    </span>
-                  </div>
-
-                  {/* Title */}
-                  <h3 style={{ fontSize: '1.2rem', color: 'var(--navy-dark)', marginBottom: '10px', lineHeight: 1.3 }}>
-                    {event.title}
-                  </h3>
-
-                  {/* Logistics List */}
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '0.82rem', color: 'var(--text-muted)', marginBottom: '14px', background: 'var(--bg-subtle)', padding: '10px 12px', borderRadius: 'var(--radius-sm)' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '7px' }}>
-                      <Clock size={14} color="var(--navy-primary)" />
-                      <span>Time: <strong>{event.time}</strong></span>
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '7px' }}>
-                      <MapPin size={14} color="var(--green-forest)" />
-                      <span>Venue: <strong>{event.venue}</strong></span>
-                    </div>
-                    {event.organizer && (
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '7px' }}>
-                        <Building size={14} color="var(--amber-warm)" />
-                        <span>Organized By: <strong>{event.organizer}</strong></span>
-                      </div>
-                    )}
-                    {event.speaker && (
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '7px' }}>
-                        <User size={14} color="var(--navy-dark)" />
-                        <span>Speaker / Lead: <strong>{event.speaker}</strong></span>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Description */}
-                  <p style={{ fontSize: '0.84rem', color: 'var(--text-muted)', marginBottom: '14px', lineHeight: 1.5 }}>
-                    {event.description}
-                  </p>
-
-                  {/* Highlights Bullet Points */}
-                  {Array.isArray(event.highlights) && event.highlights.length > 0 && (
-                    <div style={{ marginBottom: '16px' }}>
-                      <span style={{ fontSize: '0.74rem', textTransform: 'uppercase', color: 'var(--text-dim)', fontWeight: 700, display: 'block', marginBottom: '6px' }}>
-                        Event Highlights
-                      </span>
-                      <ul style={{ margin: 0, paddingLeft: '18px', fontSize: '0.8rem', color: 'var(--text-dim)', display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                        {event.highlights.map((h, i) => (
-                          <li key={i}>{h}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-
-                  {/* Capacity Bar */}
-                  {!isPast && (
-                    <div style={{ marginBottom: '16px' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: 'var(--text-dim)', marginBottom: '4px' }}>
-                        <span>Registrations</span>
-                        <span className="font-mono">
-                          <strong>{event.registeredCount || 0}</strong> / {event.capacity || 100} seats ({fillPercentage}%)
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '14px', borderTop: '1px solid var(--border-light)', flexWrap: 'wrap', gap: '8px' }}>
+                      {event.registrationLink ? (
+                        <a
+                          href={event.registrationLink}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="btn btn-secondary"
+                          style={{ fontSize: '0.78rem', padding: '6px 12px' }}
+                        >
+                          <span>Official Portal</span>
+                          <ExternalLink size={13} />
+                        </a>
+                      ) : (
+                        <span style={{ fontSize: '0.75rem', color: 'var(--text-dim)' }}>
+                          GECT CPS Registration
                         </span>
-                      </div>
-                      <div style={{ height: '6px', background: 'var(--border-light)', borderRadius: '3px', overflow: 'hidden' }}>
-                        <div style={{ 
-                          height: '100%', 
-                          width: `${fillPercentage}%`, 
-                          background: isOngoing ? 'var(--green-emerald)' : 'var(--navy-primary)', 
-                          borderRadius: '3px' 
-                        }} />
+                      )}
+
+                      <div>
+                        {event.registrationOpen ? (
+                          <button 
+                            className="btn btn-primary"
+                            style={{ fontSize: '0.82rem', padding: '6px 14px' }}
+                            onClick={() => {
+                              setPassData(null);
+                              setRegisteringEvent(event);
+                            }}
+                          >
+                            <Ticket size={15} />
+                            <span>Register &bull; Get Pass</span>
+                          </button>
+                        ) : (
+                          <span style={{ fontSize: '0.8rem', color: 'var(--text-dim)', fontWeight: 600 }}>
+                            {isPast ? 'Session Concluded' : 'Registration Closed'}
+                          </span>
+                        )}
                       </div>
                     </div>
-                  )}
-                </div>
-
-                {/* Footer Action Buttons */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '14px', borderTop: '1px solid var(--border-light)', flexWrap: 'wrap', gap: '8px' }}>
-                  {event.registrationLink ? (
-                    <a
-                      href={event.registrationLink}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="btn btn-secondary"
-                      style={{ fontSize: '0.78rem', padding: '6px 12px' }}
-                    >
-                      <span>Official Portal</span>
-                      <ExternalLink size={13} />
-                    </a>
-                  ) : (
-                    <span style={{ fontSize: '0.75rem', color: 'var(--text-dim)' }}>
-                      GECT CPS Registration
-                    </span>
-                  )}
-
-                  <div>
-                    {event.registrationOpen ? (
-                      <button 
-                        className="btn btn-primary"
-                        style={{ fontSize: '0.82rem', padding: '6px 14px' }}
-                        onClick={() => {
-                          setPassData(null);
-                          setRegisteringEvent(event);
-                        }}
-                      >
-                        <Ticket size={15} />
-                        <span>Register &bull; Get Pass</span>
-                      </button>
-                    ) : (
-                      <span style={{ fontSize: '0.8rem', color: 'var(--text-dim)', fontWeight: 600 }}>
-                        {isPast ? 'Session Concluded' : 'Registration Closed'}
-                      </span>
-                    )}
                   </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+                );
+              })}
+            </div>
+          )}
+        </>
       )}
 
       {/* Registration Modal */}
@@ -596,7 +614,7 @@ export default function Events({ events = [], onRefresh }) {
                 <input
                   type="text"
                   className="form-input"
-                  placeholder="e.g. Anand K."
+                  placeholder="Enter your full name"
                   value={regName}
                   onChange={(e) => setRegName(e.target.value)}
                   required
@@ -608,7 +626,7 @@ export default function Events({ events = [], onRefresh }) {
                 <input
                   type="email"
                   className="form-input"
-                  placeholder="student@gect.ac.in"
+                  placeholder="Enter your student email"
                   value={regEmail}
                   onChange={(e) => setRegEmail(e.target.value)}
                   required

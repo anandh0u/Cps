@@ -216,13 +216,13 @@ export default function CommitteeAdmin({
     setEventCategory('Hackathon');
     setEventStatus('Upcoming');
     setEventDate('');
-    setEventTime('09:00 AM - 05:00 PM IST');
-    setEventVenue('GECT Central Auditorium & CPS IoT Lab');
+    setEventTime('');
+    setEventVenue('');
     setEventOrganizer('Association of Cyber Physical Systems (ACPS)');
     setEventSpeaker('');
     setEventPrizePool('');
-    setEventEligibility('Open to all engineering students');
-    setEventCapacity(150);
+    setEventEligibility('');
+    setEventCapacity(100);
     setEventRegisteredCount(0);
     setEventRegistrationOpen(true);
     setEventRegistrationLink('');
@@ -616,111 +616,129 @@ export default function CommitteeAdmin({
           </div>
 
           {/* Events List */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-            {filteredAdminEvents.map(evt => {
-              const isOngoing = evt.status.toLowerCase().includes('ongoing');
-              const isPast = evt.status.toLowerCase() === 'past';
-              const fillPercentage = Math.min(100, Math.round(((evt.registeredCount || 0) / (evt.capacity || 100)) * 100));
+          {filteredAdminEvents.length === 0 ? (
+            <div className="card" style={{ padding: '40px 20px', textAlign: 'center', background: '#ffffff' }}>
+              <CalendarDays size={36} color="var(--text-dim)" style={{ margin: '0 auto 12px' }} />
+              <h3 style={{ fontSize: '1.1rem', color: 'var(--navy-dark)', marginBottom: '4px' }}>
+                No College Events in Registry
+              </h3>
+              <p style={{ color: 'var(--text-dim)', fontSize: '0.84rem', marginBottom: '16px' }}>
+                Click "+ Create Event / Hackathon" above to publish upcoming campus competitions, workshops, or symposia.
+              </p>
+              <button className="btn btn-primary" onClick={handleOpenCreateEvent} style={{ fontSize: '0.82rem' }}>
+                <PlusCircle size={14} />
+                <span>Create First Event</span>
+              </button>
+            </div>
+          ) : (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+              {filteredAdminEvents.map(evt => {
+                const isOngoing = evt.status?.toLowerCase().includes('ongoing');
+                const isPast = evt.status?.toLowerCase() === 'past';
+                const fillPercentage = evt.capacity ? Math.min(100, Math.round(((evt.registeredCount || 0) / evt.capacity) * 100)) : 0;
 
-              return (
-                <div 
-                  key={evt.id}
-                  className="card"
-                  style={{
-                    padding: '18px 22px',
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    gap: '20px',
-                    flexWrap: 'wrap',
-                    borderLeft: `4px solid ${isOngoing ? 'var(--green-emerald)' : isPast ? '#94a3b8' : 'var(--navy-primary)'}`
-                  }}
-                >
-                  {/* Left Info */}
-                  <div style={{ flex: '1 1 480px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px', flexWrap: 'wrap' }}>
-                      <span className="font-mono" style={{ fontSize: '0.74rem', color: 'var(--text-dim)', fontWeight: 700 }}>
-                        {evt.id}
-                      </span>
-                      <span className={`badge ${isOngoing ? 'badge-green' : isPast ? 'badge-slate' : 'badge-blue'}`}>
-                        {evt.status}
-                      </span>
-                      <span className="badge badge-slate">
-                        {evt.category}
-                      </span>
-                      {evt.prizePool && (
-                        <span className="badge badge-amber" style={{ display: 'inline-flex', alignItems: 'center', gap: '3px' }}>
-                          <Trophy size={11} />
-                          {evt.prizePool}
+                return (
+                  <div 
+                    key={evt.id}
+                    className="card"
+                    style={{
+                      padding: '18px 22px',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      gap: '20px',
+                      flexWrap: 'wrap',
+                      borderLeft: `4px solid ${isOngoing ? 'var(--green-emerald)' : isPast ? '#94a3b8' : 'var(--navy-primary)'}`
+                    }}
+                  >
+                    {/* Left Info */}
+                    <div style={{ flex: '1 1 480px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px', flexWrap: 'wrap' }}>
+                        <span className="font-mono" style={{ fontSize: '0.74rem', color: 'var(--text-dim)', fontWeight: 700 }}>
+                          {evt.id}
                         </span>
-                      )}
-                      <span style={{ 
-                        fontSize: '0.72rem', 
-                        fontWeight: 700, 
-                        color: evt.registrationOpen ? 'var(--green-forest)' : 'var(--red-crimson)',
-                        background: evt.registrationOpen ? 'var(--green-light)' : 'var(--red-light)',
-                        padding: '2px 8px',
-                        borderRadius: '10px'
-                      }}>
-                        {evt.registrationOpen ? 'Registration OPEN' : 'Registration CLOSED'}
-                      </span>
-                    </div>
-
-                    <h3 style={{ fontSize: '1.15rem', color: 'var(--navy-dark)', marginBottom: '6px' }}>
-                      {evt.title}
-                    </h3>
-
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '14px', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-                      <span><strong>Date:</strong> {evt.date}</span>
-                      <span><strong>Time:</strong> {evt.time}</span>
-                      <span><strong>Venue:</strong> {evt.venue}</span>
-                      <span><strong>Lead / Org:</strong> {evt.organizer || evt.speaker}</span>
-                    </div>
-
-                    {/* Progress */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginTop: '10px', maxWidth: '380px' }}>
-                      <span style={{ fontSize: '0.74rem', color: 'var(--text-dim)' }}>
-                        Capacity: <strong>{evt.registeredCount || 0}</strong> / {evt.capacity} ({fillPercentage}%)
-                      </span>
-                      <div style={{ flex: 1, height: '5px', background: 'var(--border-light)', borderRadius: '3px', overflow: 'hidden' }}>
-                        <div style={{ height: '100%', width: `${fillPercentage}%`, background: 'var(--navy-primary)' }} />
+                        <span className={`badge ${isOngoing ? 'badge-green' : isPast ? 'badge-slate' : 'badge-blue'}`}>
+                          {evt.status}
+                        </span>
+                        <span className="badge badge-slate">
+                          {evt.category}
+                        </span>
+                        {evt.prizePool && (
+                          <span className="badge badge-amber" style={{ display: 'inline-flex', alignItems: 'center', gap: '3px' }}>
+                            <Trophy size={11} />
+                            {evt.prizePool}
+                          </span>
+                        )}
+                        <span style={{ 
+                          fontSize: '0.72rem', 
+                          fontWeight: 700, 
+                          color: evt.registrationOpen ? 'var(--green-forest)' : 'var(--red-crimson)',
+                          background: evt.registrationOpen ? 'var(--green-light)' : 'var(--red-light)',
+                          padding: '2px 8px',
+                          borderRadius: '10px'
+                        }}>
+                          {evt.registrationOpen ? 'Registration OPEN' : 'Registration CLOSED'}
+                        </span>
                       </div>
+
+                      <h3 style={{ fontSize: '1.15rem', color: 'var(--navy-dark)', marginBottom: '6px' }}>
+                        {evt.title}
+                      </h3>
+
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '14px', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+                        {evt.date && <span><strong>Date:</strong> {evt.date}</span>}
+                        {evt.time && <span><strong>Time:</strong> {evt.time}</span>}
+                        {evt.venue && <span><strong>Venue:</strong> {evt.venue}</span>}
+                        {(evt.organizer || evt.speaker) && <span><strong>Lead / Org:</strong> {evt.organizer || evt.speaker}</span>}
+                      </div>
+
+                      {/* Progress */}
+                      {evt.capacity > 0 && (
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginTop: '10px', maxWidth: '380px' }}>
+                          <span style={{ fontSize: '0.74rem', color: 'var(--text-dim)' }}>
+                            Capacity: <strong>{evt.registeredCount || 0}</strong> / {evt.capacity} ({fillPercentage}%)
+                          </span>
+                          <div style={{ flex: 1, height: '5px', background: 'var(--border-light)', borderRadius: '3px', overflow: 'hidden' }}>
+                            <div style={{ height: '100%', width: `${fillPercentage}%`, background: 'var(--navy-primary)' }} />
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Right Actions */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
+                      <button
+                        className="btn btn-secondary"
+                        onClick={() => handleToggleEventRegistration(evt)}
+                        title="Toggle registration open/closed status"
+                        style={{ fontSize: '0.76rem', padding: '6px 12px' }}
+                      >
+                        {evt.registrationOpen ? 'Close Reg' : 'Open Reg'}
+                      </button>
+
+                      <button
+                        className="btn btn-primary"
+                        onClick={() => handleOpenEditEvent(evt)}
+                        style={{ fontSize: '0.78rem', padding: '6px 14px', display: 'flex', alignItems: 'center', gap: '5px' }}
+                      >
+                        <Edit3 size={14} />
+                        <span>Edit Event</span>
+                      </button>
+
+                      <button
+                        className="btn btn-secondary"
+                        onClick={() => handleDeleteEvent(evt)}
+                        title="Delete event"
+                        style={{ fontSize: '0.78rem', padding: '6px 10px', color: 'var(--red-crimson)' }}
+                      >
+                        <Trash2 size={14} />
+                      </button>
                     </div>
                   </div>
-
-                  {/* Right Actions */}
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
-                    <button
-                      className="btn btn-secondary"
-                      onClick={() => handleToggleEventRegistration(evt)}
-                      title="Toggle registration open/closed status"
-                      style={{ fontSize: '0.76rem', padding: '6px 12px' }}
-                    >
-                      {evt.registrationOpen ? 'Close Reg' : 'Open Reg'}
-                    </button>
-
-                    <button
-                      className="btn btn-primary"
-                      onClick={() => handleOpenEditEvent(evt)}
-                      style={{ fontSize: '0.78rem', padding: '6px 14px', display: 'flex', alignItems: 'center', gap: '5px' }}
-                    >
-                      <Edit3 size={14} />
-                      <span>Edit Event</span>
-                    </button>
-
-                    <button
-                      className="btn btn-secondary"
-                      onClick={() => handleDeleteEvent(evt)}
-                      title="Delete event"
-                      style={{ fontSize: '0.78rem', padding: '6px 10px', color: 'var(--red-crimson)' }}
-                    >
-                      <Trash2 size={14} />
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
+          )}
 
           {/* Event Create / Edit Modal */}
           {isEventModalOpen && (
@@ -742,7 +760,7 @@ export default function CommitteeAdmin({
                   <input
                     type="text"
                     className="form-input"
-                    placeholder="e.g. HackCPS 2026: 36-Hour National IoT Hackathon"
+                    placeholder="Enter event title"
                     value={eventTitle}
                     onChange={(e) => setEventTitle(e.target.value)}
                     required
@@ -776,7 +794,7 @@ export default function CommitteeAdmin({
                     <input
                       type="text"
                       className="form-input"
-                      placeholder="e.g. ₹65,000 Cash Prize"
+                      placeholder="Prize amount (optional)"
                       value={eventPrizePool}
                       onChange={(e) => setEventPrizePool(e.target.value)}
                     />
@@ -789,7 +807,7 @@ export default function CommitteeAdmin({
                     <input
                       type="text"
                       className="form-input"
-                      placeholder="e.g. October 16 - 18, 2026"
+                      placeholder="Event date"
                       value={eventDate}
                       onChange={(e) => setEventDate(e.target.value)}
                       required
@@ -801,7 +819,7 @@ export default function CommitteeAdmin({
                     <input
                       type="text"
                       className="form-input"
-                      placeholder="e.g. 09:00 AM - 05:00 PM"
+                      placeholder="Event timings"
                       value={eventTime}
                       onChange={(e) => setEventTime(e.target.value)}
                     />
@@ -814,7 +832,7 @@ export default function CommitteeAdmin({
                     <input
                       type="text"
                       className="form-input"
-                      placeholder="e.g. GECT Central Auditorium & CPS IoT Lab"
+                      placeholder="Auditorium, seminar hall, or lab"
                       value={eventVenue}
                       onChange={(e) => setEventVenue(e.target.value)}
                       required
@@ -826,7 +844,7 @@ export default function CommitteeAdmin({
                     <input
                       type="text"
                       className="form-input"
-                      placeholder="e.g. Association of Cyber Physical Systems (ACPS)"
+                      placeholder="Organizing committee or club"
                       value={eventOrganizer}
                       onChange={(e) => setEventOrganizer(e.target.value)}
                     />
@@ -839,7 +857,7 @@ export default function CommitteeAdmin({
                     <input
                       type="text"
                       className="form-input"
-                      placeholder="e.g. Industry Experts from Bosch & TI"
+                      placeholder="Speaker or mentor (optional)"
                       value={eventSpeaker}
                       onChange={(e) => setEventSpeaker(e.target.value)}
                     />
@@ -850,7 +868,7 @@ export default function CommitteeAdmin({
                     <input
                       type="text"
                       className="form-input"
-                      placeholder="e.g. Open to all engineering students"
+                      placeholder="Eligibility criteria (optional)"
                       value={eventEligibility}
                       onChange={(e) => setEventEligibility(e.target.value)}
                     />
@@ -896,11 +914,11 @@ export default function CommitteeAdmin({
                 </div>
 
                 <div className="form-row">
-                  <label className="form-label">External Portal Link (Devfolio / Google Form URL)</label>
+                  <label className="form-label">External Portal Link (Optional)</label>
                   <input
                     type="url"
                     className="form-input"
-                    placeholder="https://..."
+                    placeholder="Official portal or registration link"
                     value={eventRegistrationLink}
                     onChange={(e) => setEventRegistrationLink(e.target.value)}
                   />
@@ -911,7 +929,7 @@ export default function CommitteeAdmin({
                   <textarea
                     className="form-textarea"
                     rows={3}
-                    placeholder="Provide full event overview, tracks, challenge statements..."
+                    placeholder="Detailed event overview and instructions..."
                     value={eventDescription}
                     onChange={(e) => setEventDescription(e.target.value)}
                   />
@@ -922,7 +940,7 @@ export default function CommitteeAdmin({
                   <textarea
                     className="form-textarea"
                     rows={3}
-                    placeholder="₹65,000 Total Prize Pool&#10;Complimentary hardware kits: ESP32, STM32&#10;Free accommodation for outstation teams"
+                    placeholder="Key highlights (one item per line)..."
                     value={eventHighlights}
                     onChange={(e) => setEventHighlights(e.target.value)}
                   />

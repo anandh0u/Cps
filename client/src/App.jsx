@@ -4,7 +4,6 @@ import Sidebar from './components/Sidebar';
 import ReportIssue from './pages/ReportIssue';
 import Suggestions from './pages/Suggestions';
 import Scholarships from './pages/Scholarships';
-import Opportunities from './pages/Opportunities';
 import StudentSupport from './pages/StudentSupport';
 import EmergencyContacts from './pages/EmergencyContacts';
 import Announcements from './pages/Announcements';
@@ -16,7 +15,7 @@ import { RefreshCw, Building2 } from 'lucide-react';
 const getRouteFromUrl = () => {
   const path = window.location.pathname.replace(/^\/+/, '').split('/')[0].toLowerCase();
   if (path === 'admin') return 'admin';
-  const validStudentRoutes = ['events', 'scholarships', 'opportunities', 'suggestions', 'announcements', 'emergency', 'issues', 'support', 'map'];
+  const validStudentRoutes = ['events', 'scholarships', 'suggestions', 'announcements', 'emergency', 'issues', 'support', 'map'];
   if (validStudentRoutes.includes(path)) return path;
   return 'events'; // showcase events and hackathons
 };
@@ -37,7 +36,6 @@ export default function App() {
     issues: [],
     suggestions: [],
     scholarships: [],
-    opportunities: [],
     support: { counsellors: [], helplines: [] },
     emergency: [],
     announcements: []
@@ -53,7 +51,6 @@ export default function App() {
         issuesRes,
         sugRes,
         schRes,
-        oppRes,
         supRes,
         emgRes,
         annRes,
@@ -63,7 +60,6 @@ export default function App() {
         fetch('/api/issues').then(r => r.json()),
         fetch('/api/suggestions').then(r => r.json()),
         fetch('/api/scholarships').then(r => r.json()),
-        fetch('/api/opportunities').then(r => r.json()),
         fetch('/api/support').then(r => r.json()),
         fetch('/api/emergency').then(r => r.json()),
         fetch('/api/announcements').then(r => r.json()),
@@ -76,7 +72,6 @@ export default function App() {
         issues: issuesRes.data || [],
         suggestions: sugRes.data || [],
         scholarships: schRes.data || [],
-        opportunities: oppRes.data || [],
         support: supRes.data || { counsellors: [], helplines: [] },
         emergency: emgRes.data || [],
         announcements: annRes.data || []
@@ -208,9 +203,6 @@ export default function App() {
                 )}
                 {currentRoute === 'scholarships' && (
                   <Scholarships scholarships={data.scholarships} />
-                )}
-                {currentRoute === 'opportunities' && (
-                  <Opportunities opportunities={data.opportunities} />
                 )}
                 {currentRoute === 'suggestions' && (
                   <Suggestions suggestions={data.suggestions} onRefresh={fetchAllData} />
