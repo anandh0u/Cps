@@ -21,8 +21,9 @@ export default function ReportIssue({ issues = [], onRefresh }) {
   // Form State
   const [formData, setFormData] = useState({
     title: '',
-    category: 'Lab Equipment',
-    location: 'CPS Hardware Lab (Room H-101)',
+    category: '',
+    customCategory: '',
+    location: '',
     priority: 'Medium',
     description: '',
     isAnonymous: true,
@@ -45,7 +46,7 @@ export default function ReportIssue({ issues = [], onRefresh }) {
     try {
       const payload = {
         title: formData.title,
-        category: formData.category,
+        category: formData.category === 'Other' ? formData.customCategory.trim() : formData.category,
         location: formData.location,
         priority: formData.priority,
         description: formData.description,
@@ -64,8 +65,9 @@ export default function ReportIssue({ issues = [], onRefresh }) {
         setSubmittedTicket(data.data);
         setFormData({
           title: '',
-          category: 'Lab Equipment',
-          location: 'CPS Hardware Lab (Room H-101)',
+          category: '',
+          customCategory: '',
+          location: '',
           priority: 'Medium',
           description: '',
           isAnonymous: true,
@@ -191,6 +193,7 @@ export default function ReportIssue({ issues = [], onRefresh }) {
                     type="text"
                     className="form-input"
                     value={formData.title}
+                    placeholder="Short summary of the issue"
                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                     required
                   />
@@ -203,26 +206,44 @@ export default function ReportIssue({ issues = [], onRefresh }) {
                       className="form-select"
                       value={formData.category}
                       onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                      required
                     >
+                      <option value="" disabled>Choose a category</option>
                       <option value="Lab Equipment">Lab Equipment</option>
                       <option value="Software & IT">Software & IT</option>
                       <option value="Classroom Facility">Classroom Facility</option>
                       <option value="Hostel & Amenities">Hostel & Amenities</option>
                       <option value="Academic Welfare">Academic Welfare</option>
+                      <option value="Other">Other</option>
                     </select>
                   </div>
 
                   <div className="form-row">
-                    <label className="form-label">Location *</label>
+                    <label className="form-label">Location / Address *</label>
                     <input
                       type="text"
                       className="form-input"
                       value={formData.location}
+                      placeholder="Building, room, hostel, or campus area"
                       onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                       required
                     />
                   </div>
                 </div>
+
+                {formData.category === 'Other' && (
+                  <div className="form-row">
+                    <label className="form-label">Other Category *</label>
+                    <input
+                      type="text"
+                      className="form-input"
+                      value={formData.customCategory}
+                      placeholder="Describe the type of issue"
+                      onChange={(e) => setFormData({ ...formData, customCategory: e.target.value })}
+                      required
+                    />
+                  </div>
+                )}
 
                 <div className="form-row">
                   <label className="form-label">Urgency</label>
@@ -247,6 +268,7 @@ export default function ReportIssue({ issues = [], onRefresh }) {
                     className="form-textarea"
                     rows={4}
                     value={formData.description}
+                    placeholder="Describe what happened, when it started, and any useful details"
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                     required
                   />
@@ -270,6 +292,7 @@ export default function ReportIssue({ issues = [], onRefresh }) {
                           type="text"
                           className="form-input"
                           value={formData.reporterName}
+                          placeholder="Your name"
                           onChange={(e) => setFormData({ ...formData, reporterName: e.target.value })}
                         />
                       </div>
@@ -279,6 +302,7 @@ export default function ReportIssue({ issues = [], onRefresh }) {
                           type="email"
                           className="form-input"
                           value={formData.contactEmail}
+                          placeholder="Your GEC email address"
                           onChange={(e) => setFormData({ ...formData, contactEmail: e.target.value })}
                         />
                       </div>

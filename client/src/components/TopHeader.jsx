@@ -15,7 +15,7 @@ export default function TopHeader() {
           </div>
           <div className="college-text">
             <h1 className="college-main-title">GOVERNMENT ENGINEERING COLLEGE THRISSUR</h1>
-            <p className="college-sub-text">Autonomous Institution &bull; Govt. of Kerala &bull; Estd. 1957</p>
+            <p className="college-sub-text">Govt. of Kerala &bull; Affiliated to APJAKTU &bull; Estd. 1957</p>
           </div>
         </div>
 

@@ -4,13 +4,14 @@ import { getStore } from '../db.js';
 
 const router = Router();
 
-const COMMITTEE_PASSCODE = process.env.COMMITTEE_PASSCODE || (process.env.NODE_ENV === 'production' ? '' : 'committee2026');
+const COMMITTEE_EMAIL = process.env.COMMITTEE_EMAIL || (process.env.NODE_ENV === 'production' ? '' : 'committee@gectcr.ac.in');
+const COMMITTEE_PASSWORD = process.env.COMMITTEE_PASSWORD || process.env.COMMITTEE_PASSCODE || (process.env.NODE_ENV === 'production' ? '' : 'committee2026');
 const SESSION_TTL_MS = 8 * 60 * 60 * 1000;
 const committeeSessions = new Map();
 
-function passcodesMatch(candidate) {
-  if (!COMMITTEE_PASSCODE || typeof candidate !== 'string') return false;
-  const expected = Buffer.from(COMMITTEE_PASSCODE);
+function secureMatch(candidate, expectedValue) {
+  if (!expectedValue || typeof candidate !== 'string') return false;
+  const expected = Buffer.from(expectedValue);
   const actual = Buffer.from(candidate);
   return expected.length === actual.length && timingSafeEqual(expected, actual);
 }
@@ -35,8 +36,8 @@ export function requireCommittee(req, res, next) {
 }
 
 router.post('/verify', (req, res) => {
-  const { passcode } = req.body;
-  if (passcodesMatch(passcode)) {
+  const { email, password } = req.body;
+  if (secureMatch(email?.trim().toLowerCase(), COMMITTEE_EMAIL.toLowerCase()) && secureMatch(password, COMMITTEE_PASSWORD)) {
     res.json({
       success: true,
       role: 'Welfare & Grievance Committee Member',
@@ -46,7 +47,7 @@ router.post('/verify', (req, res) => {
   } else {
     res.status(401).json({
       success: false,
-      error: 'Invalid committee passcode. Access restricted to authorized faculty & student representatives.'
+      error: 'Invalid committee email or password. Access is restricted to authorized committee members.'
     });
   }
 });

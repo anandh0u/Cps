@@ -37,7 +37,8 @@ export default function CommitteeAdmin({
   setIsAdminLoggedIn,
   onNavigateToStudentPortal
 }) {
-  const [passcode, setPasscode] = useState('');
+  const [adminEmail, setAdminEmail] = useState('');
+  const [adminPassword, setAdminPassword] = useState('');
   const [authError, setAuthError] = useState('');
   const [adminTab, setAdminTab] = useState('events'); // 'events' | 'issues' | 'suggestions' | 'announcements'
 
@@ -130,7 +131,7 @@ export default function CommitteeAdmin({
       const res = await fetch('/api/admin/verify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ passcode })
+        body: JSON.stringify({ email: adminEmail, password: adminPassword })
       });
       const data = await res.json();
       if (data.success) {
@@ -141,10 +142,10 @@ export default function CommitteeAdmin({
           setSelectedIssue(issues[0]);
         }
       } else {
-        setAuthError(data.error || 'Invalid passcode.');
+        setAuthError(data.error || 'Invalid email or password.');
       }
     } catch (err) {
-      setAuthError('Connection error verifying committee passcode.');
+      setAuthError('Connection error verifying committee credentials.');
     }
   };
 
@@ -431,12 +432,26 @@ export default function CommitteeAdmin({
 
           <form onSubmit={handleLogin}>
             <div className="form-row">
-              <label className="form-label">Committee Passcode</label>
+              <label className="form-label">Committee Email</label>
+              <input
+                type="email"
+                className="form-input"
+                value={adminEmail}
+                placeholder="Committee email address"
+                onChange={(e) => setAdminEmail(e.target.value)}
+                autoComplete="username"
+                required
+              />
+            </div>
+            <div className="form-row">
+              <label className="form-label">Password</label>
               <input
                 type="password"
                 className="form-input"
-                value={passcode}
-                onChange={(e) => setPasscode(e.target.value)}
+                value={adminPassword}
+                placeholder="Committee password"
+                onChange={(e) => setAdminPassword(e.target.value)}
+                autoComplete="current-password"
                 required
               />
             </div>

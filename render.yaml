@@ -10,5 +10,7 @@ services:
         value: production
       - key: PORT
         value: 10000
-      - key: COMMITTEE_PASSCODE
+      - key: COMMITTEE_EMAIL
+        sync: false
+      - key: COMMITTEE_PASSWORD
         sync: false

@@ -454,6 +454,12 @@ h1, h2, h3, h4, h5, h6 {
   border-color: var(--navy-primary);
 }
 
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: #a8b2c2;
+  opacity: 1;
+}
+
 /* Grid Layouts */
 .grid-2 {
   display: grid;

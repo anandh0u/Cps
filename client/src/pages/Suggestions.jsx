@@ -9,7 +9,8 @@ import {
 export default function Suggestions({ suggestions = [], onRefresh }) {
   const [formData, setFormData] = useState({
     title: '',
-    category: 'Lab Facilities',
+    category: '',
+    customCategory: '',
     idea: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -27,15 +28,25 @@ export default function Suggestions({ suggestions = [], onRefresh }) {
 
     setIsSubmitting(true);
     try {
+      const payload = {
+        title: formData.title,
+        category: formData.category === 'Other' ? formData.customCategory.trim() : formData.category,
+        idea: formData.idea
+      };
+      if (!payload.category) {
+        setErrorMsg('Please choose or enter a category.');
+        setIsSubmitting(false);
+        return;
+      }
       const res = await fetch('/api/suggestions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(payload)
       });
       const data = await res.json();
       if (data.success) {
         setSubmitSuccess(true);
-        setFormData({ title: '', category: 'Lab Facilities', idea: '' });
+        setFormData({ title: '', category: '', customCategory: '', idea: '' });
         if (onRefresh) onRefresh();
       } else {
         setErrorMsg(data.error || 'Failed to submit suggestion.');
@@ -96,6 +107,7 @@ export default function Suggestions({ suggestions = [], onRefresh }) {
                   type="text"
                   className="form-input"
                   value={formData.title}
+                  placeholder="Briefly name your suggestion"
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                   required
                 />
@@ -107,14 +119,31 @@ export default function Suggestions({ suggestions = [], onRefresh }) {
                   className="form-select"
                   value={formData.category}
                   onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                  required
                 >
+                  <option value="" disabled>Choose a category</option>
                   <option value="Lab Facilities">Lab Facilities & Equipment</option>
                   <option value="Curriculum & Workshops">Workshops & Seminars</option>
                   <option value="Student Resources">Component Lending Library</option>
                   <option value="Campus & Hostel">Hostel & Amenities</option>
                   <option value="General Welfare">General Student Welfare</option>
+                  <option value="Other">Other</option>
                 </select>
               </div>
+
+              {formData.category === 'Other' && (
+                <div className="form-row">
+                  <label className="form-label">Other Category *</label>
+                  <input
+                    type="text"
+                    className="form-input"
+                    value={formData.customCategory}
+                    placeholder="Enter the category"
+                    onChange={(e) => setFormData({ ...formData, customCategory: e.target.value })}
+                    required
+                  />
+                </div>
+              )}
 
               <div className="form-row">
                 <label className="form-label">Suggestion *</label>
@@ -122,6 +151,7 @@ export default function Suggestions({ suggestions = [], onRefresh }) {
                   className="form-textarea"
                   rows={4}
                   value={formData.idea}
+                  placeholder="Explain the idea, who it helps, and what could be improved"
                   onChange={(e) => setFormData({ ...formData, idea: e.target.value })}
                   required
                 />
