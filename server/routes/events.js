@@ -1,7 +1,15 @@
 import { Router } from 'express';
 import { getStore, saveStore } from '../db.js';
+import { requireCommittee } from './admin.js';
 
 const router = Router();
+
+function parseBoolean(value, fallback) {
+  if (typeof value === 'boolean') return value;
+  if (value === 'true') return true;
+  if (value === 'false') return false;
+  return fallback;
+}
 
 // GET all events with optional filtering
 router.get('/', (req, res) => {
@@ -46,7 +54,7 @@ router.get('/:id', (req, res) => {
 });
 
 // POST create new event (Admin)
-router.post('/', (req, res) => {
+router.post('/', requireCommittee, (req, res) => {
   const store = getStore();
   if (!store.events) store.events = [];
 
@@ -54,8 +62,8 @@ router.post('/', (req, res) => {
     title,
     category = 'Hackathon',
     status = 'Upcoming',
-    date = 'TBD',
-    time = 'TBD',
+    date = '',
+    time = '',
     venue = 'CPS Seminar Hall / Main Auditorium',
     organizer = 'Association of Cyber Physical Systems (ACPS)',
     speaker = 'Industry Experts & Faculty',
@@ -68,12 +76,15 @@ router.post('/', (req, res) => {
     registrationLink = ''
   } = req.body;
 
-  if (!title || !title.trim()) {
-    return res.status(400).json({ success: false, error: 'Event title is required.' });
+  if (!title?.trim() || !date?.trim() || !time?.trim() || !venue?.trim()) {
+    return res.status(400).json({ success: false, error: 'Event title, date, time, and venue are required.' });
   }
 
   // Generate unique ID
-  const eventNumber = store.events.length + 1;
+  const eventNumber = store.events.reduce((max, event) => {
+    const match = String(event.id || '').match(/(\d+)$/);
+    return match ? Math.max(max, Number(match[1])) : max;
+  }, 0) + 1;
   const newId = `EVT-2026-${String(eventNumber).padStart(2, '0')}`;
 
   const newEvent = {
@@ -92,7 +103,7 @@ router.post('/', (req, res) => {
     eligibility: eligibility.trim(),
     capacity: Number(capacity) || 100,
     registeredCount: 0,
-    registrationOpen: Boolean(registrationOpen),
+    registrationOpen: parseBoolean(registrationOpen, true),
     registrationLink: (registrationLink || '').trim(),
     createdAt: new Date().toISOString()
   };
@@ -109,7 +120,7 @@ router.post('/', (req, res) => {
 });
 
 // PUT update existing event (Admin)
-router.put('/:id', (req, res) => {
+router.put('/:id', requireCommittee, (req, res) => {
   const store = getStore();
   const index = (store.events || []).findIndex(e => e.id.toLowerCase() === req.params.id.toLowerCase());
 
@@ -131,7 +142,7 @@ router.put('/:id', (req, res) => {
           : existing.highlights),
     capacity: updates.capacity !== undefined ? Number(updates.capacity) : existing.capacity,
     registeredCount: updates.registeredCount !== undefined ? Number(updates.registeredCount) : existing.registeredCount,
-    registrationOpen: updates.registrationOpen !== undefined ? Boolean(updates.registrationOpen) : existing.registrationOpen,
+    registrationOpen: parseBoolean(updates.registrationOpen, existing.registrationOpen),
     updatedAt: new Date().toISOString()
   };
 
@@ -146,7 +157,7 @@ router.put('/:id', (req, res) => {
 });
 
 // DELETE event (Admin)
-router.delete('/:id', (req, res) => {
+router.delete('/:id', requireCommittee, (req, res) => {
   const store = getStore();
   const initialLength = (store.events || []).length;
   store.events = (store.events || []).filter(e => e.id.toLowerCase() !== req.params.id.toLowerCase());
@@ -181,6 +192,12 @@ router.post('/:id/register', (req, res) => {
   }
 
   const { name, email, year } = req.body;
+  if (!name?.trim() || !email?.trim() || !year?.trim()) {
+    return res.status(400).json({ success: false, error: 'Name, email, and year are required.' });
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+    return res.status(400).json({ success: false, error: 'Enter a valid email address.' });
+  }
   event.registeredCount = (event.registeredCount || 0) + 1;
   saveStore();
 
@@ -195,7 +212,7 @@ router.post('/:id/register', (req, res) => {
       venue: event.venue,
       date: event.date,
       time: event.time,
-      name,
+      name: name.trim(),
       registeredCount: event.registeredCount
     }
   });

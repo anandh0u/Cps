@@ -46,7 +46,7 @@ export default function Opportunities({ opportunities = [] }) {
           <Search size={14} />
           <input
             type="text"
-            placeholder="Search opportunity..."
+            aria-label="Search opportunities"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />

@@ -190,7 +190,7 @@ export default function Complaints({ complaints = [], onRefresh, initialRoomCode
           <Search size={16} />
           <input
             type="text"
-            placeholder="Search Ticket ID, title, lab..."
+            aria-label="Search complaints by ticket, title, or laboratory"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -332,7 +332,6 @@ export default function Complaints({ complaints = [], onRefresh, initialRoomCode
             <input
               type="text"
               className="form-input"
-              placeholder="e.g. Oscilloscope Channel 2 noise, Projector HDMI failure..."
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
               required
@@ -395,7 +394,6 @@ export default function Complaints({ complaints = [], onRefresh, initialRoomCode
             <textarea
               className="form-textarea"
               rows={4}
-              placeholder="Describe what occurred, station or bench number, error messages, or steps to reproduce..."
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
               required
@@ -419,7 +417,6 @@ export default function Complaints({ complaints = [], onRefresh, initialRoomCode
                   <input
                     type="text"
                     className="form-input"
-                    placeholder="e.g. S6 CPS Student"
                     value={formData.reporterName}
                     onChange={(e) => setFormData({ ...formData, reporterName: e.target.value })}
                   />
@@ -429,7 +426,6 @@ export default function Complaints({ complaints = [], onRefresh, initialRoomCode
                   <input
                     type="email"
                     className="form-input"
-                    placeholder="student@gect.ac.in"
                     value={formData.contactEmail}
                     onChange={(e) => setFormData({ ...formData, contactEmail: e.target.value })}
                   />

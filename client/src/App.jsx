@@ -9,22 +9,23 @@ import EmergencyContacts from './pages/EmergencyContacts';
 import Announcements from './pages/Announcements';
 import CampusMap from './pages/CampusMap';
 import Events from './pages/Events';
+import Welcome from './pages/Welcome';
 import CommitteeAdmin from './pages/CommitteeAdmin';
 import { RefreshCw, Building2 } from 'lucide-react';
 
 const getRouteFromUrl = () => {
   const path = window.location.pathname.replace(/^\/+/, '').split('/')[0].toLowerCase();
   if (path === 'admin') return 'admin';
-  const validStudentRoutes = ['map', 'events', 'scholarships', 'suggestions', 'support', 'announcements', 'emergency', 'issues'];
+  const validStudentRoutes = ['welcome', 'map', 'events', 'scholarships', 'suggestions', 'support', 'announcements', 'emergency', 'issues'];
   if (validStudentRoutes.includes(path)) return path;
-  return 'map'; // GEC Campus Map is top landing page
+  return 'welcome';
 };
 
 export default function App() {
   const [currentRoute, setCurrentRoute] = useState(getRouteFromUrl);
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(() => {
     try {
-      return sessionStorage.getItem('cps_admin_session') === 'true';
+      return Boolean(sessionStorage.getItem('cps_admin_token'));
     } catch (e) {
       return false;
     }
@@ -97,7 +98,7 @@ export default function App() {
 
   const navigate = (route) => {
     setCurrentRoute(route);
-    const targetPath = route === 'admin' ? '/admin' : route === 'map' ? '/' : `/${route}`;
+    const targetPath = route === 'admin' ? '/admin' : route === 'welcome' ? '/' : `/${route}`;
     if (window.location.pathname !== targetPath) {
       window.history.pushState({ route }, '', targetPath);
     }
@@ -129,7 +130,7 @@ export default function App() {
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <button 
               className="btn btn-secondary"
-              onClick={() => navigate('map')}
+              onClick={() => navigate('welcome')}
               style={{ fontSize: '0.82rem' }}
             >
               <span>&larr; Return to Student Portal</span>
@@ -146,7 +147,7 @@ export default function App() {
             onRefresh={fetchAllData} 
             isAdminLoggedIn={isAdminLoggedIn} 
             setIsAdminLoggedIn={setIsAdminLoggedIn} 
-            onNavigateToStudentPortal={() => navigate('map')}
+            onNavigateToStudentPortal={() => navigate('welcome')}
           />
         </div>
 
@@ -198,6 +199,9 @@ export default function App() {
               </div>
             ) : (
               <>
+                {currentRoute === 'welcome' && (
+                  <Welcome data={data} onNavigate={navigate} />
+                )}
                 {currentRoute === 'events' && (
                   <Events events={data.events} onRefresh={fetchAllData} />
                 )}
@@ -239,7 +243,7 @@ export default function App() {
               <div style={{ textAlign: 'right', fontSize: '0.78rem' }}>
                 <span>Campus Security: +91 487 2334144 &bull; Student Welfare Helpline: 1056 / 14416</span>
                 <p style={{ marginTop: '2px', color: 'var(--text-dim)' }}>
-                  Student Welfare &amp; Grievance Resolution Portal &bull; Academic Year 2025–2026 &bull; <a href="/admin" onClick={(e) => { e.preventDefault(); navigate('admin'); }} style={{ color: 'var(--text-dim)', textDecoration: 'underline' }}>Committee Desk</a>
+                  Student Welfare &amp; Grievance Resolution Portal &bull; Academic Year 2026–2027 &bull; <a href="/admin" onClick={(e) => { e.preventDefault(); navigate('admin'); }} style={{ color: 'var(--text-dim)', textDecoration: 'underline' }}>Committee Desk</a>
                 </p>
               </div>
             </div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { 
   CalendarDays,
   GraduationCap, 
@@ -8,13 +8,16 @@ import {
   AlertCircle, 
   HeartHandshake, 
   Building2,
-  MapPin
+  MapPin,
+  Home
 } from 'lucide-react';
 
 export default function Sidebar({ currentRoute, setCurrentRoute }) {
+  const activeLinkRef = useRef(null);
+
   // Student Portal Navigation Items in user-specified order
   const navItems = [
-    { id: 'map', label: 'GEC Campus Map', icon: MapPin },
+    { id: 'welcome', label: 'Welcome', icon: Home },
     { id: 'events', label: 'College Events', icon: CalendarDays },
     { id: 'scholarships', label: 'Scholarships', icon: GraduationCap },
     { id: 'suggestions', label: 'Suggestions', icon: Lightbulb },
@@ -22,12 +25,19 @@ export default function Sidebar({ currentRoute, setCurrentRoute }) {
     { id: 'announcements', label: 'Announcements', icon: Bell },
     { id: 'emergency', label: 'Emergency Contacts', icon: PhoneCall },
     { id: 'issues', label: 'Report an Issue', icon: AlertCircle },
+    { id: 'map', label: 'GEC Campus Map', icon: MapPin },
   ];
+
+  useEffect(() => {
+    if (window.matchMedia('(max-width: 900px)').matches) {
+      activeLinkRef.current?.scrollIntoView({ block: 'nearest', inline: 'center' });
+    }
+  }, [currentRoute]);
 
   return (
     <aside className="sidebar">
       {/* CPS Welfare Branding at top of sidebar */}
-      <div className="sidebar-brand" onClick={() => setCurrentRoute('map')} style={{ cursor: 'pointer' }}>
+      <div className="sidebar-brand" onClick={() => setCurrentRoute('welcome')} style={{ cursor: 'pointer' }}>
         <div className="brand-icon-box" style={{ background: '#0f172a', padding: '2px', overflow: 'hidden' }}>
           <img src="/cps-gect-emblem.png" alt="CPS GECT" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
         </div>
@@ -46,10 +56,11 @@ export default function Sidebar({ currentRoute, setCurrentRoute }) {
             return (
               <li key={item.id}>
                 <button
+                  ref={isActive ? activeLinkRef : null}
                   className={`sidebar-link ${isActive ? 'active' : ''}`}
                   onClick={() => setCurrentRoute(item.id)}
                 >
-                  <Icon size={17} color={isActive ? '#1e293b' : '#64748b'} />
+                  <Icon size={17} color={isActive ? '#3157d5' : '#718096'} />
                   <span>{item.label}</span>
                 </button>
               </li>

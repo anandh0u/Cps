@@ -1,172 +1,223 @@
-import React, { useState } from 'react';
-import { 
-  GraduationCap, 
-  Search, 
-  ExternalLink, 
-  CheckCircle2, 
-  IndianRupee
+import React, { useMemo, useState } from 'react';
+import {
+  BadgeIndianRupee,
+  BookOpenCheck,
+  CheckCircle2,
+  ExternalLink,
+  FileCheck2,
+  GraduationCap,
+  Search,
+  ShieldCheck,
+  SlidersHorizontal,
+  X
 } from 'lucide-react';
+
+const categories = [
+  'All',
+  'College & GECT Scholarships',
+  'National Scholarship Portal (NSP)',
+  'State & Central Government',
+  'Corporate & CSR Grants',
+  'Special & Alumni Aid'
+];
+
+const commonDocuments = [
+  'Recent marksheet and current admission proof',
+  'Income certificate, where the scheme requires it',
+  'Government identity proof and student ID',
+  'Applicant bank passbook with an active, seeded account',
+  'Category, disability, service, or minority certificate if applicable'
+];
+
+function scholarshipDocuments(item) {
+  if (item.documents?.length) return item.documents;
+  const documents = [...commonDocuments];
+  if (item.tag?.includes('FOR WOMEN')) documents.push('Declaration or certificate required by the women-student scheme');
+  if (item.tag?.includes('MINORITY')) documents.push('Valid minority-community certificate');
+  if (item.tag?.includes('SC/ST')) documents.push('Valid community certificate');
+  return documents;
+}
+
+function supportLabel(amount) {
+  return amount === 'Check Portal' ? 'Varies by scheme and course' : amount;
+}
 
 export default function Scholarships({ scholarships = [] }) {
   const [filterCategory, setFilterCategory] = useState('All');
   const [searchTerm, setSearchTerm] = useState('');
+  const [sortMode, setSortMode] = useState('name');
   const [activeModalItem, setActiveModalItem] = useState(null);
 
-  const filtered = scholarships.filter(item => {
-    const matchesCat = filterCategory === 'All' || item.category.toLowerCase().includes(filterCategory.toLowerCase());
-    const q = searchTerm.toLowerCase();
-    const matchesSearch = !searchTerm ||
-      item.name.toLowerCase().includes(q) ||
-      item.provider.toLowerCase().includes(q) ||
-      item.eligibility.toLowerCase().includes(q);
+  const filtered = useMemo(() => {
+    const query = searchTerm.trim().toLowerCase();
+    const list = scholarships.filter((item) => {
+      const matchesCategory = filterCategory === 'All' || item.category === filterCategory;
+      const haystack = [item.name, item.provider, item.eligibility, item.tag, item.amount]
+        .filter(Boolean)
+        .join(' ')
+        .toLowerCase();
+      return matchesCategory && (!query || haystack.includes(query));
+    });
 
-    return matchesCat && matchesSearch;
-  });
+    return [...list].sort((a, b) => {
+      if (sortMode === 'category') return a.category.localeCompare(b.category) || a.name.localeCompare(b.name);
+      if (sortMode === 'deadline') return a.deadline.localeCompare(b.deadline) || a.name.localeCompare(b.name);
+      return a.name.localeCompare(b.name);
+    });
+  }, [filterCategory, scholarships, searchTerm, sortMode]);
+
+  const governmentCount = scholarships.filter((item) =>
+    /government|central govt|aicte|nsp/i.test(`${item.provider} ${item.category} ${item.tag}`)
+  ).length;
 
   return (
-    <div>
-      <div className="page-title-row">
+    <div className="scholarship-page">
+      <div className="page-title-row scholarship-heading">
         <div>
+          <span className="section-kicker">Student funding finder</span>
           <h1>Scholarships &amp; Financial Support</h1>
-          <p>Curated repository of 50+ college, state, central government, and corporate CSR scholarships for GEC Thrissur students (Source: Genome GECT &amp; Welfare Desk).</p>
+          <p>Compare GECT, Kerala, national, alumni, and private funding opportunities in one directory.</p>
+        </div>
+        <a className="btn btn-secondary" href="https://scholarships.gov.in/All-Scholarships" target="_blank" rel="noreferrer">
+          <span>National Scholarship Portal</span>
+          <ExternalLink size={14} />
+        </a>
+      </div>
+
+      <div className="scholarship-summary" aria-label="Scholarship directory summary">
+        <div><GraduationCap size={19} /><span><strong>{scholarships.length}</strong> listed schemes</span></div>
+        <div><ShieldCheck size={19} /><span><strong>{governmentCount}</strong> government-linked</span></div>
+        <div><BookOpenCheck size={19} /><span><strong>{categories.length - 1}</strong> funding groups</span></div>
+      </div>
+
+      <div className="scholarship-notice">
+        <FileCheck2 size={19} />
+        <div>
+          <strong>Check the current notification before applying.</strong>
+          <p>Amounts, eligibility rules, and closing dates can change each academic year. Use this directory to shortlist a scheme, then confirm the current cycle on its official portal.</p>
         </div>
       </div>
 
-      {/* Filter and Search Bar */}
-      <div className="filter-shelf">
-        <div className="filter-group">
-          {['All', 'College & GECT Scholarships', 'National Scholarship Portal (NSP)', 'State & Central Government', 'Corporate & CSR Grants', 'Special & Alumni Aid'].map((cat) => (
+      <section className="scholarship-tools" aria-label="Scholarship search and filters">
+        <label className="scholarship-search">
+          <span>Search scholarships</span>
+          <div className="scholarship-search-control">
+            <Search size={16} />
+            <input
+              type="search"
+              value={searchTerm}
+              onChange={(event) => setSearchTerm(event.target.value)}
+              aria-label="Search scholarships by name, eligibility, amount, or provider"
+            />
+          </div>
+        </label>
+
+        <label className="scholarship-sort">
+          <span><SlidersHorizontal size={14} /> Sort results</span>
+          <select value={sortMode} onChange={(event) => setSortMode(event.target.value)}>
+            <option value="name">Name A–Z</option>
+            <option value="category">Funding group</option>
+            <option value="deadline">Deadline label</option>
+          </select>
+        </label>
+
+        <div className="scholarship-filters" role="group" aria-label="Filter by funding group">
+          {categories.map((category) => (
             <button
-              key={cat}
-              className={`filter-btn ${filterCategory === cat ? 'active' : ''}`}
-              onClick={() => setFilterCategory(cat)}
+              key={category}
+              type="button"
+              className={`filter-btn ${filterCategory === category ? 'active' : ''}`}
+              onClick={() => setFilterCategory(category)}
             >
-              {cat}
+              {category === 'All' ? `All (${scholarships.length})` : category}
             </button>
           ))}
         </div>
+      </section>
 
-        <div className="search-field">
-          <Search size={14} />
-          <input
-            type="text"
-            placeholder="Search 50+ scholarships by name, tag, or eligibility..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
+      <div className="scholarship-results-row">
+        <strong>{filtered.length} opportunities</strong>
+        <span>Source directory: GENOME by KSU GECT and linked scheme portals</span>
+      </div>
+
+      {filtered.length ? (
+        <div className="scholarship-grid">
+          {filtered.map((item) => (
+            <article key={item.id} className="scholarship-card">
+              <div className="scholarship-card-topline">
+                <span className="tag tag-navy">{item.tag}</span>
+                <span className="scholarship-id">{item.id}</span>
+              </div>
+              <div>
+                <p className="scholarship-category">{item.category}</p>
+                <h2>{item.name}</h2>
+                <p className="scholarship-provider">{item.provider}</p>
+              </div>
+              <div className="scholarship-facts">
+                <div><span>Support</span><strong><BadgeIndianRupee size={15} />{supportLabel(item.amount)}</strong></div>
+                <div><span>Usual closing window</span><strong>{item.deadline}</strong></div>
+              </div>
+              <div className="scholarship-eligibility">
+                <span>Who can apply</span>
+                <p>{item.eligibility}</p>
+              </div>
+              <div className="scholarship-card-actions">
+                <button type="button" className="btn btn-secondary" onClick={() => setActiveModalItem(item)}>Requirements</button>
+                <a href={item.applyUrl} target="_blank" rel="noreferrer" className="btn btn-primary">
+                  <span>Official portal</span><ExternalLink size={13} />
+                </a>
+              </div>
+            </article>
+          ))}
         </div>
-      </div>
+      ) : (
+        <div className="scholarship-empty card">
+          <Search size={22} />
+          <h2>No matching scholarship</h2>
+          <p>Try a broader keyword or choose another funding group.</p>
+          <button type="button" className="btn btn-secondary" onClick={() => { setSearchTerm(''); setFilterCategory('All'); }}>Clear filters</button>
+        </div>
+      )}
 
-      {/* Cards Grid */}
-      <div className="grid-2" style={{ gap: '18px' }}>
-        {filtered.map((item) => (
-          <div key={item.id} className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-            <div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '6px' }}>
-                <span className="tag tag-stone">
-                  {item.category}
-                </span>
-                <span className="tag tag-amber font-mono">
-                  Deadline: {item.deadline}
-                </span>
-              </div>
-
-              <h3 style={{ fontSize: '1.05rem', color: 'var(--navy-dark)', marginBottom: '3px' }}>
-                {item.name}
-              </h3>
-              <p style={{ fontSize: '0.78rem', color: 'var(--text-dim)', marginBottom: '10px' }}>
-                Administered by: <strong>{item.provider}</strong>
-              </p>
-
-              <div style={{ background: 'var(--navy-subtle)', padding: '7px 10px', borderRadius: 'var(--radius-sm)', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <IndianRupee size={14} color="var(--navy-primary)" />
-                <span style={{ fontSize: '0.86rem', fontWeight: 700, color: 'var(--navy-dark)' }}>
-                  {item.amount}
-                </span>
-              </div>
-
-              <div style={{ marginBottom: '10px' }}>
-                <span style={{ fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-dim)', display: 'block', marginBottom: '2px' }}>
-                  Eligibility:
-                </span>
-                <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', lineHeight: '1.45' }}>
-                  {item.eligibility}
-                </p>
-              </div>
-
-              {item.documents && item.documents.length > 0 && (
-                <div>
-                  <span style={{ fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-dim)', display: 'block', marginBottom: '3px' }}>
-                    Key Documents:
-                  </span>
-                  <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '2px', fontSize: '0.78rem', color: 'var(--text-muted)' }}>
-                    {item.documents.map((doc, idx) => (
-                      <li key={idx} style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                        <CheckCircle2 size={12} color="var(--green-forest)" />
-                        <span>{doc}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              {item.tag && (
-                <div style={{ marginTop: '6px' }}>
-                  <span className="tag tag-stone" style={{ fontSize: '0.72rem', fontWeight: 600 }}>
-                    Category Tag: {item.tag}
-                  </span>
-                </div>
-              )}
-            </div>
-
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '10px', borderTop: '1px solid var(--border-light)', marginTop: '12px' }}>
-              <button 
-                className="btn btn-secondary" 
-                style={{ fontSize: '0.76rem', padding: '4px 8px' }}
-                onClick={() => setActiveModalItem(item)}
-              >
-                Guidelines
-              </button>
-
-              <a
-                href={item.applyUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="btn btn-primary"
-                style={{ fontSize: '0.76rem', padding: '4px 10px' }}
-              >
-                <span>Portal Link</span>
-                <ExternalLink size={12} />
-              </a>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Guidelines Modal */}
       {activeModalItem && (
-        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.4)', zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px' }} onClick={() => setActiveModalItem(null)}>
-          <div className="card" style={{ maxWidth: '540px', width: '100%', maxHeight: '85vh', overflowY: 'auto' }} onClick={(e) => e.stopPropagation()}>
-            <h3 style={{ fontSize: '1.15rem', color: 'var(--navy-dark)', marginBottom: '4px' }}>{activeModalItem.name}</h3>
-            <p style={{ fontSize: '0.8rem', color: 'var(--text-dim)', marginBottom: '14px' }}>{activeModalItem.provider}</p>
-
-            <div style={{ marginBottom: '12px', background: 'var(--bg-subtle)', padding: '10px', borderRadius: 'var(--radius-sm)' }}>
-              <strong style={{ display: 'block', color: 'var(--navy-dark)' }}>Grant: {activeModalItem.amount}</strong>
-              <span className="font-mono" style={{ fontSize: '0.8rem', color: 'var(--amber-warm)' }}>Deadline: {activeModalItem.deadline}</span>
+        <div className="scholarship-modal-backdrop" role="presentation" onClick={() => setActiveModalItem(null)}>
+          <section className="scholarship-modal" role="dialog" aria-modal="true" aria-labelledby="scholarship-dialog-title" onClick={(event) => event.stopPropagation()}>
+            <button type="button" className="scholarship-modal-close" aria-label="Close scholarship details" onClick={() => setActiveModalItem(null)}><X size={18} /></button>
+            <span className="tag tag-navy">{activeModalItem.tag}</span>
+            <h2 id="scholarship-dialog-title">{activeModalItem.name}</h2>
+            <p className="scholarship-provider">{activeModalItem.provider}</p>
+            <div className="scholarship-modal-facts">
+              <div><span>Support</span><strong>{supportLabel(activeModalItem.amount)}</strong></div>
+              <div><span>Usual closing window</span><strong>{activeModalItem.deadline}</strong></div>
             </div>
-
-            <div style={{ marginBottom: '12px' }}>
-              <h4 style={{ fontSize: '0.84rem', color: 'var(--navy-dark)', marginBottom: '2px' }}>Application Procedure</h4>
-              <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>{activeModalItem.guidelines}</p>
+            <div className="scholarship-modal-section">
+              <h3>Eligibility summary</h3>
+              <p>{activeModalItem.eligibility}</p>
             </div>
-
-            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px', marginTop: '16px' }}>
-              <button className="btn btn-secondary" onClick={() => setActiveModalItem(null)}>Close</button>
+            <div className="scholarship-modal-section">
+              <h3>Prepare these documents</h3>
+              <ul>
+                {scholarshipDocuments(activeModalItem).map((document) => (
+                  <li key={document}><CheckCircle2 size={15} /><span>{document}</span></li>
+                ))}
+              </ul>
+            </div>
+            <div className="scholarship-modal-section application-steps">
+              <h3>Application steps</h3>
+              <ol>
+                <li>Open the official portal and find the latest notification for this scheme.</li>
+                <li>Confirm the current eligibility, award amount, deadline, and document format.</li>
+                <li>Complete the application and keep the acknowledgement or registration number.</li>
+                <li>Submit institute-verification documents to the college office if the scheme requests them.</li>
+              </ol>
+            </div>
+            <div className="scholarship-modal-actions">
+              <button type="button" className="btn btn-secondary" onClick={() => setActiveModalItem(null)}>Close</button>
               <a href={activeModalItem.applyUrl} target="_blank" rel="noreferrer" className="btn btn-primary">
-                <span>Go to Portal</span>
-                <ExternalLink size={12} />
+                <span>Open official portal</span><ExternalLink size={13} />
               </a>
             </div>
-          </div>
+          </section>
         </div>
       )}
     </div>

@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { getStore, saveStore } from '../db.js';
+import { requireCommittee } from './admin.js';
 
 const router = Router();
 
@@ -7,6 +8,7 @@ const router = Router();
 router.get('/', (req, res) => {
   const store = getStore();
   const suggestions = store.suggestions || [];
+  store.suggestions = suggestions;
   // Sort by upvotes desc, then date desc
   const sorted = [...suggestions].sort((a, b) => b.upvotes - a.upvotes || new Date(b.submittedAt).getTime() - new Date(a.submittedAt).getTime());
   res.json({ success: true, count: sorted.length, data: sorted });
@@ -63,7 +65,7 @@ router.post('/:id/upvote', (req, res) => {
 });
 
 // PATCH suggestion status by committee
-router.patch('/:id/status', (req, res) => {
+router.patch('/:id/status', requireCommittee, (req, res) => {
   const store = getStore();
   const item = (store.suggestions || []).find(s => s.id.toLowerCase() === req.params.id.toLowerCase());
 

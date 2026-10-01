@@ -190,7 +190,6 @@ export default function ReportIssue({ issues = [], onRefresh }) {
                   <input
                     type="text"
                     className="form-input"
-                    placeholder="e.g. Oscilloscope Channel 2 noise, Projector HDMI connection..."
                     value={formData.title}
                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                     required
@@ -218,7 +217,6 @@ export default function ReportIssue({ issues = [], onRefresh }) {
                     <input
                       type="text"
                       className="form-input"
-                      placeholder="e.g. Lab H-101, Room 301, Hostel..."
                       value={formData.location}
                       onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                       required
@@ -248,7 +246,6 @@ export default function ReportIssue({ issues = [], onRefresh }) {
                   <textarea
                     className="form-textarea"
                     rows={4}
-                    placeholder="Describe what occurred, station or bench number, error message..."
                     value={formData.description}
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                     required
@@ -272,7 +269,6 @@ export default function ReportIssue({ issues = [], onRefresh }) {
                         <input
                           type="text"
                           className="form-input"
-                          placeholder="e.g. S6 CPS Student"
                           value={formData.reporterName}
                           onChange={(e) => setFormData({ ...formData, reporterName: e.target.value })}
                         />
@@ -282,7 +278,6 @@ export default function ReportIssue({ issues = [], onRefresh }) {
                         <input
                           type="email"
                           className="form-input"
-                          placeholder="student@gect.ac.in"
                           value={formData.contactEmail}
                           onChange={(e) => setFormData({ ...formData, contactEmail: e.target.value })}
                         />
@@ -327,7 +322,7 @@ export default function ReportIssue({ issues = [], onRefresh }) {
               <Search size={14} />
               <input
                 type="text"
-                placeholder="Search ticket reference..."
+                aria-label="Search issue by ticket reference"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />

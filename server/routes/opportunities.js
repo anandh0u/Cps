@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { getStore, saveStore } from '../db.js';
+import { requireCommittee } from './admin.js';
 
 const router = Router();
 
@@ -24,7 +25,7 @@ router.get('/', (req, res) => {
   res.json({ success: true, count: opportunities.length, data: opportunities });
 });
 
-router.post('/', (req, res) => {
+router.post('/', requireCommittee, (req, res) => {
   const store = getStore();
   const { title, type, organization, stipend, deadline, location, eligibility, applyUrl, description } = req.body;
 
@@ -33,13 +34,18 @@ router.post('/', (req, res) => {
   }
 
   const opportunities = store.opportunities || [];
+  store.opportunities = opportunities;
+  const maxNumber = opportunities.reduce((max, item) => {
+    const match = String(item.id || '').match(/\d+/);
+    return match ? Math.max(max, Number(match[0])) : max;
+  }, 0);
   const newOpp = {
-    id: `OPP-0${opportunities.length + 1}`,
+    id: `OPP-${String(maxNumber + 1).padStart(3, '0')}`,
     title: title.trim(),
     type: type || 'Internship',
     organization: organization.trim(),
-    stipend: stipend || 'Not Specified',
-    deadline: deadline || 'Open Until Filled',
+    stipend: stipend || 'Contact the programme provider',
+    deadline: deadline || 'Applications accepted until filled',
     location: location || 'Hybrid / Kerala',
     eligibility: eligibility || 'CPS Students',
     applyUrl: applyUrl.trim(),

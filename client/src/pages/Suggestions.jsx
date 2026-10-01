@@ -95,7 +95,6 @@ export default function Suggestions({ suggestions = [], onRefresh }) {
                 <input
                   type="text"
                   className="form-input"
-                  placeholder="e.g. Open Lab Access on Saturdays..."
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                   required
@@ -122,7 +121,6 @@ export default function Suggestions({ suggestions = [], onRefresh }) {
                 <textarea
                   className="form-textarea"
                   rows={4}
-                  placeholder="Explain the idea and how it benefits students..."
                   value={formData.idea}
                   onChange={(e) => setFormData({ ...formData, idea: e.target.value })}
                   required

@@ -1,7 +1,12 @@
 import { Router } from 'express';
 import { getStore, saveStore } from '../db.js';
+import { requireCommittee } from './admin.js';
 
 const router = Router();
+
+function parseBoolean(value) {
+  return value === true || value === 'true';
+}
 
 router.get('/', (req, res) => {
   const store = getStore();
@@ -24,7 +29,7 @@ router.get('/', (req, res) => {
   res.json({ success: true, count: list.length, data: list });
 });
 
-router.post('/', (req, res) => {
+router.post('/', requireCommittee, (req, res) => {
   const store = getStore();
   const { title, category, summary, issuedBy, urgent } = req.body;
 
@@ -33,14 +38,19 @@ router.post('/', (req, res) => {
   }
 
   const list = store.announcements || [];
+  store.announcements = list;
+  const maxNumber = list.reduce((max, item) => {
+    const match = String(item.id || '').match(/\d+/);
+    return match ? Math.max(max, Number(match[0])) : max;
+  }, 500);
   const newAnn = {
-    id: `ANN-${500 + list.length + 1}`,
+    id: `ANN-${maxNumber + 1}`,
     title: title.trim(),
     category: category || 'Welfare Notice',
     date: new Date().toISOString().slice(0, 10),
     summary: summary.trim(),
     issuedBy: issuedBy?.trim() || 'Student Welfare Committee',
-    urgent: Boolean(urgent)
+    urgent: parseBoolean(urgent)
   };
 
   store.announcements.unshift(newAnn);
@@ -49,7 +59,7 @@ router.post('/', (req, res) => {
   res.status(201).json({ success: true, message: 'Announcement published.', data: newAnn });
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', requireCommittee, (req, res) => {
   const store = getStore();
   const { id } = req.params;
   const initialLength = (store.announcements || []).length;

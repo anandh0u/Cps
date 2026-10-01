@@ -13,6 +13,8 @@ import announcementsRoutes from './routes/announcements.js';
 import adminRoutes from './routes/admin.js';
 import departmentRoutes from './routes/department.js';
 import eventsRoutes from './routes/events.js';
+import roomsRoutes from './routes/rooms.js';
+import facultyRoutes from './routes/faculty.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -52,6 +54,8 @@ app.use('/api/support', supportRoutes);
 app.use('/api/emergency', emergencyRoutes);
 app.use('/api/announcements', announcementsRoutes);
 app.use('/api/events', eventsRoutes);
+app.use('/api/rooms', roomsRoutes);
+app.use('/api/faculty', facultyRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/department', departmentRoutes);
 

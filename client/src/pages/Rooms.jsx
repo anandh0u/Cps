@@ -81,7 +81,7 @@ export default function Rooms({ rooms = [], onReportIssue }) {
           <Search size={16} />
           <input
             type="text"
-            placeholder="Search room code, class, subject..."
+            aria-label="Search rooms by code, class, or subject"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />

@@ -62,7 +62,7 @@ export default function Updates({ updates = [] }) {
           <Search size={16} />
           <input
             type="text"
-            placeholder="Search circulars, exam cell..."
+            aria-label="Search circulars and examination notices"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />

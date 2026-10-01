@@ -32,7 +32,9 @@ export function getStore() {
 
 export function saveStore() {
   try {
-    fs.writeFileSync(DATA_FILE, JSON.stringify(store, null, 2), 'utf-8');
+    const temporaryFile = `${DATA_FILE}.tmp`;
+    fs.writeFileSync(temporaryFile, JSON.stringify(store, null, 2), 'utf-8');
+    fs.renameSync(temporaryFile, DATA_FILE);
     return true;
   } catch (err) {
     console.error('Failed to write store.json:', err);

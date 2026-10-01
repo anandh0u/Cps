@@ -50,7 +50,7 @@ export default function Faculty({ faculty = [] }) {
           <Search size={16} />
           <input
             type="text"
-            placeholder="Search faculty name, specialization, lab..."
+            aria-label="Search faculty by name, specialization, or laboratory"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />

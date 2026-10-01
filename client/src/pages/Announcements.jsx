@@ -50,7 +50,7 @@ export default function Announcements({ announcements = [] }) {
           <Search size={15} />
           <input
             type="text"
-            placeholder="Search circulars..."
+            aria-label="Search circulars"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />

@@ -340,7 +340,7 @@ export default function Events({ events = [], onRefresh }) {
                 <Search size={16} />
                 <input
                   type="text"
-                  placeholder="Search events..."
+                  aria-label="Search events"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
@@ -614,7 +614,6 @@ export default function Events({ events = [], onRefresh }) {
                 <input
                   type="text"
                   className="form-input"
-                  placeholder="Enter your full name"
                   value={regName}
                   onChange={(e) => setRegName(e.target.value)}
                   required
@@ -626,7 +625,6 @@ export default function Events({ events = [], onRefresh }) {
                 <input
                   type="email"
                   className="form-input"
-                  placeholder="Enter your student email"
                   value={regEmail}
                   onChange={(e) => setRegEmail(e.target.value)}
                   required

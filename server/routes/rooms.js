@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { getStore, saveStore } from '../db.js';
+import { requireCommittee } from './admin.js';
 
 const router = Router();
 
@@ -33,7 +34,7 @@ router.get('/:id', (req, res) => {
   res.json({ success: true, data: room });
 });
 
-router.patch('/:id/status', (req, res) => {
+router.patch('/:id/status', requireCommittee, (req, res) => {
   const store = getStore();
   const room = (store.rooms || []).find(r => r.id.toLowerCase() === req.params.id.toLowerCase());
 

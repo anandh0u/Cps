@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
   ShieldCheck, 
   Lock, 
@@ -90,6 +90,39 @@ export default function CommitteeAdmin({
   const [eventFeedbackMsg, setEventFeedbackMsg] = useState('');
   const [eventErrorMsg, setEventErrorMsg] = useState('');
 
+  useEffect(() => {
+    if (!issues.length) {
+      setSelectedIssue(null);
+      return;
+    }
+
+    setSelectedIssue((current) => {
+      if (!current) return issues[0];
+      return issues.find((issue) => issue.id === current.id) || issues[0];
+    });
+  }, [issues]);
+
+  const committeeFetch = async (url, options = {}) => {
+    const token = sessionStorage.getItem('cps_admin_token');
+    const response = await fetch(url, {
+      ...options,
+      headers: {
+        ...(options.body ? { 'Content-Type': 'application/json' } : {}),
+        ...options.headers,
+        Authorization: `Bearer ${token || ''}`
+      }
+    });
+
+    if (response.status === 401) {
+      sessionStorage.removeItem('cps_admin_token');
+      sessionStorage.removeItem('cps_admin_session');
+      setIsAdminLoggedIn(false);
+      throw new Error('Committee session expired. Please sign in again.');
+    }
+
+    return response;
+  };
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setAuthError('');
@@ -101,6 +134,7 @@ export default function CommitteeAdmin({
       });
       const data = await res.json();
       if (data.success) {
+        sessionStorage.setItem('cps_admin_token', data.token);
         sessionStorage.setItem('cps_admin_session', 'true');
         setIsAdminLoggedIn(true);
         if (issues.length > 0 && !selectedIssue) {
@@ -128,9 +162,8 @@ export default function CommitteeAdmin({
         assignedCommittee: updateAssigned || selectedIssue.assignedCommittee
       };
 
-      const res = await fetch(`/api/issues/${selectedIssue.id}/status`, {
+      const res = await committeeFetch(`/api/issues/${selectedIssue.id}/status`, {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
       const data = await res.json();
@@ -158,9 +191,8 @@ export default function CommitteeAdmin({
         officialResponse: sugResponse || selectedSuggestion.officialResponse
       };
 
-      const res = await fetch(`/api/suggestions/${selectedSuggestion.id}/status`, {
+      const res = await committeeFetch(`/api/suggestions/${selectedSuggestion.id}/status`, {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
       const data = await res.json();
@@ -189,9 +221,8 @@ export default function CommitteeAdmin({
         issuedBy: 'Student Welfare & Grievance Committee'
       };
 
-      const res = await fetch('/api/announcements', {
+      const res = await committeeFetch('/api/announcements', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
       const data = await res.json();
@@ -211,7 +242,7 @@ export default function CommitteeAdmin({
   const handleDeleteAnnouncement = async (ann) => {
     if (!window.confirm(`Delete circular "${ann.title}"?`)) return;
     try {
-      const res = await fetch(`/api/announcements/${ann.id}`, { method: 'DELETE' });
+      const res = await committeeFetch(`/api/announcements/${ann.id}`, { method: 'DELETE' });
       const data = await res.json();
       if (data.success) {
         setEventFeedbackMsg(`Circular "${ann.title}" removed.`);
@@ -274,8 +305,8 @@ export default function CommitteeAdmin({
 
   const handleSaveEvent = async (e) => {
     e.preventDefault();
-    if (!eventTitle.trim()) {
-      setEventErrorMsg('Event Title is required.');
+    if (!eventTitle.trim() || !eventDate.trim() || !eventTime.trim() || !eventVenue.trim()) {
+      setEventErrorMsg('Title, date, time, and venue are required.');
       return;
     }
 
@@ -287,8 +318,8 @@ export default function CommitteeAdmin({
       title: eventTitle.trim(),
       category: eventCategory,
       status: eventStatus,
-      date: eventDate.trim() || 'TBD',
-      time: eventTime.trim() || 'TBD',
+      date: eventDate.trim(),
+      time: eventTime.trim(),
       venue: eventVenue.trim(),
       organizer: eventOrganizer.trim(),
       speaker: eventSpeaker.trim(),
@@ -305,15 +336,13 @@ export default function CommitteeAdmin({
     try {
       let res;
       if (eventFormMode === 'create') {
-        res = await fetch('/api/events', {
+        res = await committeeFetch('/api/events', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
       } else {
-        res = await fetch(`/api/events/${editingEventId}`, {
+        res = await committeeFetch(`/api/events/${editingEventId}`, {
           method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
       }
@@ -336,9 +365,8 @@ export default function CommitteeAdmin({
 
   const handleToggleEventRegistration = async (evt) => {
     try {
-      const res = await fetch(`/api/events/${evt.id}`, {
+      const res = await committeeFetch(`/api/events/${evt.id}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ registrationOpen: !evt.registrationOpen })
       });
       const data = await res.json();
@@ -357,7 +385,7 @@ export default function CommitteeAdmin({
     if (!confirmDelete) return;
 
     try {
-      const res = await fetch(`/api/events/${evt.id}`, {
+      const res = await committeeFetch(`/api/events/${evt.id}`, {
         method: 'DELETE'
       });
       const data = await res.json();
@@ -407,7 +435,6 @@ export default function CommitteeAdmin({
               <input
                 type="password"
                 className="form-input"
-                placeholder="Enter passcode (hint: committee2026)"
                 value={passcode}
                 onChange={(e) => setPasscode(e.target.value)}
                 required
@@ -419,10 +446,6 @@ export default function CommitteeAdmin({
               <span>Authenticate &amp; Access Dashboard</span>
             </button>
           </form>
-
-          <div style={{ marginTop: '16px', background: 'var(--bg-subtle)', padding: '10px', borderRadius: 'var(--radius-sm)', fontSize: '0.78rem', color: 'var(--text-dim)', textAlign: 'center' }}>
-            Authorized Passcode: <strong style={{ color: 'var(--navy-dark)' }}>committee2026</strong>
-          </div>
 
           {onNavigateToStudentPortal && (
             <div style={{ marginTop: '16px', textAlign: 'center' }}>
@@ -481,6 +504,7 @@ export default function CommitteeAdmin({
             className="btn btn-secondary"
             onClick={() => {
               sessionStorage.removeItem('cps_admin_session');
+              sessionStorage.removeItem('cps_admin_token');
               setIsAdminLoggedIn(false);
             }}
             style={{ fontSize: '0.82rem' }}
@@ -613,7 +637,7 @@ export default function CommitteeAdmin({
                 <Search size={15} />
                 <input
                   type="text"
-                  placeholder="Search events..."
+                  aria-label="Search events"
                   value={eventSearchTerm}
                   onChange={(e) => setEventSearchTerm(e.target.value)}
                 />
@@ -775,7 +799,6 @@ export default function CommitteeAdmin({
                   <input
                     type="text"
                     className="form-input"
-                    placeholder="Enter event title"
                     value={eventTitle}
                     onChange={(e) => setEventTitle(e.target.value)}
                     required
@@ -809,7 +832,6 @@ export default function CommitteeAdmin({
                     <input
                       type="text"
                       className="form-input"
-                      placeholder="Prize amount (optional)"
                       value={eventPrizePool}
                       onChange={(e) => setEventPrizePool(e.target.value)}
                     />
@@ -822,7 +844,6 @@ export default function CommitteeAdmin({
                     <input
                       type="text"
                       className="form-input"
-                      placeholder="Event date"
                       value={eventDate}
                       onChange={(e) => setEventDate(e.target.value)}
                       required
@@ -830,13 +851,13 @@ export default function CommitteeAdmin({
                   </div>
 
                   <div className="form-row">
-                    <label className="form-label">Time</label>
+                    <label className="form-label">Time *</label>
                     <input
                       type="text"
                       className="form-input"
-                      placeholder="Event timings"
                       value={eventTime}
                       onChange={(e) => setEventTime(e.target.value)}
+                      required
                     />
                   </div>
                 </div>
@@ -847,7 +868,6 @@ export default function CommitteeAdmin({
                     <input
                       type="text"
                       className="form-input"
-                      placeholder="Auditorium, seminar hall, or lab"
                       value={eventVenue}
                       onChange={(e) => setEventVenue(e.target.value)}
                       required
@@ -859,7 +879,6 @@ export default function CommitteeAdmin({
                     <input
                       type="text"
                       className="form-input"
-                      placeholder="Organizing committee or club"
                       value={eventOrganizer}
                       onChange={(e) => setEventOrganizer(e.target.value)}
                     />
@@ -872,7 +891,6 @@ export default function CommitteeAdmin({
                     <input
                       type="text"
                       className="form-input"
-                      placeholder="Speaker or mentor (optional)"
                       value={eventSpeaker}
                       onChange={(e) => setEventSpeaker(e.target.value)}
                     />
@@ -883,7 +901,6 @@ export default function CommitteeAdmin({
                     <input
                       type="text"
                       className="form-input"
-                      placeholder="Eligibility criteria (optional)"
                       value={eventEligibility}
                       onChange={(e) => setEventEligibility(e.target.value)}
                     />
@@ -933,7 +950,6 @@ export default function CommitteeAdmin({
                   <input
                     type="url"
                     className="form-input"
-                    placeholder="Official portal or registration link"
                     value={eventRegistrationLink}
                     onChange={(e) => setEventRegistrationLink(e.target.value)}
                   />
@@ -944,7 +960,6 @@ export default function CommitteeAdmin({
                   <textarea
                     className="form-textarea"
                     rows={3}
-                    placeholder="Detailed event overview and instructions..."
                     value={eventDescription}
                     onChange={(e) => setEventDescription(e.target.value)}
                   />
@@ -955,7 +970,6 @@ export default function CommitteeAdmin({
                   <textarea
                     className="form-textarea"
                     rows={3}
-                    placeholder="Key highlights (one item per line)..."
                     value={eventHighlights}
                     onChange={(e) => setEventHighlights(e.target.value)}
                   />
@@ -1132,7 +1146,6 @@ export default function CommitteeAdmin({
                         className="form-input"
                         value={updateAssigned || selectedIssue.assignedCommittee}
                         onChange={(e) => setUpdateAssigned(e.target.value)}
-                        placeholder="e.g. Er. Sreejith K. (Lab Superintendent)"
                       />
                     </div>
 
@@ -1141,7 +1154,6 @@ export default function CommitteeAdmin({
                       <textarea
                         className="form-textarea"
                         rows={3}
-                        placeholder="Log actions taken (e.g. Component replaced from stock. Calibrated with signal generator)..."
                         value={updateNote}
                         onChange={(e) => setUpdateNote(e.target.value)}
                         required
@@ -1245,7 +1257,6 @@ export default function CommitteeAdmin({
                     <textarea
                       className="form-textarea"
                       rows={3}
-                      placeholder="e.g. Approved by HOD. Lab will remain accessible until 6:00 PM..."
                       value={sugResponse}
                       onChange={(e) => setSugResponse(e.target.value)}
                     />
@@ -1284,7 +1295,6 @@ export default function CommitteeAdmin({
                 <input
                   type="text"
                   className="form-input"
-                  placeholder="e.g. Exam Fee Concession Verification Camp..."
                   value={newAnnTitle}
                   onChange={(e) => setNewAnnTitle(e.target.value)}
                   required
@@ -1306,7 +1316,6 @@ export default function CommitteeAdmin({
                 <textarea
                   className="form-textarea"
                   rows={4}
-                  placeholder="Details of the announcement, venue, dates, and instructions for students..."
                   value={newAnnSummary}
                   onChange={(e) => setNewAnnSummary(e.target.value)}
                   required

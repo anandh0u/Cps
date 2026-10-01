@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { getStore, saveStore } from '../db.js';
+import { requireCommittee } from './admin.js';
 
 const router = Router();
 
@@ -56,6 +57,7 @@ router.post('/', (req, res) => {
   }
 
   const issues = store.issues || [];
+  store.issues = issues;
   const maxNumber = issues.reduce((max, item) => {
     const match = item.id.match(/\d+/);
     return match ? Math.max(max, parseInt(match[0], 10)) : max;
@@ -108,7 +110,7 @@ router.post('/', (req, res) => {
 });
 
 // PATCH issue status & resolution notes (Committee -> Track/Resolve -> Update)
-router.patch('/:id/status', (req, res) => {
+router.patch('/:id/status', requireCommittee, (req, res) => {
   const store = getStore();
   const issue = (store.issues || []).find(i => i.id.toLowerCase() === req.params.id.toLowerCase());
 

@@ -23,7 +23,7 @@ import {
 import { campusBounds, campusRoads, campusGrounds, campusLandmarks } from '../data/campusMapData';
 
 export default function CampusMap() {
-  const [activeTab, setActiveTab] = useState('vector-map'); // 'vector-map' | 'signboard-reference'
+  const [activeTab, setActiveTab] = useState('satellite');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [activeLocationId, setActiveLocationId] = useState(31); // Default to #31 (Robotics / CPS)
@@ -88,6 +88,14 @@ export default function CampusMap() {
 
         {/* View Switcher Tabs */}
         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+          <button
+            className={`btn ${activeTab === 'satellite' ? 'btn-primary' : 'btn-secondary'}`}
+            onClick={() => setActiveTab('satellite')}
+            style={{ display: 'flex', alignItems: 'center', gap: '6px' }}
+          >
+            <Layers size={16} />
+            <span>Satellite View</span>
+          </button>
           <button 
             className={`btn ${activeTab === 'vector-map' ? 'btn-primary' : 'btn-secondary'}`}
             onClick={() => setActiveTab('vector-map')}
@@ -177,7 +185,44 @@ export default function CampusMap() {
         </div>
       </div>
 
-      {/* TAB 1: 2D VECTOR INTERACTIVE MAP */}
+      {/* TAB 1: LIVE SATELLITE MAP */}
+      {activeTab === 'satellite' && (
+        <section className="satellite-map-card" ref={mapContainerRef}>
+          <div className="satellite-map-toolbar">
+            <div>
+              <span className="section-kicker">Live geographic view</span>
+              <h2>GEC Thrissur from satellite</h2>
+              <p>Pan and zoom to inspect the campus. The CPS hub is centred near location #31.</p>
+            </div>
+            <a
+              className="btn btn-secondary"
+              href="https://www.google.com/maps/search/?api=1&query=10.554514,76.224300"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <ExternalLink size={15} /> Open full map
+            </a>
+          </div>
+          <div className="satellite-map-frame">
+            <iframe
+              title="Satellite map of Government Engineering College Thrissur"
+              src="https://www.google.com/maps?q=10.554514,76.224300&z=17&t=k&output=embed"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+            />
+            <div className="satellite-cps-marker">
+              <span><MapPin size={18} /></span>
+              <div><strong>CPS Hub · #31</strong><small>Nodal Centre for Robotics &amp; AI</small></div>
+            </div>
+          </div>
+          <div className="satellite-map-note">
+            <Info size={16} /> Satellite imagery is provided by Google Maps; labels and image date may vary.
+          </div>
+        </section>
+      )}
+
+      {/* TAB 2: 2D VECTOR INTERACTIVE MAP */}
       {activeTab === 'vector-map' && (
         <>
           {/* Controls Bar */}
@@ -228,7 +273,7 @@ export default function CampusMap() {
                 <Search size={14} />
                 <input 
                   type="text" 
-                  placeholder="Search landmark, CCF, #..." 
+                  aria-label="Search campus landmarks by name or number"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
@@ -697,7 +742,7 @@ export default function CampusMap() {
         </>
       )}
 
-      {/* TAB 2: PHYSICAL SIGNBOARD REFERENCE */}
+      {/* TAB 3: PHYSICAL SIGNBOARD REFERENCE */}
       {activeTab === 'signboard-reference' && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           <div className="card" style={{ padding: '16px 20px' }}>
