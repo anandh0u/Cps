@@ -137,6 +137,8 @@ h1, h2, h3, h4, h5, h6 {
   overflow-y: auto;
 }
 
+.mobile-route-picker { display: none; }
+
 .sidebar-nav ul {
   list-style: none;
   display: flex;
@@ -485,22 +487,25 @@ h1, h2, h3, h4, h5, h6 {
   .sidebar-footer {
     display: none;
   }
-  .sidebar-nav {
-    padding: 8px 10px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scrollbar-width: thin;
+  .sidebar-nav { display: none; }
+  .mobile-route-picker {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 9px 12px;
+    color: var(--navy-primary);
   }
-  .sidebar-nav ul {
-    flex-direction: row;
-    width: max-content;
-    min-width: 100%;
-  }
-  .sidebar-link {
-    width: auto;
-    min-height: 38px;
-    padding: 8px 11px;
-    white-space: nowrap;
+  .mobile-route-picker select {
+    flex: 1;
+    min-width: 0;
+    padding: 9px 34px 9px 11px;
+    background: #fff;
+    border: 1px solid var(--border-medium);
+    border-radius: 10px;
+    color: var(--navy-dark);
+    font-family: var(--font-body);
+    font-size: .88rem;
+    font-weight: 700;
   }
   .main-content {
     padding: 16px;
@@ -1085,4 +1090,55 @@ h1, h2, h3, h4, h5, h6 {
   .satellite-map-toolbar { align-items: flex-start; flex-direction: column; }
   .satellite-map-frame { min-height: 380px; }
   .satellite-cps-marker { right: 12px; bottom: 12px; left: 12px; }
+}
+
+.suggestions-empty {
+  padding: 24px 16px;
+  background: transparent;
+  border: 1px dashed var(--border-medium);
+  border-radius: var(--radius-md);
+  color: var(--text-dim);
+  font-size: .84rem;
+  text-align: center;
+}
+
+@media (max-width: 680px) {
+  html, body { overflow-x: hidden; }
+  .institutional-top-bar { box-shadow: 0 2px 12px rgba(30,45,75,.05); }
+  .top-bar-inner { min-height: 72px; }
+  .top-brand-left, .college-text { min-width: 0; }
+  .college-main-title { max-width: 190px; line-height: 1.25; }
+  .association-img { width: min(100%, 170px); height: auto; max-height: 34px; }
+  .page-title-row { align-items: flex-start; margin-bottom: 16px; padding-bottom: 12px; }
+  .page-title-row h1 { font-size: 1.35rem; line-height: 1.25; }
+  .page-title-row p { font-size: .8rem; line-height: 1.5; }
+  .page-title-row > div:last-child { width: 100%; }
+  .page-title-row > div:last-child .btn { flex: 1 1 calc(50% - 6px); min-width: 0; }
+  .card { padding: 16px; border-radius: 14px; box-shadow: none; }
+  .welcome-page { gap: 14px; }
+  .welcome-hero { gap: 22px; border-radius: 15px; }
+  .welcome-hero-copy > p { font-size: .88rem; line-height: 1.6; }
+  .welcome-actions { align-items: stretch; flex-direction: column; }
+  .welcome-actions .btn { width: 100%; }
+  .system-loop-grid { grid-template-columns: 1fr; }
+  .system-arrow { display: none; }
+  .system-stage { min-height: 58px; }
+  .welcome-grid { gap: 14px; }
+  .welcome-about, .welcome-links { padding: 17px; }
+  .welcome-stats button { padding: 13px 15px; }
+  .filter-shelf { align-items: stretch; flex-direction: column; padding: 10px; }
+  .filter-group { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 3px; scrollbar-width: none; }
+  .filter-group::-webkit-scrollbar { display: none; }
+  .filter-btn { flex: 0 0 auto; }
+  .search-field { width: 100%; min-width: 0; }
+  .satellite-map-toolbar { padding: 15px; }
+  .satellite-map-frame { min-height: 330px; height: 52vh; }
+  .satellite-map-note { align-items: flex-start; }
+  .footer-row { align-items: flex-start; flex-direction: column; }
+  .footer-row > div:last-child { display: none; }
+  .site-footer { margin-top: 24px; padding-top: 18px; }
+  .scholarship-card { padding: 16px; }
+  .scholarship-tools { padding: 12px; }
+  .scholarship-modal-backdrop { padding: 10px; }
+  .scholarship-modal { max-height: 94vh; border-radius: 14px; }
 }

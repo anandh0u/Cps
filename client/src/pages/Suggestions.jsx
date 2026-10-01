@@ -148,6 +148,9 @@ export default function Suggestions({ suggestions = [], onRefresh }) {
           </h2>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            {suggestions.length === 0 && (
+              <p className="suggestions-empty">No suggestions have been submitted yet.</p>
+            )}
             {suggestions.map((item) => {
               const isImplemented = item.status === 'Implemented';
               const isConsidered = item.status === 'Considered';

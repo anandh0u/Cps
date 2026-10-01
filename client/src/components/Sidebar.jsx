@@ -9,7 +9,8 @@ import {
   HeartHandshake, 
   Building2,
   MapPin,
-  Home
+  Home,
+  Menu
 } from 'lucide-react';
 
 export default function Sidebar({ currentRoute, setCurrentRoute }) {
@@ -48,6 +49,19 @@ export default function Sidebar({ currentRoute, setCurrentRoute }) {
       </div>
 
       {/* Navigation List in exact user order */}
+      <div className="mobile-route-picker">
+        <Menu size={18} aria-hidden="true" />
+        <select
+          aria-label="Choose a portal page"
+          value={currentRoute}
+          onChange={(event) => setCurrentRoute(event.target.value)}
+        >
+          {navItems.map((item) => (
+            <option key={item.id} value={item.id}>{item.label}</option>
+          ))}
+        </select>
+      </div>
+
       <nav className="sidebar-nav">
         <ul>
           {navItems.map((item) => {
