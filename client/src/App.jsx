@@ -269,7 +269,7 @@ export default function App() {
               <div style={{ textAlign: 'right', fontSize: '0.78rem' }}>
                 <span>Campus Security: +91 487 2334144 &bull; Student Welfare Helpline: 1056 / 14416</span>
                 <p style={{ marginTop: '2px', color: 'var(--text-dim)' }}>
-                  Student Welfare &amp; Grievance Resolution Portal &bull; Academic Year 2026–2027 &bull; <a href="/admin" onClick={(e) => { e.preventDefault(); navigate('admin'); }} style={{ color: 'var(--text-dim)', textDecoration: 'underline' }}>Committee Desk</a>
+                  Student Welfare &amp; Grievance Resolution Portal &bull; Academic Year 2026–2027
                 </p>
               </div>
             </div>

@@ -309,9 +309,6 @@ export default function Events({ events = [], onRefresh }) {
           <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: 1.6, marginBottom: '22px' }}>
             Upcoming hackathons, workshops, and technical symposia conducted by the Department of Cyber Physical System Engineering, ACPS, and campus clubs will appear here once officially published.
           </p>
-          <div style={{ background: 'var(--bg-subtle)', padding: '14px 20px', borderRadius: 'var(--radius-md)', fontSize: '0.82rem', color: 'var(--text-dim)', display: 'inline-block' }}>
-            Are you a faculty member or student convener? Official events can be registered through the <a href="/admin" onClick={(e) => { e.preventDefault(); if (window.location.pathname !== '/admin') window.history.pushState({}, '', '/admin'); window.dispatchEvent(new PopStateEvent('popstate')); }} style={{ color: 'var(--navy-primary)', fontWeight: 700, textDecoration: 'underline' }}>Committee Desk</a>.
-          </div>
         </div>
       ) : (
         <>

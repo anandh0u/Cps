@@ -137,8 +137,6 @@ h1, h2, h3, h4, h5, h6 {
   overflow-y: auto;
 }
 
-.mobile-route-picker { display: none; }
-
 .sidebar-nav ul {
   list-style: none;
   display: flex;
@@ -487,25 +485,28 @@ h1, h2, h3, h4, h5, h6 {
   .sidebar-footer {
     display: none;
   }
-  .sidebar-nav { display: none; }
-  .mobile-route-picker {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    padding: 9px 12px;
-    color: var(--navy-primary);
+  .sidebar-nav {
+    display: block;
+    padding: 8px 10px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
   }
-  .mobile-route-picker select {
-    flex: 1;
-    min-width: 0;
-    padding: 9px 34px 9px 11px;
-    background: #fff;
-    border: 1px solid var(--border-medium);
-    border-radius: 10px;
-    color: var(--navy-dark);
-    font-family: var(--font-body);
-    font-size: .88rem;
-    font-weight: 700;
+  .sidebar-nav::-webkit-scrollbar { display: none; }
+  .sidebar-nav ul {
+    flex-direction: row;
+    width: max-content;
+    min-width: 100%;
+  }
+  .sidebar-link {
+    width: auto;
+    min-height: 40px;
+    padding: 8px 11px;
+    white-space: nowrap;
+    scroll-snap-align: center;
   }
   .main-content {
     padding: 16px;

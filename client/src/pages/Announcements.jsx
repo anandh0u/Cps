@@ -72,15 +72,6 @@ export default function Announcements({ announcements = [] }) {
                 ? 'There are currently no active circulars or notices published. Official circulars published by the Student Welfare Committee and Department authorities will appear here.'
                 : 'No circulars match your current filter or search criteria. Try selecting "All" or clearing the search.'}
             </p>
-            {announcements.length === 0 && (
-              <a 
-                href="/admin" 
-                className="btn btn-secondary" 
-                style={{ fontSize: '0.82rem', display: 'inline-flex', alignItems: 'center', gap: '6px', margin: '0 auto' }}
-              >
-                <span>Committee Desk Login &rarr;</span>
-              </a>
-            )}
           </div>
         ) : (
           filtered.map((item) => (
