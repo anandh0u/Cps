@@ -1,13 +1,9 @@
 import React, { useMemo, useState } from 'react';
 import {
   BadgeIndianRupee,
-  BookOpenCheck,
   CheckCircle2,
   ExternalLink,
-  FileCheck2,
-  GraduationCap,
   Search,
-  ShieldCheck,
   SlidersHorizontal,
   X
 } from 'lucide-react';
@@ -66,36 +62,18 @@ export default function Scholarships({ scholarships = [] }) {
     });
   }, [filterCategory, scholarships, searchTerm, sortMode]);
 
-  const governmentCount = scholarships.filter((item) =>
-    /government|central govt|aicte|nsp/i.test(`${item.provider} ${item.category} ${item.tag}`)
-  ).length;
-
   return (
     <div className="scholarship-page">
       <div className="page-title-row scholarship-heading">
         <div>
-          <span className="section-kicker">Student funding finder</span>
-          <h1>Scholarships &amp; Financial Support</h1>
-          <p>Compare GECT, Kerala, national, alumni, and private funding opportunities in one directory.</p>
+          <span className="section-kicker">Scholarships</span>
+          <h1>Scholarship Directory</h1>
+          <p>Search schemes and open the official portal to apply.</p>
         </div>
         <a className="btn btn-secondary" href="https://scholarships.gov.in/All-Scholarships" target="_blank" rel="noreferrer">
           <span>National Scholarship Portal</span>
           <ExternalLink size={14} />
         </a>
-      </div>
-
-      <div className="scholarship-summary" aria-label="Scholarship directory summary">
-        <div><GraduationCap size={19} /><span><strong>{scholarships.length}</strong> listed schemes</span></div>
-        <div><ShieldCheck size={19} /><span><strong>{governmentCount}</strong> government-linked</span></div>
-        <div><BookOpenCheck size={19} /><span><strong>{categories.length - 1}</strong> funding groups</span></div>
-      </div>
-
-      <div className="scholarship-notice">
-        <FileCheck2 size={19} />
-        <div>
-          <strong>Check the current notification before applying.</strong>
-          <p>Amounts, eligibility rules, and closing dates can change each academic year. Use this directory to shortlist a scheme, then confirm the current cycle on its official portal.</p>
-        </div>
       </div>
 
       <section className="scholarship-tools" aria-label="Scholarship search and filters">
@@ -136,18 +114,13 @@ export default function Scholarships({ scholarships = [] }) {
       </section>
 
       <div className="scholarship-results-row">
-        <strong>{filtered.length} opportunities</strong>
-        <span>Source directory: GENOME by KSU GECT and linked scheme portals</span>
+        <strong>{filtered.length} scholarships</strong>
       </div>
 
       {filtered.length ? (
         <div className="scholarship-grid">
           {filtered.map((item) => (
             <article key={item.id} className="scholarship-card">
-              <div className="scholarship-card-topline">
-                <span className="tag tag-navy">{item.tag}</span>
-                <span className="scholarship-id">{item.id}</span>
-              </div>
               <div>
                 <p className="scholarship-category">{item.category}</p>
                 <h2>{item.name}</h2>
@@ -183,7 +156,6 @@ export default function Scholarships({ scholarships = [] }) {
         <div className="scholarship-modal-backdrop" role="presentation" onClick={() => setActiveModalItem(null)}>
           <section className="scholarship-modal" role="dialog" aria-modal="true" aria-labelledby="scholarship-dialog-title" onClick={(event) => event.stopPropagation()}>
             <button type="button" className="scholarship-modal-close" aria-label="Close scholarship details" onClick={() => setActiveModalItem(null)}><X size={18} /></button>
-            <span className="tag tag-navy">{activeModalItem.tag}</span>
             <h2 id="scholarship-dialog-title">{activeModalItem.name}</h2>
             <p className="scholarship-provider">{activeModalItem.provider}</p>
             <div className="scholarship-modal-facts">

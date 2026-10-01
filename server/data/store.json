@@ -141,8 +141,7 @@
       "eligibility": "All students whose annual family income is below ₹1 Lakh.",
       "deadline": "Every Semester",
       "applyUrl": "https://egrantz.kerala.gov.in/",
-      "tag": "GOVERNMENT",
-      "source": "Genome GECT Portal"
+      "tag": "GOVERNMENT"
     },
     {
       "id": "GECT-SCH-002",
@@ -153,8 +152,7 @@
       "eligibility": "All students in various income levels.",
       "deadline": "October 31",
       "applyUrl": "https://scholarships.gov.in/",
-      "tag": "GOVERNMENT",
-      "source": "Genome GECT Portal"
+      "tag": "GOVERNMENT"
     },
     {
       "id": "GECT-SCH-003",
@@ -165,8 +163,7 @@
       "eligibility": "Students of minority religions whose annual family income is below ₹8 Lakh and secured 50% marks in previous examinations.",
       "deadline": "Check Notice Board",
       "applyUrl": "https://scholarships.gov.in/",
-      "tag": "MINORITY",
-      "source": "Genome GECT Portal"
+      "tag": "MINORITY"
     },
     {
       "id": "GECT-SCH-004",
@@ -177,8 +174,7 @@
       "eligibility": "Hosteller girls of Muslim minority whose annual family income is below ₹8 Lakh.",
       "deadline": "Check Notice Board",
       "applyUrl": "https://scholarships.gov.in",
-      "tag": "MINORITY",
-      "source": "Genome GECT Portal"
+      "tag": "MINORITY"
     },
     {
       "id": "GECT-SCH-005",
@@ -189,8 +185,7 @@
       "eligibility": "Students who scored 85% or above in HSE and annual family income below ₹2 Lakh.",
       "deadline": "Check Notice Board",
       "applyUrl": "https://scholarships.gov.in",
-      "tag": "MERIT",
-      "source": "Genome GECT Portal"
+      "tag": "MERIT"
     },
     {
       "id": "GECT-SCH-006",
@@ -201,8 +196,7 @@
       "eligibility": "Students admitted under the quota reserved for employees of Co-operative sector.",
       "deadline": "Check Notice Board",
       "applyUrl": "https://scholarships.gov.in",
-      "tag": "RESERVED",
-      "source": "Genome GECT Portal"
+      "tag": "RESERVED"
     },
     {
       "id": "GECT-SCH-007",
@@ -213,8 +207,7 @@
       "eligibility": "Wards of fishermen in Kerala.",
       "deadline": "Every Semester",
       "applyUrl": "https://egrantz.kerala.gov.in/",
-      "tag": "GOVERNMENT",
-      "source": "Genome GECT Portal"
+      "tag": "GOVERNMENT"
     },
     {
       "id": "GECT-SCH-008",
@@ -225,8 +218,7 @@
       "eligibility": "Students whose annual family income is below ₹4 Lakh and scored 80%+ in previous exams.",
       "deadline": "October 31",
       "applyUrl": "https://scholarships.gov.in/",
-      "tag": "CENTRAL GOVT",
-      "source": "Genome GECT Portal"
+      "tag": "CENTRAL GOVT"
     },
     {
       "id": "GECT-SCH-009",
@@ -237,8 +229,7 @@
       "eligibility": "Wards of CRPF Jawans and Assam Rifles who scored above 60%.",
       "deadline": "October 31",
       "applyUrl": "https://scholarships.gov.in/",
-      "tag": "CENTRAL GOVT",
-      "source": "Genome GECT Portal"
+      "tag": "CENTRAL GOVT"
     },
     {
       "id": "GECT-SCH-010",
@@ -249,8 +240,7 @@
       "eligibility": "Students of forward castes (non-reservation category) whose annual family income is below ₹2 Lakh.",
       "deadline": "Check Notice Board",
       "applyUrl": "https://scholarships.gov.in",
-      "tag": "GOVERNMENT",
-      "source": "Genome GECT Portal"
+      "tag": "GOVERNMENT"
     },
     {
       "id": "GECT-SCH-011",
@@ -261,8 +251,7 @@
       "eligibility": "Female students whose annual family income is below ₹2 Lakh.",
       "deadline": "Check Notice Board",
       "applyUrl": "https://scholarships.gov.in",
-      "tag": "FOR WOMEN",
-      "source": "Genome GECT Portal"
+      "tag": "FOR WOMEN"
     },
     {
       "id": "GECT-SCH-012",
@@ -273,8 +262,7 @@
       "eligibility": "Selected by AICTE based on HSE marks and annual family income level.",
       "deadline": "Check AICTE Portal",
       "applyUrl": "https://www.aicte-india.org/",
-      "tag": "AICTE",
-      "source": "Genome GECT Portal"
+      "tag": "AICTE"
     },
     {
       "id": "GECT-SCH-013",
@@ -285,8 +273,7 @@
       "eligibility": "Differently abled students studying in premier institutions.",
       "deadline": "October 31",
       "applyUrl": "https://scholarships.gov.in/",
-      "tag": "DISABILITY",
-      "source": "Genome GECT Portal"
+      "tag": "DISABILITY"
     },
     {
       "id": "GECT-SCH-014",
@@ -297,8 +284,7 @@
       "eligibility": "Differently abled students studying in courses after 10th to PG.",
       "deadline": "October 31",
       "applyUrl": "https://scholarships.gov.in/",
-      "tag": "DISABILITY",
-      "source": "Genome GECT Portal"
+      "tag": "DISABILITY"
     },
     {
       "id": "GECT-SCH-015",
@@ -309,8 +295,7 @@
       "eligibility": "Differently abled students studying in 9th and 10th.",
       "deadline": "September 30",
       "applyUrl": "https://scholarships.gov.in/",
-      "tag": "DISABILITY",
-      "source": "Genome GECT Portal"
+      "tag": "DISABILITY"
     },
     {
       "id": "GECT-SCH-016",
@@ -321,8 +306,7 @@
       "eligibility": "First year UG students eligible to apply in Fresh category.",
       "deadline": "October 31",
       "applyUrl": "https://scholarships.gov.in/",
-      "tag": "CENTRAL GOVT",
-      "source": "Genome GECT Portal"
+      "tag": "CENTRAL GOVT"
     },
     {
       "id": "GECT-SCH-017",
@@ -333,8 +317,7 @@
       "eligibility": "Orphan students studying B.Tech or technical diplomas.",
       "deadline": "October 31",
       "applyUrl": "https://scholarships.gov.in/",
-      "tag": "AICTE",
-      "source": "Genome GECT Portal"
+      "tag": "AICTE"
     },
     {
       "id": "GECT-SCH-018",
@@ -345,8 +328,7 @@
       "eligibility": "Girls studying B.Tech or Technical Diploma.",
       "deadline": "October 31",
       "applyUrl": "https://scholarships.gov.in/",
-      "tag": "FOR WOMEN",
-      "source": "Genome GECT Portal"
+      "tag": "FOR WOMEN"
     },
     {
       "id": "GECT-SCH-019",
@@ -357,8 +339,7 @@
       "eligibility": "Disabled students studying B.Tech or Technical Diploma.",
       "deadline": "October 31",
       "applyUrl": "https://scholarships.gov.in/",
-      "tag": "DISABILITY",
-      "source": "Genome GECT Portal"
+      "tag": "DISABILITY"
     },
     {
       "id": "GECT-SCH-020",
@@ -369,8 +350,7 @@
       "eligibility": "PG first year students qualified in fresh category.",
       "deadline": "October 31",
       "applyUrl": "https://scholarships.gov.in/",
-      "tag": "CENTRAL GOVT",
-      "source": "Genome GECT Portal"
+      "tag": "CENTRAL GOVT"
     },
     {
       "id": "GECT-SCH-021",
@@ -381,8 +361,7 @@
       "eligibility": "SC students studying in premier institutions.",
       "deadline": "October 31",
       "applyUrl": "https://scholarships.gov.in/",
-      "tag": "SC/ST",
-      "source": "Genome GECT Portal"
+      "tag": "SC/ST"
     },
     {
       "id": "GECT-SCH-022",
@@ -393,8 +372,7 @@
       "eligibility": "OBC, EBC, DNT students studying in premier institutions.",
       "deadline": "October 31",
       "applyUrl": "https://scholarships.gov.in/",
-      "tag": "OBC/EBC",
-      "source": "Genome GECT Portal"
+      "tag": "OBC/EBC"
     },
     {
       "id": "GECT-SCH-023",
@@ -405,8 +383,7 @@
       "eligibility": "OBC, EBC, DNT students studying in selected schools.",
       "deadline": "September 30",
       "applyUrl": "https://scholarships.gov.in/",
-      "tag": "OBC/EBC",
-      "source": "Genome GECT Portal"
+      "tag": "OBC/EBC"
     },
     {
       "id": "GECT-SCH-024",
@@ -417,8 +394,7 @@
       "eligibility": "ST students in premier institutions.",
       "deadline": "October 31",
       "applyUrl": "https://scholarships.gov.in/",
-      "tag": "SC/ST",
-      "source": "Genome GECT Portal"
+      "tag": "SC/ST"
     },
     {
       "id": "GECT-SCH-025",
@@ -429,8 +405,7 @@
       "eligibility": "Post-Matric wards of Central Armed Police Forces and Assam Rifles personnel.",
       "deadline": "October 31",
       "applyUrl": "https://scholarships.gov.in/",
-      "tag": "CENTRAL GOVT",
-      "source": "Genome GECT Portal"
+      "tag": "CENTRAL GOVT"
     },
     {
       "id": "GECT-SCH-026",
@@ -441,8 +416,7 @@
       "eligibility": "Wards of States/UT's Police Personnel martyred during terror/naxal attacks.",
       "deadline": "October 31",
       "applyUrl": "https://scholarships.gov.in/",
-      "tag": "CENTRAL GOVT",
-      "source": "Genome GECT Portal"
+      "tag": "CENTRAL GOVT"
     },
     {
       "id": "GECT-SCH-027",
@@ -453,8 +427,7 @@
       "eligibility": "Pre-Matric scheme under Ministry of Railways.",
       "deadline": "September 30",
       "applyUrl": "https://scholarships.gov.in/",
-      "tag": "CENTRAL GOVT",
-      "source": "Genome GECT Portal"
+      "tag": "CENTRAL GOVT"
     },
     {
       "id": "GECT-SCH-028",
@@ -465,8 +438,7 @@
       "eligibility": "Wards of Beedi, Cine, IOMC, and LSDM workers.",
       "deadline": "September 30",
       "applyUrl": "https://scholarships.gov.in/",
-      "tag": "CENTRAL GOVT",
-      "source": "Genome GECT Portal"
+      "tag": "CENTRAL GOVT"
     },
     {
       "id": "GECT-SCH-029",
@@ -477,8 +449,7 @@
       "eligibility": "First year students of UG in Pure and Natural Sciences (B.Sc./BS/Integrated PG).",
       "deadline": "October 15",
       "applyUrl": "https://online-inspire.gov.in/",
-      "tag": "SCIENCE",
-      "source": "Genome GECT Portal"
+      "tag": "SCIENCE"
     },
     {
       "id": "GECT-SCH-030",
@@ -489,8 +460,7 @@
       "eligibility": "Students taking coaching for Medicine/Engineering Entrance, Civil Service, Banking, GATE/MAT, UGC-NET/JRF.",
       "deadline": "September 15",
       "applyUrl": "https://egrantz.kerala.gov.in/",
-      "tag": "GOVERNMENT",
-      "source": "Genome GECT Portal"
+      "tag": "GOVERNMENT"
     },
     {
       "id": "GECT-SCH-031",
@@ -501,8 +471,7 @@
       "eligibility": "OEC, OBC(H) students studying outside Kerala (Fresh/Renewal).",
       "deadline": "Check E-Grantz",
       "applyUrl": "https://egrantz.kerala.gov.in/",
-      "tag": "OBC/EBC",
-      "source": "Genome GECT Portal"
+      "tag": "OBC/EBC"
     },
     {
       "id": "GECT-SCH-032",
@@ -513,8 +482,7 @@
       "eligibility": "OEC, OBC(H), OBC students studying inside Kerala (except Higher Secondary and VHSC).",
       "deadline": "Check E-Grantz",
       "applyUrl": "https://egrantz.kerala.gov.in/",
-      "tag": "OBC/EBC",
-      "source": "Genome GECT Portal"
+      "tag": "OBC/EBC"
     },
     {
       "id": "GECT-SCH-033",
@@ -525,8 +493,7 @@
       "eligibility": "PG, PhD students studying abroad.",
       "deadline": "September 20",
       "applyUrl": "https://egrantz.kerala.gov.in/",
-      "tag": "OBC/EBC",
-      "source": "Genome GECT Portal"
+      "tag": "OBC/EBC"
     },
     {
       "id": "GECT-SCH-034",
@@ -537,8 +504,7 @@
       "eligibility": "OBC, EBC students in 9th and 10th.",
       "deadline": "September 30",
       "applyUrl": "https://scholarships.gov.in/",
-      "tag": "OBC/EBC",
-      "source": "Genome GECT Portal"
+      "tag": "OBC/EBC"
     },
     {
       "id": "GECT-SCH-035",
@@ -549,8 +515,7 @@
       "eligibility": "1st class to UG students with single mothers (father passed away/fled/paralyzed).",
       "deadline": "December 15",
       "applyUrl": "https://schemes.wcd.kerala.gov.in/",
-      "tag": "FOR WOMEN",
-      "source": "Genome GECT Portal"
+      "tag": "FOR WOMEN"
     },
     {
       "id": "GECT-SCH-036",
@@ -561,8 +526,7 @@
       "eligibility": "Any UG or PG student in Engineering, Technology, Energy, and Life Sciences.",
       "deadline": "October 6",
       "applyUrl": "https://www.buddy4study.com/",
-      "tag": "CORPORATE",
-      "source": "Genome GECT Portal"
+      "tag": "CORPORATE"
     },
     {
       "id": "GECT-SCH-037",
@@ -573,8 +537,7 @@
       "eligibility": "Students from 1st to 12th, UG and PG.",
       "deadline": "October 30",
       "applyUrl": "https://www.buddy4study.com/",
-      "tag": "CORPORATE",
-      "source": "Genome GECT Portal"
+      "tag": "CORPORATE"
     },
     {
       "id": "GECT-SCH-038",
@@ -585,8 +548,7 @@
       "eligibility": "6th to 12th class, UG/PG in top colleges, IIT, IIM students.",
       "deadline": "October 1",
       "applyUrl": "https://www.buddy4study.com/",
-      "tag": "CORPORATE",
-      "source": "Genome GECT Portal"
+      "tag": "CORPORATE"
     },
     {
       "id": "GECT-SCH-039",
@@ -597,8 +559,7 @@
       "eligibility": "Girls and Transgenders in STEM courses and female athletes.",
       "deadline": "October 6",
       "applyUrl": "https://www.buddy4study.com/",
-      "tag": "FOR WOMEN",
-      "source": "Genome GECT Portal"
+      "tag": "FOR WOMEN"
     },
     {
       "id": "GECT-SCH-040",
@@ -609,8 +570,7 @@
       "eligibility": "Students in teaching, nursing, pharmacy, medicine, engineering, architecture, law, and other professional courses.",
       "deadline": "September 30",
       "applyUrl": "https://www.buddy4study.com/",
-      "tag": "CORPORATE",
-      "source": "Genome GECT Portal"
+      "tag": "CORPORATE"
     },
     {
       "id": "GECT-SCH-041",
@@ -621,8 +581,7 @@
       "eligibility": "Students pursuing professional graduation courses in STEM.",
       "deadline": "September 30",
       "applyUrl": "https://www.buddy4study.com/",
-      "tag": "CORPORATE",
-      "source": "Genome GECT Portal"
+      "tag": "CORPORATE"
     },
     {
       "id": "GECT-SCH-042",
@@ -633,8 +592,7 @@
       "eligibility": "Students in photography-related courses.",
       "deadline": "September 20",
       "applyUrl": "https://www.buddy4study.com/",
-      "tag": "CORPORATE",
-      "source": "Genome GECT Portal"
+      "tag": "CORPORATE"
     },
     {
       "id": "GECT-SCH-043",
@@ -645,8 +603,7 @@
       "eligibility": "Female students in undergraduate STEM degrees.",
       "deadline": "September 15",
       "applyUrl": "https://www.buddy4study.com/",
-      "tag": "FOR WOMEN",
-      "source": "Genome GECT Portal"
+      "tag": "FOR WOMEN"
     },
     {
       "id": "GECT-SCH-044",
@@ -657,8 +614,7 @@
       "eligibility": "Female students pursuing PG, doctoral, or UG courses in agriculture, and +1/+2.",
       "deadline": "September 30",
       "applyUrl": "https://www.buddy4study.com/",
-      "tag": "FOR WOMEN",
-      "source": "Genome GECT Portal"
+      "tag": "FOR WOMEN"
     },
     {
       "id": "GECT-SCH-045",
@@ -669,8 +625,7 @@
       "eligibility": "Students in selected premier institutions.",
       "deadline": "September 20",
       "applyUrl": "https://www.buddy4study.com/",
-      "tag": "MERIT",
-      "source": "Genome GECT Portal"
+      "tag": "MERIT"
     },
     {
       "id": "GECT-SCH-046",
@@ -681,8 +636,7 @@
       "eligibility": "Girl students who passed Class 12 and aspire to pursue professional graduation or UG in premier research institutes.",
       "deadline": "September 30",
       "applyUrl": "https://www.buddy4study.com/",
-      "tag": "FOR WOMEN",
-      "source": "Genome GECT Portal"
+      "tag": "FOR WOMEN"
     },
     {
       "id": "GECT-SCH-047",
@@ -693,8 +647,7 @@
       "eligibility": "Students in Classes 11 and 12, or pursuing general graduation/diploma/polytechnic courses.",
       "deadline": "September 15",
       "applyUrl": "https://www.buddy4study.com/",
-      "tag": "CORPORATE",
-      "source": "Genome GECT Portal"
+      "tag": "CORPORATE"
     },
     {
       "id": "GECT-SCH-048",
@@ -705,8 +658,7 @@
       "eligibility": "Wards of teachers who achieved full A+ in 10th or 12th.",
       "deadline": "September 30",
       "applyUrl": "https://www.nftwkerala.org/",
-      "tag": "MERIT",
-      "source": "Genome GECT Portal"
+      "tag": "MERIT"
     },
     {
       "id": "GECT-SCH-049",
@@ -717,8 +669,7 @@
       "eligibility": "1st year B.Tech or B.Arch students.",
       "deadline": "November 30",
       "applyUrl": "https://www.meahouston.org/",
-      "tag": "ENGINEERING",
-      "source": "Genome GECT Portal"
+      "tag": "ENGINEERING"
     },
     {
       "id": "GECT-SCH-050",
@@ -729,11 +680,9 @@
       "eligibility": "Engineering, MBBS, or Masters in Management, Geology, and Geophysics.",
       "deadline": "September 18",
       "applyUrl": "https://www.ongcscholar.org/",
-      "tag": "MERIT",
-      "source": "Genome GECT Portal"
+      "tag": "MERIT"
     }
   ],
-  "opportunities": [],
   "support": {
     "counsellors": [
       {
