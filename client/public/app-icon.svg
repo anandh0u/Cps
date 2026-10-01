@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="CPS Welfare">
+  <rect width="512" height="512" rx="112" fill="#172554"/>
+  <rect x="126" y="126" width="260" height="260" rx="54" fill="none" stroke="#ffffff" stroke-width="28"/>
+  <rect x="205" y="205" width="102" height="102" rx="18" fill="#5eead4"/>
+  <g stroke="#ffffff" stroke-width="25" stroke-linecap="round">
+    <path d="M182 76v50M256 76v50M330 76v50M182 386v50M256 386v50M330 386v50"/>
+    <path d="M76 182h50M76 256h50M76 330h50M386 182h50M386 256h50M386 330h50"/>
+  </g>
+</svg>

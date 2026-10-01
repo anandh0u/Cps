@@ -1,0 +1,19 @@
+{
+  "name": "CPS Student Welfare Portal — GEC Thrissur",
+  "short_name": "CPS Welfare",
+  "description": "Student welfare, scholarships, events, support and campus information for GEC Thrissur CPS students.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f5f7fb",
+  "theme_color": "#172554",
+  "icons": [
+    {
+      "src": "app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

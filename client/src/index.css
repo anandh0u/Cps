@@ -473,7 +473,7 @@ h1, h2, h3, h4, h5, h6 {
   gap: 16px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 900px), (max-device-width: 900px) {
   .app-layout {
     flex-direction: column;
   }
@@ -588,7 +588,7 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0 auto;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 768px), (max-device-width: 768px) {
   .admin-topbar {
     padding: 12px 16px;
     flex-direction: column;
@@ -738,7 +738,7 @@ h1, h2, h3, h4, h5, h6 {
   background: #0f172a;
 }
 
-@media (max-width: 1080px) {
+@media (max-width: 1080px), (max-device-width: 1080px) {
   .top-bar-inner {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -760,7 +760,7 @@ h1, h2, h3, h4, h5, h6 {
   .crest-box { width: 46px; height: 46px; }
 }
 
-@media (max-width: 680px) {
+@media (max-width: 680px), (max-device-width: 680px) {
   .top-bar-inner { gap: 7px 10px; padding: 8px 10px; }
   .college-main-title, .dept-main-title { font-size: .72rem; }
   .college-sub-text, .dept-sub-text { display: none; }
@@ -1023,7 +1023,7 @@ h1, h2, h3, h4, h5, h6 {
 .application-steps li { display: list-item; }
 .scholarship-modal-actions { justify-content: flex-end; margin-top: 8px; }
 
-@media (max-width: 820px) {
+@media (max-width: 820px), (max-device-width: 820px) {
   .scholarship-summary,
   .scholarship-tools,
   .scholarship-grid { grid-template-columns: 1fr; }
@@ -1033,7 +1033,7 @@ h1, h2, h3, h4, h5, h6 {
   .scholarship-results-row { align-items: flex-start; flex-direction: column; gap: 3px; }
 }
 
-@media (max-width: 520px) {
+@media (max-width: 520px), (max-device-width: 520px) {
   .scholarship-facts,
   .scholarship-modal-facts { grid-template-columns: 1fr; }
   .scholarship-facts > div + div,
@@ -1111,11 +1111,11 @@ h1, h2, h3, h4, h5, h6 {
 .satellite-cps-marker small { margin-top: 2px; color: #cbd5e1; font-size: .68rem; }
 .satellite-map-note { display: flex; align-items: center; gap: 7px; padding: 10px 18px; background: #f8fafc; color: var(--text-dim); font-size: .72rem; }
 
-@media (max-width: 850px) {
+@media (max-width: 850px), (max-device-width: 850px) {
   .welcome-hero, .welcome-grid { grid-template-columns: 1fr; }
   .welcome-system { min-height: 0; }
 }
-@media (max-width: 600px) {
+@media (max-width: 600px), (max-device-width: 600px) {
   .welcome-stats { grid-template-columns: 1fr; }
   .welcome-stats button { justify-content: flex-start; border-right: 0; border-bottom: 1px solid var(--border-light); }
   .welcome-stats button:last-child { border-bottom: 0; }
@@ -1134,7 +1134,7 @@ h1, h2, h3, h4, h5, h6 {
   text-align: center;
 }
 
-@media (max-width: 680px) {
+@media (max-width: 680px), (max-device-width: 680px) {
   html, body { overflow-x: hidden; }
   .institutional-top-bar { box-shadow: 0 2px 12px rgba(30,45,75,.05); }
   .top-bar-inner { min-height: 72px; }
