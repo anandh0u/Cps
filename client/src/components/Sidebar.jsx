@@ -39,7 +39,7 @@ export default function Sidebar({ currentRoute, setCurrentRoute }) {
       {/* CPS Welfare Branding at top of sidebar */}
       <div className="sidebar-brand" onClick={() => setCurrentRoute('welcome')} style={{ cursor: 'pointer' }}>
         <div className="brand-icon-box" style={{ background: '#0f172a', padding: '2px', overflow: 'hidden' }}>
-          <img src="/cps-gect-emblem.png" alt="CPS GECT" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+          <img src={`${import.meta.env.BASE_URL}cps-gect-emblem.png`} alt="CPS GECT" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
         </div>
         <div className="brand-info">
           <h2>CPS Welfare</h2>

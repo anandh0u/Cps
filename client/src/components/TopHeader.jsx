@@ -8,7 +8,7 @@ export default function TopHeader() {
         <div className="top-brand-left">
           <div className="crest-box">
             <img 
-              src="/gect-emblem.png" 
+              src={`${import.meta.env.BASE_URL}gect-emblem.png`}
               alt="Government Engineering College Thrissur Emblem" 
               className="crest-img"
             />
@@ -23,7 +23,7 @@ export default function TopHeader() {
         <div className="top-brand-center">
           <div className="association-logo-box">
             <img 
-              src="/association-cps-logo.png" 
+              src={`${import.meta.env.BASE_URL}association-cps-logo.png`}
               alt="Association of Cyber Physical Systems" 
               className="association-img"
             />
@@ -38,7 +38,7 @@ export default function TopHeader() {
           </div>
           <div className="crest-box cps-crest-box">
             <img 
-              src="/cps-gect-emblem.png" 
+              src={`${import.meta.env.BASE_URL}cps-gect-emblem.png`}
               alt="CPS GECT Emblem" 
               className="crest-img"
             />

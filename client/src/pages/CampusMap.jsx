@@ -755,7 +755,7 @@ export default function CampusMap() {
           {/* Full Signboard Photo */}
           <div className="card" style={{ padding: '0', overflow: 'hidden', textAlign: 'center', background: '#0f172a' }}>
             <img 
-              src="/gec-campus-map-full.jpg" 
+              src={`${import.meta.env.BASE_URL}gec-campus-map-full.jpg`}
               alt="GEC Thrissur Campus Map Signboard" 
               style={{ width: '100%', maxHeight: '700px', objectFit: 'contain', display: 'block' }}
             />

@@ -12,8 +12,13 @@ import Events from './pages/Events';
 import Welcome from './pages/Welcome';
 import CommitteeAdmin from './pages/CommitteeAdmin';
 import { RefreshCw, Building2 } from 'lucide-react';
+import fallbackStore from '../../server/data/store.json';
 
 const getRouteFromUrl = () => {
+  if (import.meta.env.VITE_STATIC_HOST === 'true') {
+    const hashRoute = window.location.hash.replace(/^#\/?/, '').split('/')[0].toLowerCase();
+    return hashRoute || 'welcome';
+  }
   const path = window.location.pathname.replace(/^\/+/, '').split('/')[0].toLowerCase();
   if (path === 'admin') return 'admin';
   const validStudentRoutes = ['welcome', 'map', 'events', 'scholarships', 'suggestions', 'support', 'announcements', 'emergency', 'issues'];
@@ -45,6 +50,21 @@ export default function App() {
   const [error, setError] = useState(null);
 
   const fetchAllData = async () => {
+    if (import.meta.env.VITE_STATIC_HOST === 'true') {
+      setData({
+        department: fallbackStore.department || {},
+        events: fallbackStore.events || [],
+        issues: fallbackStore.issues || [],
+        suggestions: fallbackStore.suggestions || [],
+        scholarships: fallbackStore.scholarships || [],
+        support: fallbackStore.support || { counsellors: [], helplines: [] },
+        emergency: fallbackStore.emergency || [],
+        announcements: fallbackStore.announcements || []
+      });
+      setError(null);
+      setLoading(false);
+      return;
+    }
     try {
       setLoading(true);
       const [
@@ -98,6 +118,12 @@ export default function App() {
 
   const navigate = (route) => {
     setCurrentRoute(route);
+    if (import.meta.env.VITE_STATIC_HOST === 'true') {
+      const targetHash = route === 'welcome' ? '' : `#/${route}`;
+      window.history.pushState({ route }, '', `${import.meta.env.BASE_URL}${targetHash}`);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
     const targetPath = route === 'admin' ? '/admin' : route === 'welcome' ? '/' : `/${route}`;
     if (window.location.pathname !== targetPath) {
       window.history.pushState({ route }, '', targetPath);
@@ -115,7 +141,7 @@ export default function App() {
         <header className="admin-topbar">
           <div className="admin-brand">
             <div className="crest-box" style={{ width: '38px', height: '38px' }}>
-              <img src="/cps-gect-emblem.png" alt="CPS" className="crest-img" />
+              <img src={`${import.meta.env.BASE_URL}cps-gect-emblem.png`} alt="CPS" className="crest-img" />
             </div>
             <div>
               <strong style={{ fontSize: '1.05rem', color: 'var(--navy-dark)', display: 'block' }}>
