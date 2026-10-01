@@ -22,11 +22,17 @@ export default function TopHeader() {
         {/* Association of Cyber Physical Systems Logo */}
         <div className="top-brand-center">
           <div className="association-logo-box">
-            <img 
-              src={`${import.meta.env.BASE_URL}association-cps-logo.png`}
-              alt="Association of Cyber Physical Systems" 
-              className="association-img"
-            />
+            <span className="association-mark" aria-hidden="true">
+              <img
+                src={`${import.meta.env.BASE_URL}association-cps-logo.png`}
+                alt=""
+                className="association-mark-source"
+              />
+            </span>
+            <span className="association-name">
+              <span>Association of</span>
+              <span>Cyber Physical Systems</span>
+            </span>
           </div>
         </div>
 

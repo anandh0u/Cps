@@ -615,10 +615,10 @@ h1, h2, h3, h4, h5, h6 {
   max-width: 1560px;
   margin: 0 auto;
   padding: 14px 30px;
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  justify-content: space-between;
-  gap: 20px;
+  gap: 32px;
 }
 
 /* Logo 1: GEC Thrissur Crest (Left) */
@@ -667,26 +667,45 @@ h1, h2, h3, h4, h5, h6 {
 .top-brand-center {
   display: flex;
   align-items: center;
-  justify-content: center;
-  flex: 1.2;
+  justify-content: flex-end;
 }
 
 .association-logo-box {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
+  gap: 10px;
   background: transparent;
   border: none;
   box-shadow: none;
   padding: 0;
 }
 
-.association-img {
+.association-mark {
   height: 48px;
-  max-width: 300px;
-  width: auto;
-  object-fit: contain;
+  width: 48px;
+  overflow: hidden;
+  flex: 0 0 48px;
   display: block;
+}
+
+.association-mark-source {
+  display: block;
+  height: 48px;
+  width: auto;
+  max-width: none;
+}
+
+.association-name {
+  display: flex;
+  flex-direction: column;
+  color: #111827;
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1.28;
+  letter-spacing: 0.015em;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 /* Logo 3: CPS GECT Department Emblem (Right) */
@@ -734,7 +753,9 @@ h1, h2, h3, h4, h5, h6 {
     grid-row: 1;
     justify-content: flex-end;
   }
-  .association-img { height: 36px; }
+  .association-mark { width: 36px; height: 36px; flex-basis: 36px; }
+  .association-mark-source { height: 36px; }
+  .association-name { font-size: 0.65rem; }
   .crest-box { width: 46px; height: 46px; }
 }
 
@@ -744,7 +765,10 @@ h1, h2, h3, h4, h5, h6 {
   .college-sub-text, .dept-sub-text { display: none; }
   .top-brand-left { gap: 8px; }
   .crest-box { width: 40px; height: 40px; }
-  .association-img { height: 30px; max-width: 230px; }
+  .association-logo-box { gap: 6px; }
+  .association-mark { width: 30px; height: 30px; flex-basis: 30px; }
+  .association-mark-source { height: 30px; }
+  .association-name { font-size: 0.54rem; line-height: 1.22; }
   .main-content { padding: 14px 12px; }
   .welcome-hero { padding: 24px 20px; }
   .welcome-hero h1 { font-size: 1.8rem; }
@@ -1115,7 +1139,6 @@ h1, h2, h3, h4, h5, h6 {
   .top-bar-inner { min-height: 72px; }
   .top-brand-left, .college-text { min-width: 0; }
   .college-main-title { max-width: 190px; line-height: 1.25; }
-  .association-img { width: min(100%, 170px); height: auto; max-height: 34px; }
   .page-title-row { align-items: flex-start; margin-bottom: 16px; padding-bottom: 12px; }
   .page-title-row h1 { font-size: 1.35rem; line-height: 1.25; }
   .page-title-row p { font-size: .8rem; line-height: 1.5; }
