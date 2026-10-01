@@ -55,26 +55,32 @@ export default function StudentSupport({ support = { counsellors: [], helplines:
                 </p>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '0.82rem', color: 'var(--text-muted)', marginBottom: '12px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <MapPin size={14} color="var(--navy-primary)" />
-                    <span>{c.office}</span>
-                  </div>
+                  {c.office && (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <MapPin size={14} color="var(--navy-primary)" />
+                      <span>{c.office}</span>
+                    </div>
+                  )}
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <Phone size={14} color="var(--navy-primary)" />
                     <a href={`tel:${c.phone}`} style={{ color: 'var(--navy-dark)', textDecoration: 'none', fontWeight: 600 }}>
                       {c.phone}
                     </a>
                   </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <Mail size={14} color="var(--navy-primary)" />
-                    <a href={`mailto:${c.email}`} style={{ color: 'var(--navy-primary)', textDecoration: 'none' }}>
-                      {c.email}
-                    </a>
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <Clock size={14} color="var(--green-forest)" />
-                    <span>{c.timings}</span>
-                  </div>
+                  {c.email && (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <Mail size={14} color="var(--navy-primary)" />
+                      <a href={`mailto:${c.email}`} style={{ color: 'var(--navy-primary)', textDecoration: 'none' }}>
+                        {c.email}
+                      </a>
+                    </div>
+                  )}
+                  {c.timings && (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <Clock size={14} color="var(--green-forest)" />
+                      <span>{c.timings}</span>
+                    </div>
+                  )}
                 </div>
 
                 <p style={{ fontSize: '0.82rem', color: 'var(--text-dim)', borderTop: '1px solid var(--border-light)', paddingTop: '8px' }}>
