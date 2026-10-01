@@ -130,48 +130,7 @@
       ]
     }
   ],
-  "suggestions": [
-    {
-      "id": "SUG-104",
-      "title": "Add Microchip Soldering Stations for FYP Teams",
-      "category": "Lab Facilities",
-      "idea": "Provide 2 additional temperature-controlled soldering stations with fume extractors in Lab H-101.",
-      "submittedAt": "2026-09-21T03:19:58.795Z",
-      "upvotes": 2,
-      "status": "Under Review",
-      "officialResponse": "Submitted to Welfare Committee for agenda review."
-    },
-    {
-      "id": "SUG-101",
-      "title": "Introduce Weekend Open-Lab Hours for Capstone Robotics Projects",
-      "category": "Lab Facilities",
-      "idea": "Allow final and pre-final year students access to the Robotics & IoT Lab on Saturdays with prior faculty permission for robot hardware assembly and calibration.",
-      "submittedAt": "2026-09-14T11:00:00.000Z",
-      "upvotes": 28,
-      "status": "Implemented",
-      "officialResponse": "Approved by HOD. Lab H-101 and R-204 are now open Saturdays 9:30 AM - 1:30 PM under supervision of Er. Deepa Mohan."
-    },
-    {
-      "id": "SUG-102",
-      "title": "Set up a Dedicated Component Lending Library for Small Sensors & Boards",
-      "category": "Student Resources",
-      "idea": "Create a fast self-checkout cupboard for basic sensor modules (ultrasonic, IMU, motor drivers) so students do not have to wait days for minor hardware testing.",
-      "submittedAt": "2026-09-17T15:20:00.000Z",
-      "upvotes": 35,
-      "status": "Considered",
-      "officialResponse": "Department stores currently compiling inventory. Dedicated fast-checkout shelf being installed in Lab H-101."
-    },
-    {
-      "id": "SUG-103",
-      "title": "Conduct Peer-to-Peer Linux & ROS2 Crash Course for S4 Juniors",
-      "category": "Academic Mentoring",
-      "idea": "Senior S6/S8 students can conduct a 2-day evening workshop helping juniors set up dual-boot Ubuntu and ROS2 on their personal laptops before lab classes begin.",
-      "submittedAt": "2026-09-19T09:40:00.000Z",
-      "upvotes": 19,
-      "status": "Under Review",
-      "officialResponse": "Welfare committee discussing date with Student Association for early October."
-    }
-  ],
+  "suggestions": [],
   "scholarships": [
     {
       "id": "GECT-SCH-001",

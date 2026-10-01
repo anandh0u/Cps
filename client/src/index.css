@@ -713,14 +713,14 @@ h1, h2, h3, h4, h5, h6 {
     padding: 10px 16px;
     gap: 8px 18px;
   }
-  .top-brand-left, .top-brand-right {
+  .top-brand-left {
     width: 100%;
   }
   .top-brand-left { justify-content: flex-start; }
-  .top-brand-right { justify-content: flex-end; }
   .top-brand-center {
-    grid-column: 1 / -1;
-    grid-row: 2;
+    grid-column: 2;
+    grid-row: 1;
+    justify-content: flex-end;
   }
   .association-img { height: 36px; }
   .crest-box { width: 46px; height: 46px; }
@@ -730,12 +730,9 @@ h1, h2, h3, h4, h5, h6 {
   .top-bar-inner { gap: 7px 10px; padding: 8px 10px; }
   .college-main-title, .dept-main-title { font-size: .72rem; }
   .college-sub-text, .dept-sub-text { display: none; }
-  .top-brand-left, .top-brand-right { gap: 8px; }
+  .top-brand-left { gap: 8px; }
   .crest-box { width: 40px; height: 40px; }
   .association-img { height: 30px; max-width: 230px; }
-  .top-brand-right .dept-text { order: 2; }
-  .top-brand-right .cps-crest-box { order: 1; }
-  .dept-main-title { text-align: left; }
   .main-content { padding: 14px 12px; }
   .welcome-hero { padding: 24px 20px; }
   .welcome-hero h1 { font-size: 1.8rem; }

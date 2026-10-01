@@ -14,8 +14,6 @@ import {
   RotateCcw,
   Eye,
   CheckCircle2,
-  Sparkles,
-  Bot,
   Map as MapIcon,
   ShieldCheck,
   GraduationCap
@@ -26,7 +24,7 @@ export default function CampusMap() {
   const [activeTab, setActiveTab] = useState('satellite');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeLocationId, setActiveLocationId] = useState(31); // Default to #31 (Robotics / CPS)
+  const [activeLocationId, setActiveLocationId] = useState(1);
   const [zoomLevel, setZoomLevel] = useState(1);
   const [hoveredLocation, setHoveredLocation] = useState(null);
   const mapContainerRef = useRef(null);
@@ -37,8 +35,7 @@ export default function CampusMap() {
       selectedCategory === 'All' ||
       (selectedCategory === 'Academic & Administration' && loc.catKey === 'acad') ||
       (selectedCategory === 'Central Facilities' && loc.catKey === 'fac') ||
-      (selectedCategory === 'Residential Area' && loc.catKey === 'res') ||
-      (selectedCategory === 'CPS Spotlight' && loc.highlight);
+      (selectedCategory === 'Residential Area' && loc.catKey === 'res');
 
     const q = searchQuery.toLowerCase().trim();
     const matchesQuery = !q || 
@@ -64,7 +61,6 @@ export default function CampusMap() {
   };
 
   const getPinColor = (loc) => {
-    if (loc.id === 31) return { bg: '#eab308', text: '#000000', ring: '#ca8a04', badge: 'tag-amber' }; // Gold for CPS
     if (loc.catKey === 'acad') return { bg: '#1e40af', text: '#ffffff', ring: '#1d4ed8', badge: 'tag-blue' }; // Royal Blue
     if (loc.catKey === 'fac') return { bg: '#ea580c', text: '#ffffff', ring: '#c2410c', badge: 'tag-amber' }; // Coral/Orange
     return { bg: '#0d9488', text: '#ffffff', ring: '#0f766e', badge: 'tag-stone' }; // Teal for Hostels & Quarters
@@ -125,66 +121,6 @@ export default function CampusMap() {
         </div>
       </div>
 
-      {/* CPS Department Spotlight Banner */}
-      <div className="card" style={{ 
-        background: 'linear-gradient(135deg, rgba(234, 179, 8, 0.1) 0%, rgba(202, 138, 4, 0.05) 100%)', 
-        border: '1px solid rgba(234, 179, 8, 0.35)',
-        marginBottom: '20px',
-        padding: '16px 20px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        flexWrap: 'wrap',
-        gap: '12px'
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-          <div style={{ 
-            width: '44px', 
-            height: '44px', 
-            borderRadius: '10px', 
-            background: 'var(--amber-bg)', 
-            display: 'flex', 
-            alignItems: 'center', 
-            justifyContent: 'center',
-            border: '1px solid rgba(234, 179, 8, 0.4)',
-            boxShadow: '0 2px 10px rgba(234, 179, 8, 0.25)'
-          }}>
-            <Bot size={24} style={{ color: 'var(--amber-text)' }} />
-          </div>
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ fontWeight: 700, fontSize: '0.98rem' }}>
-                Cyber Physical Systems (CPS) Department Location: #31
-              </span>
-              <span className="tag tag-amber" style={{ fontSize: '0.7rem' }}>
-                Department Headquarters
-              </span>
-            </div>
-            <p style={{ margin: '2px 0 0', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-              Situated at <strong>#31 Nodal Center for Robotics and AI (NCRAI)</strong>, directly north of the Central Library and Main Administrative Quadrangle (Lat: 10.5545° N, Lon: 76.2243° E).
-            </p>
-          </div>
-        </div>
-
-        <div style={{ display: 'flex', gap: '8px' }}>
-          <button 
-            className="btn btn-secondary"
-            onClick={() => {
-              setActiveTab('vector-map');
-              setActiveLocationId(31);
-              setZoomLevel(1.5);
-              if (mapContainerRef.current) {
-                mapContainerRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
-              }
-            }}
-            style={{ fontSize: '0.82rem', padding: '6px 14px', borderColor: 'rgba(234, 179, 8, 0.4)' }}
-          >
-            <Sparkles size={14} style={{ color: 'var(--amber-text)', marginRight: '4px' }} />
-            Spotlight #31 on Map
-          </button>
-        </div>
-      </div>
-
       {/* TAB 1: LIVE SATELLITE MAP */}
       {activeTab === 'satellite' && (
         <section className="satellite-map-card" ref={mapContainerRef}>
@@ -192,7 +128,7 @@ export default function CampusMap() {
             <div>
               <span className="section-kicker">Live geographic view</span>
               <h2>GEC Thrissur from satellite</h2>
-              <p>Pan and zoom to inspect the campus. The CPS hub is centred near location #31.</p>
+              <p>Pan and zoom to inspect the college buildings, roads and surrounding campus.</p>
             </div>
             <a
               className="btn btn-secondary"
@@ -211,10 +147,6 @@ export default function CampusMap() {
               referrerPolicy="no-referrer-when-downgrade"
               allowFullScreen
             />
-            <div className="satellite-cps-marker">
-              <span><MapPin size={18} /></span>
-              <div><strong>CPS Hub · #31</strong><small>Nodal Centre for Robotics &amp; AI</small></div>
-            </div>
           </div>
           <div className="satellite-map-note">
             <Info size={16} /> Satellite imagery is provided by Google Maps; labels and image date may vary.
@@ -228,7 +160,7 @@ export default function CampusMap() {
           {/* Controls Bar */}
           <div className="filter-shelf" style={{ marginBottom: '14px' }}>
             <div className="filter-group">
-              {['All', 'Academic & Administration', 'Central Facilities', 'Residential Area', 'CPS Spotlight'].map(cat => (
+              {['All', 'Academic & Administration', 'Central Facilities', 'Residential Area'].map(cat => (
                 <button
                   key={cat}
                   className={`filter-btn ${selectedCategory === cat ? 'active' : ''}`}
@@ -612,11 +544,6 @@ export default function CampusMap() {
                       <span className={`tag ${getPinColor(activeLoc).badge}`}>
                         {activeLoc.category}
                       </span>
-                      {activeLoc.id === 31 && (
-                        <span className="tag tag-amber font-mono">
-                          ★ CPS Department Hub
-                        </span>
-                      )}
                       <span className="tag tag-stone font-mono" style={{ fontSize: '0.7rem' }}>
                         {activeLoc.lat.toFixed(4)}° N, {activeLoc.lon.toFixed(4)}° E
                       </span>
@@ -672,7 +599,6 @@ export default function CampusMap() {
             {filteredLocations.map(loc => {
               const colors = getPinColor(loc);
               const isSelected = loc.id === activeLocationId;
-              const isCPS = loc.id === 31;
 
               return (
                 <div 
@@ -684,12 +610,8 @@ export default function CampusMap() {
                     display: 'flex', 
                     flexDirection: 'column', 
                     justifyContent: 'space-between',
-                    border: isSelected 
-                      ? `2px solid ${isCPS ? '#eab308' : 'var(--accent-primary)'}` 
-                      : '1px solid var(--border-color)',
-                    background: isSelected 
-                      ? (isCPS ? 'rgba(234, 179, 8, 0.06)' : 'var(--bg-card)') 
-                      : 'var(--bg-card)',
+                    border: isSelected ? '2px solid var(--accent-primary)' : '1px solid var(--border-color)',
+                    background: 'var(--bg-card)',
                     padding: '14px 16px',
                     transition: 'all 0.15s ease'
                   }}
@@ -728,8 +650,8 @@ export default function CampusMap() {
                   </div>
 
                   <div style={{ marginTop: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid var(--border-subtle)', paddingTop: '8px' }}>
-                    <span style={{ fontSize: '0.75rem', color: isCPS ? 'var(--amber-text)' : 'var(--text-muted)', fontWeight: isCPS ? 700 : 500 }}>
-                      {isCPS ? '★ CPS Department Hub' : `Index #${loc.id} &bull; ${loc.lat.toFixed(4)}° N`}
+                    <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 500 }}>
+                      Index #{loc.id} &bull; {loc.lat.toFixed(4)}° N
                     </span>
                     <span style={{ fontSize: '0.78rem', color: 'var(--accent-primary)', fontWeight: 600 }}>
                       {isSelected ? 'Currently Selected' : 'Locate on Map →'}
@@ -811,7 +733,7 @@ export default function CampusMap() {
                   <li>General store</li>
                   <li>Store</li>
                   <li>Gloria Gopi Kumar Alumni Hall</li>
-                  <li><strong>Nodal center for Robotics and AI (CPS Hub)</strong></li>
+                  <li><strong>Nodal Center for Robotics and AI (ECE)</strong></li>
                   <li>Technology Buisiness Incubator</li>
                   <li>Eastern Amphitheatre</li>
                   <li>ITC &amp; SR,CEC</li>

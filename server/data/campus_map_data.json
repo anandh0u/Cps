@@ -366,8 +366,8 @@
     "catKey": "fac",
     "lat": 10.554514,
     "lon": 76.2243,
-    "desc": "\u2605 Academic and research home of Cyber Physical System (CPS) Engineering, Industrial Automation, Robotic manipulators, Embedded Systems, and AI/IoT prototyping.",
-    "highlight": true,
+    "desc": "Robotics and artificial intelligence research facility under the Department of Electronics and Communication Engineering (ECE).",
+    "highlight": false,
     "icon": "bot",
     "x": 756.3,
     "y": 205.2

@@ -19,7 +19,7 @@ export default function TopHeader() {
           </div>
         </div>
 
-        {/* Logo 2: Association of Cyber Physical Systems Logo (Center) */}
+        {/* Association of Cyber Physical Systems Logo */}
         <div className="top-brand-center">
           <div className="association-logo-box">
             <img 
@@ -30,20 +30,6 @@ export default function TopHeader() {
           </div>
         </div>
 
-        {/* Logo 3: CPS GECT Department Emblem & Department Title */}
-        <div className="top-brand-right">
-          <div className="dept-text">
-            <h2 className="dept-main-title">DEPARTMENT OF CYBER PHYSICAL SYSTEMS</h2>
-            <p className="dept-sub-text">Student Welfare &amp; Grievance Redressal Cell</p>
-          </div>
-          <div className="crest-box cps-crest-box">
-            <img 
-              src={`${import.meta.env.BASE_URL}cps-gect-emblem.png`}
-              alt="CPS GECT Emblem" 
-              className="crest-img"
-            />
-          </div>
-        </div>
       </div>
     </header>
   );
